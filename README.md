@@ -166,13 +166,20 @@ git clone https://github.com/rynaqrtz/QuranKita.git
 cd QuranKita
 
 ./gradlew testDebugUnitTest     # jalankan test
-./gradlew assembleDebug         # bangun APK
+./gradlew assembleDebug         # bangun APK debug (untuk pengembangan)
+./gradlew assembleCiRelease     # bangun APK rilis (R8 + shrink + baseline profile)
 ```
 
-APK (lokal): `app/build/outputs/apk/debug/app-debug.apk`
+APK rilis: `app/build/outputs/apk/ciRelease/` — lebih kecil, tanpa `debuggable`,
+dan sudah membawa baseline profile sehingga startup tidak menunggu kompilasi.
 
-> GitHub Actions me-*rename* berkas itu menjadi **`QuranKita.apk`** sebelum
-> diunggah dan dirilis.
+> Build `ciRelease` ditandatangani dengan `debug.keystore` yang sudah ikut di
+> repo, sehingga APK bisa langsung dipasang tanpa konfigurasi tambahan. Untuk
+> distribusi ke Play Store, pakai build `release` dengan `KEYSTORE_PATH`,
+> `STORE_PASSWORD`, dan `KEY_PASSWORD` milik Anda sendiri.
+
+> GitHub Actions me-*rename* berkas hasil build menjadi **`QuranKita.apk`**
+> sebelum diunggah dan dirilis.
 
 > Repo ini sudah menyertakan **Gradle wrapper** dan **`debug.keystore`**, sehingga
 > build berjalan di mesin mana pun tanpa konfigurasi tambahan.
@@ -218,7 +225,7 @@ app/src/main/assets/
 - ✅ Pembersihan dependensi & aset tak terpakai
 - ✅ Animasi transisi antar layar (shared element surah → pembaca, spring slide/fade)
 - ✅ Mode Gelap OLED, Terang, dan Sepia (ganti di Pengaturan)
-- ⬜ Baseline profile untuk mempercepat startup
+- ✅ APK minified + resource shrink + baseline profile (4,3 MB, satu file dex)
 
 ---
 
