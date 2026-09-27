@@ -1,4 +1,6 @@
 package com.example.ui.home
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -22,6 +24,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 
+@Stable
 data class HomeUiState(
     val isAppLoading: Boolean = true,
     val selectedCityName: String = "Jakarta",
@@ -33,6 +36,7 @@ data class HomeUiState(
     val verseOfTheDay: VerseOfTheDay = VerseOfTheDay()
 )
 
+@Immutable
 data class VerseOfTheDay(
     val surahName: String = "Al-Baqarah",
     val surahNumber: Int = 2,

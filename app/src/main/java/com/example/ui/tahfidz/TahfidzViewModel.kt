@@ -1,4 +1,5 @@
 package com.example.ui.tahfidz
+import androidx.compose.runtime.Stable
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+@Stable
 data class QuizState(
     val currentQuestionIndex: Int = 0,
     val questions: List<QuizQuestion> = emptyList(),

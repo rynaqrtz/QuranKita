@@ -137,7 +137,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Salam & Islamic Date Bar
-            item {
+            item(contentType = "greeting") {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -176,7 +176,7 @@ fun HomeScreen(
             }
 
             // Quick Search Bar
-            item {
+            item(contentType = "searchbar") {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -210,7 +210,7 @@ fun HomeScreen(
             }
 
             // Next Prayer Quick Highlight Strip
-            item {
+            item(contentType = "nextprayer") {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -306,14 +306,14 @@ fun HomeScreen(
             }
 
             // Hitung Mundur Ramadhan & Kalender Hari Besar Islam
-            item {
+            item(contentType = "islamic_events") {
                 IslamicEventsCard(
                     onOpenAllEvents = { showIslamicEventsDialog = true }
                 )
             }
 
             // Hero Card: Terakhir Dibaca (Last Read) with Rich Reading Progress & Illuminated Canvas
-            item {
+            item(contentType = "verse_watermark") {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(26.dp),
@@ -535,7 +535,7 @@ fun HomeScreen(
             }
 
             // Quick Actions 4 Grid with Islamic Emerald Accents
-            item {
+            item(contentType = "section_header") {
                 Text(
                     text = "Akses Cepat",
                     style = MaterialTheme.typography.titleMedium.copy(
@@ -626,7 +626,7 @@ fun HomeScreen(
             }
 
             // Progres Khataman & Hafalan
-            item {
+            item(contentType = "quick_access") {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
@@ -713,7 +713,7 @@ fun HomeScreen(
             }
 
             // Verse of the Day (Tadabbur Card)
-            item {
+            item(contentType = "verse_of_day") {
                 val votd = uiState.verseOfTheDay
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -791,7 +791,7 @@ fun HomeScreen(
                 }
             }
 
-            item {
+            item(contentType = "spacer") {
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }

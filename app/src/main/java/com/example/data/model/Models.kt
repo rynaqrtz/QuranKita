@@ -1,5 +1,8 @@
 package com.example.data.model
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
+@Immutable
 data class Surah(
     val number: Int,
     val nameLatin: String,
@@ -12,6 +15,7 @@ data class Surah(
     val memorizedVersesCount: Int = 0
 )
 
+@Immutable
 data class Verse(
     val id: String, // e.g. "1_1"
     val surahNumber: Int,
@@ -24,6 +28,7 @@ data class Verse(
     val isMemorized: Boolean = false
 )
 
+@Immutable
 data class LastRead(
     val surahNumber: Int,
     val surahName: String,
@@ -31,6 +36,7 @@ data class LastRead(
     val timestamp: Long
 )
 
+@Immutable
 data class JuzInfo(
     val number: Int,
     val nameArabic: String,
@@ -79,6 +85,7 @@ data class JuzInfo(
     }
 }
 
+@Immutable
 data class PrayerTimeInfo(
     val name: String,
     val time: String,
@@ -87,6 +94,7 @@ data class PrayerTimeInfo(
     val remainingTimeText: String = ""
 )
 
+@Immutable
 data class Qari(
     val id: String,
     val name: String,
@@ -123,6 +131,7 @@ data class Qari(
     }
 }
 
+@Immutable
 data class DzikirItem(
     val id: Int,
     val title: String,
@@ -135,6 +144,7 @@ data class DzikirItem(
     val category: String = "Pagi" // Pagi, Petang, Sholat
 )
 
+@Immutable
 data class QuranDua(
     val id: Int,
     val title: String,
@@ -258,6 +268,7 @@ data class QuranDua(
     }
 }
 
+@Immutable
 data class AsmaulHusnaItem(
     val number: Int,
     val arabic: String,
@@ -283,6 +294,7 @@ data class AsmaulHusnaItem(
     }
 }
 
+@Stable
 data class QuizQuestion(
     val surahNumber: Int,
     val surahName: String,
