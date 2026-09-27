@@ -33,9 +33,6 @@ val CelestialCyan = Color(0xFF06B6D4)              // Cyan 500: Hadith & Du'a ac
 val CelestialContainerDark = Color(0xFF134E4A)
 
 // 4. BRAND ACCENTS
-val TixarMagenta = Color(0xFFE11D48)
-val TixarYellow = Color(0xFFFACC15)
-val TixarCyan = Color(0xFF06B6D4)
 
 // 5. SURFACES & NEUTRALS: Pure OLED Midnight & Sleek Slate
 val DarkBackground = Color(0xFF060B12)              // Absolute Midnight OLED base

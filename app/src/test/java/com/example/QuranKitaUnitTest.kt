@@ -8,12 +8,14 @@ import com.example.data.model.AsmaulHusnaItem
 import com.example.data.model.JuzInfo
 import com.example.data.model.Qari
 import com.example.data.model.QuranDua
+import com.example.util.AudioPlayerManager
 import com.example.util.HijriCalendar
 import com.example.util.HijriDate
 import com.example.util.PrayerTimeCalculator
 import com.example.util.TajwidFormatter
 import org.junit.Assert.*
 import org.junit.Test
+import java.io.File
 import java.util.Date
 
 class QuranKitaUnitTest {
@@ -166,5 +168,18 @@ class QuranKitaUnitTest {
         assertEquals("Dzulhijjah", HijriCalendar.MONTH_NAMES.last())
         assertTrue(HijriCalendar.isLeapYear(1447))
         assertFalse(HijriCalendar.isLeapYear(1448))
+    }
+
+    @Test
+    fun offlineAudio_layoutIsPerVerseUnderTheQariFolder() {
+        val root = File("/data/data/com.example/files")
+        assertEquals(
+            File("/data/data/com.example/files/audio/husary/002_286.mp3"),
+            AudioPlayerManager.verseFile(root, "husary", 2, 286)
+        )
+        assertNotEquals(
+            AudioPlayerManager.verseFile(root, "husary", 2, 1),
+            AudioPlayerManager.verseFile(root, "husary", 2, 2)
+        )
     }
 }

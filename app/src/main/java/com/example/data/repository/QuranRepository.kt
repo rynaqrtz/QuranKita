@@ -175,6 +175,11 @@ class QuranRepository(private val quranDao: QuranDao) {
         }.flowOn(Dispatchers.IO)
     }
 
+    fun searchSurahs(query: String): Flow<List<Surah>> =
+        quranDao.searchSurahs(query).map { list ->
+            list.map { it.toModel() }
+        }.flowOn(Dispatchers.IO)
+
     /**
      * Builds a valid FTS4 MATCH expression: every token becomes a prefix term
      * (`token*`) and anything that is not a letter or digit is dropped, so free
@@ -234,10 +239,8 @@ class QuranRepository(private val quranDao: QuranDao) {
     suspend fun deleteDownloadedAudio(key: String, filePath: String) = withContext(Dispatchers.IO) {
         quranDao.deleteDownloadedAudio(key)
         try {
-            val file = File(filePath)
-            if (file.exists()) {
-                file.delete()
-            }
+            // localFilePath is the per-qari audio directory, not a single file
+            File(filePath).deleteRecursively()
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -69,9 +70,10 @@ fun AudioPlayerBar(
     onClose: () -> Unit,
     onCycleSpeed: () -> Unit = {},
     onSetSleepTimer: (Int?) -> Unit = {},
+    onDownload: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val isVisible = state.isPlaying || state.isLoading || state.currentPositionMs > 0
+    val isVisible = state.isPlaying || state.isLoading || state.isDownloading || state.currentPositionMs > 0
 
     var showSleepTimerMenu by remember { mutableStateOf(false) }
 
@@ -154,6 +156,20 @@ fun AudioPlayerBar(
                     }
 
                     IconButton(
+                        onClick = onDownload,
+                        enabled = !state.isDownloading,
+                        modifier = Modifier.size(40.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Download,
+                            contentDescription = "Unduh surah ini untuk dibaca offline",
+                            tint = if (state.downloadStatus != null) GoldAccent
+                                   else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+
+                    IconButton(
                         onClick = onClose,
                         modifier = Modifier.size(40.dp)
                     ) {
@@ -164,6 +180,14 @@ fun AudioPlayerBar(
                             modifier = Modifier.size(20.dp)
                         )
                     }
+                }
+
+                if (state.downloadStatus != null) {
+                    Text(
+                        text = state.downloadStatus.orEmpty(),
+                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                        color = GoldAccent
+                    )
                 }
 
                 // Tier 2: Progress Scrubber

@@ -91,18 +91,3 @@ fun TixarBrandedHeader(
         }
     }
 }
-
-/**
- * App Loading Screen with the modern Quran logo
- * and subtle Emerald Green progress indicator.
- */
-@Composable
-fun AppLoadingScreen(
-    modifier: Modifier = Modifier,
-    statusText: String = "Memuat Al-Qur'an..."
-) {
-    AppLaunchLoadingView(
-        modifier = modifier,
-        statusText = statusText
-    )
-}

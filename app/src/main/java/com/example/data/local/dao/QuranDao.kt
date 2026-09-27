@@ -52,6 +52,15 @@ interface QuranDao {
     """)
     fun searchSurahsFts(query: String): Flow<List<SurahEntity>>
 
+    @Query("""
+        SELECT * FROM surahs
+        WHERE nameLatin LIKE '%' || :query || '%'
+           OR meaning LIKE '%' || :query || '%'
+        ORDER BY number ASC
+        LIMIT 50
+    """)
+    fun searchSurahs(query: String): Flow<List<SurahEntity>>
+
     // Verses
     @Query("SELECT * FROM verses WHERE surahNumber = :surahNumber ORDER BY verseNumber ASC")
     fun getVersesForSurah(surahNumber: Int): Flow<List<VerseEntity>>

@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.data.model.Surah
 import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.GoldAccent
 
@@ -58,6 +59,7 @@ fun SearchScreen(
     BackHandler(onBack = onNavigateBack)
     val query by viewModel.query.collectAsStateWithLifecycle()
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
+    val surahResults by viewModel.surahResults.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -147,7 +149,7 @@ fun SearchScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             // Results List
-            if (query.length >= 2 && searchResults.isEmpty()) {
+            if (query.length >= 2 && searchResults.isEmpty() && surahResults.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -168,12 +170,15 @@ fun SearchScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     if (query.length >= 2) {
-                        item {
+                        item(key = "result-count") {
                             Text(
-                                text = "Ditemukan ${searchResults.size} ayat",
+                                text = "Ditemukan ${surahResults.size} surah, ${searchResults.size} ayat",
                                 style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                                 color = EmeraldPrimary
                             )
+                        }
+                        items(surahResults, key = { "surah-${it.number}" }) { surah ->
+                            SurahHitCard(surah = surah, onClick = { onNavigateToSurah(surah.number) })
                         }
                     }
 
@@ -230,6 +235,46 @@ fun SearchScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun SurahHitCard(surah: Surah, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = "${surah.number}. ${surah.nameLatin}",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    color = GoldAccent
+                )
+                Text(
+                    text = "${surah.meaning} · ${surah.verseCount} ayat · ${surah.revelation}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Text(
+                text = surah.nameArabic,
+                style = MaterialTheme.typography.headlineSmall
+            )
         }
     }
 }

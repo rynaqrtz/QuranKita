@@ -14,7 +14,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 import java.util.Locale
 
 data class AudioPlaybackState(
@@ -31,7 +34,9 @@ data class AudioPlaybackState(
     val sleepTimerMinutesRemaining: Int? = null,
     val currentPositionMs: Int = 0,
     val durationMs: Int = 0,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val isDownloading: Boolean = false,
+    val downloadStatus: String? = null
 )
 
 class AudioPlayerManager(private val context: Context) {
@@ -43,6 +48,9 @@ class AudioPlayerManager(private val context: Context) {
 
     private val _playbackState = MutableStateFlow(AudioPlaybackState())
     val playbackState: StateFlow<AudioPlaybackState> = _playbackState.asStateFlow()
+
+    /** Wired by the ViewModel so a finished download is recorded for the Settings list. */
+    var onAudioDownloaded: (suspend (qariId: String, surahNumber: Int, filePath: String, sizeStr: String) -> Unit)? = null
 
     fun setQari(qari: Qari) {
         _playbackState.value = _playbackState.value.copy(selectedQari = qari)
@@ -126,7 +134,7 @@ class AudioPlayerManager(private val context: Context) {
         val vStr = String.format(Locale.US, "%03d", verseNumber)
 
         // Check if offline audio exists
-        val offlineFile = File(context.filesDir, "audio/${qari.id}_$sStr.mp3")
+        val offlineFile = verseFile(context.filesDir, qari.id, surahNumber, verseNumber)
         val audioUrl = if (offlineFile.exists()) {
             offlineFile.absolutePath
         } else {
@@ -278,5 +286,68 @@ class AudioPlayerManager(private val context: Context) {
                 delay(300)
             }
         }
+    }
+
+    /**
+     * Downloads every verse of the current surah so it plays with no network.
+     * ponytail: java.net.URL + copyTo, whole-surah only, no byte-level progress.
+     * Add per-verse resume if users start hitting timeouts on long surahs.
+     */
+    fun downloadCurrentSurah(verseCount: Int) {
+        if (_playbackState.value.isDownloading) return
+
+        val state = _playbackState.value
+        val qari = state.selectedQari
+        val surahNumber = state.currentSurahNumber
+        val sStr = String.format(Locale.US, "%03d", surahNumber)
+        val dir = File(File(context.filesDir, "audio"), qari.id)
+        _playbackState.value = state.copy(isDownloading = true, downloadStatus = "Mengunduh surah…")
+
+        scope.launch {
+            val message = try {
+                dir.mkdirs()
+                var totalBytes = 0L
+                for (verse in 1..verseCount) {
+                    val target = verseFile(context.filesDir, qari.id, surahNumber, verse)
+                    if (!target.exists()) {
+                        withContext(Dispatchers.IO) {
+                            val vStr = String.format(Locale.US, "%03d", verse)
+                            val url = "https://everyayah.com/data/${qari.subfolder}/$sStr$vStr.mp3"
+                            URL(url).openStream().use { input ->
+                                FileOutputStream(target).use { output -> input.copyTo(output) }
+                            }
+                        }
+                    }
+                    totalBytes += target.length()
+                    _playbackState.value = _playbackState.value.copy(
+                        downloadStatus = "Mengunduh $verse/$verseCount"
+                    )
+                }
+                onAudioDownloaded?.invoke(qari.id, surahNumber, dir.absolutePath, formatSize(totalBytes))
+                "Surah tersimpan untuk dibaca offline"
+            } catch (e: Exception) {
+                dir.deleteRecursively()
+                "Gagal mengunduh: " + (e.localizedMessage ?: "jaringan bermasalah")
+            }
+            _playbackState.value = _playbackState.value.copy(isDownloading = false, downloadStatus = message)
+            delay(4000)
+            if (_playbackState.value.downloadStatus == message) {
+                _playbackState.value = _playbackState.value.copy(downloadStatus = null)
+            }
+        }
+    }
+
+    private fun formatSize(bytes: Long): String = when {
+        bytes < 1024 -> "$bytes B"
+        bytes < 1024 * 1024 -> String.format(Locale.US, "%.0f KB", bytes / 1024.0)
+        else -> String.format(Locale.US, "%.1f MB", bytes / (1024.0 * 1024.0))
+    }
+
+    companion object {
+        /** Single source of truth for the offline layout: audio/<qari>/<surah>_<verse>.mp3 */
+        fun verseFile(root: File, qariId: String, surahNumber: Int, verseNumber: Int): File = File(
+            File(File(root, "audio"), qariId),
+            String.format(Locale.US, "%03d_%03d.mp3", surahNumber, verseNumber)
+        )
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.local.AppDatabase
+import com.example.data.model.Surah
 import com.example.data.model.Verse
 import com.example.data.repository.QuranRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,6 +26,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     val query: StateFlow<String> = _query.asStateFlow()
 
     val searchResults: StateFlow<List<Verse>>
+    val surahResults: StateFlow<List<Surah>>
 
     val popularKeywords = listOf("Sabar", "Surga", "Sholat", "Rezeki", "Hidayah", "Taubat", "Ilmu")
 
@@ -40,6 +42,22 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
                     .catch { emit(emptyList()) }
                     .flatMapLatest { fts ->
                         if (fts.isNotEmpty()) flowOf(fts) else repository.searchVerses(q)
+                    }
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+        surahResults = _query.flatMapLatest { q ->
+            if (q.isBlank() || q.length < 2) {
+                flowOf(emptyList())
+            } else {
+                repository.searchSurahsFts(q)
+                    .catch { emit(emptyList()) }
+                    .flatMapLatest { fts ->
+                        if (fts.isNotEmpty()) flowOf(fts) else repository.searchSurahs(q)
                     }
             }
         }.stateIn(

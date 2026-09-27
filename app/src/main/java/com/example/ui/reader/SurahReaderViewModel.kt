@@ -70,6 +70,14 @@ class SurahReaderViewModel(application: Application) : AndroidViewModel(applicat
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+        audioPlayer.onAudioDownloaded = { qariId, surahNumber, filePath, sizeStr ->
+            repository.registerDownloadedAudio(qariId, surahNumber, filePath, sizeStr)
+        }
+    }
+
+    fun downloadCurrentSurahAudio() {
+        audioPlayer.downloadCurrentSurah(playbackState.value.totalVersesInSurah)
     }
 
     fun loadSurah(surahNumber: Int) {
