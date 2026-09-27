@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    name: Build & Package APK
+    name: Build, Test & Package APK
     runs-on: ubuntu-latest
 
     steps:
@@ -26,16 +26,27 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Grant Execute Permission to Gradle
-        run: chmod +x gradlew || true
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant Execute Permission to Gradle Wrapper
+        run: chmod +x gradlew
 
       - name: Run Unit Tests
-        run: gradle testDebugUnitTest --no-daemon --stacktrace
+        run: ./gradlew testDebugUnitTest --stacktrace
 
       - name: Build Debug APK
-        run: gradle assembleDebug --no-daemon --stacktrace
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuranKita-Test-Report
+          path: app/build/reports/tests/
+          retention-days: 14
+          if-no-files-found: ignore
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
@@ -45,28 +56,19 @@ jobs:
           retention-days: 30
 
       - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || 'v1.2.0' }}
-          name: "QuranKita v1.2.0 - Official Release"
+          name: "QuranKita ${{ github.ref_name }}"
           draft: false
           prerelease: false
           body: |
-            ## 📖 QuranKita v1.2.0 - Official Build
-            
-            Aplikasi Al-Qur'anul Karim & Pendamping Ibadah Harian Modern, Bersih, 100% Bebas Iklan, dan Offline-First.
-            
-            ### ✨ Fitur Terbaru:
-            - **Hitung Mundur Ramadhan & Hari Besar Islam:** Kalender Hijriah dan countdown otomatis ke bulan suci Ramadhan, Idul Fitri, Idul Adha, dan hari-hari besar Islam.
-            - **Visual Tajweed Highlighter:** Pewarnaan hukum tajwid dinamis dengan panduan warna (*Ghunnah, Ikhfa, Idgham, Qalqalah, Mad*).
-            - **Khatam Tracker Dashboard:** Visualisasi cincin progres khatam 30 Juz dan checklist tilawah.
-            - **Kumpulan Doa Quran Terkategori:** Doa *Rabbana*, *Para Nabi*, *Perlindungan*, *Rezeki*, dan *Taubat*.
-            - **Audio Murottal + Sleep Timer:** 4 Qari dunia, repeat loop tahfidz, pengatur kecepatan (*0.75x - 1.5x*), dan sleep timer.
-            - **100% Offline-First:** Basis data Room FTS4 terindeks tanpa koneksi internet.
-            
-            ### 📥 Download Langsung:
-            Unduh berkas `app-debug.apk` di bawah dan pasang langsung pada smartphone Android Anda.
+            ## QuranKita ${{ github.ref_name }}
+
+            Aplikasi Al-Qur'anul Karim & pendamping ibadah harian — offline-first, bebas iklan, ringan.
+
+            ### Unduh
+            Ambil berkas `app-debug.apk` di bawah, lalu pasang langsung di perangkat Android Anda.
           files: |
             app/build/outputs/apk/debug/app-debug.apk
         env:
