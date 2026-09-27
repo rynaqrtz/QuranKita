@@ -79,7 +79,7 @@ fun IslamicEventsCard(
             .clickable { onOpenAllEvents() },
         shape = RoundedCornerShape(26.dp),
         colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Box(
             modifier = Modifier
@@ -426,7 +426,7 @@ fun IslamicEventsDialog(
                                 1.dp,
                                 if (isHighlighted) EmeraldPrimary.copy(alpha = 0.4f) else DarkSurfaceBorder
                             ),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                         ) {
                             Column(
                                 modifier = Modifier

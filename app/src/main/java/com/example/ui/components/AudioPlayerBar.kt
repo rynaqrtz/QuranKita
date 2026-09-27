@@ -88,7 +88,7 @@ fun AudioPlayerBar(
             shape = RoundedCornerShape(22.dp),
             colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
             border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
         ) {
             Column(
                 modifier = Modifier

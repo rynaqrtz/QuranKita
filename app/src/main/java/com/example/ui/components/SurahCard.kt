@@ -76,7 +76,7 @@ fun SurahCard(
             containerColor = DarkCardSurface
         ),
         border = BorderStroke(1.dp, DarkSurfaceBorder),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Row(
             modifier = Modifier

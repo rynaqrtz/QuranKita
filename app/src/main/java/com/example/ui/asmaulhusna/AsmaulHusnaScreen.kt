@@ -157,7 +157,7 @@ fun AsmaulHusnaScreen(
                             .testTag("asmaul_husna_card_${item.number}"),
                         shape = RoundedCornerShape(18.dp),
                         colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                     ) {
                         Row(
                             modifier = Modifier

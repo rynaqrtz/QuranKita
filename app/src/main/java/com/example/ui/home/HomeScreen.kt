@@ -224,7 +224,7 @@ fun HomeScreen(
                         containerColor = DarkCardSurface
                     ),
                     border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Row(
                         modifier = Modifier
@@ -329,7 +329,7 @@ fun HomeScreen(
                             listOf(GoldAccent.copy(alpha = 0.6f), EmeraldMint.copy(alpha = 0.3f), Color.Transparent)
                         )
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Box(
                         modifier = Modifier
