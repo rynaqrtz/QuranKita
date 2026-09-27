@@ -1,21 +1,30 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
+# QuranKita R8 rules
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Compose + Room + Navigation all ship their own consumer rules, so the defaults
+# are almost enough. These are the reflective entry points in this app that R8
+# cannot see on its own.
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# ViewModels are instantiated by name through ViewModelProvider.
+-keep class * extends androidx.lifecycle.ViewModel { <init>(); }
+-keep class * extends androidx.lifecycle.AndroidViewModel { <init>(android.app.Application); }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Room generates the DAO/Database implementations at build time and loads them
+# reflectively by name.
+-keep class * extends androidx.room.RoomDatabase { <init>(); }
+-keep @androidx.room.Entity class * { *; }
+-dontwarn androidx.room.paging.**
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Everything referenced from the manifest (activities, receivers, services,
+# providers) must survive shrinking.
+-keep class com.example.MainActivity { *; }
+-keep class * extends android.content.BroadcastReceiver { *; }
+-keep class * extends android.app.Service { *; }
+-keep class * extends android.content.ContentProvider { *; }
+
+# Keep enum values used with valueOf()/entries in theme + audio settings.
+-keepclassmembers enum * { *; }
+
+# Coroutines / debug metadata that R8 warns about but does not need.
+-dontwarn kotlinx.coroutines.**
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
