@@ -68,7 +68,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.data.model.Qari
 import com.example.ui.components.TixarLogoBadge
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.AppThemeMode
 import com.example.ui.theme.DarkCardSurface
 import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldMint
@@ -86,7 +85,6 @@ import com.example.util.TajwidFormatter
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel,
-    onThemeChanged: (AppThemeMode) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val selectedQari by viewModel.selectedQari.collectAsStateWithLifecycle()

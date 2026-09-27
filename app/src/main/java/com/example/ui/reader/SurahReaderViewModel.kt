@@ -8,7 +8,6 @@ import com.example.data.model.Qari
 import com.example.data.model.Surah
 import com.example.data.model.Verse
 import com.example.data.repository.QuranRepository
-import com.example.ui.theme.AppThemeMode
 import com.example.util.AudioPlaybackState
 import com.example.util.AudioPlayerManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,7 +31,6 @@ data class ReaderSettings(
     val isTranslationEnabled: Boolean = true,
     val isTahfidzHideMode: Boolean = false, // If true, hides arabic until tapped
     val arabicFontSize: Float = 26f, // 20f .. 36f
-    val readerTheme: AppThemeMode = AppThemeMode.DARK
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -124,10 +122,6 @@ class SurahReaderViewModel(application: Application) : AndroidViewModel(applicat
 
     fun setArabicFontSize(size: Float) {
         _readerSettings.value = _readerSettings.value.copy(arabicFontSize = size)
-    }
-
-    fun setReaderTheme(theme: AppThemeMode) {
-        _readerSettings.value = _readerSettings.value.copy(readerTheme = theme)
     }
 
     fun toggleVerseBookmark(verse: Verse) {

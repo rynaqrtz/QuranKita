@@ -8,7 +8,6 @@ import com.example.data.local.AppDatabase
 import com.example.data.local.entity.DownloadedAudioEntity
 import com.example.data.model.Qari
 import com.example.data.repository.QuranRepository
-import com.example.ui.theme.AppThemeMode
 import com.example.util.QuranReminderManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,9 +23,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     private val _selectedQari = MutableStateFlow(Qari.ALL_QARIS.first())
     val selectedQari: StateFlow<Qari> = _selectedQari.asStateFlow()
-
-    private val _themeMode = MutableStateFlow(AppThemeMode.DARK)
-    val themeMode: StateFlow<AppThemeMode> = _themeMode.asStateFlow()
 
     private val _arabicFontSize = MutableStateFlow(prefs.getFloat("arabic_font_size", 26f))
     val arabicFontSize: StateFlow<Float> = _arabicFontSize.asStateFlow()
@@ -64,10 +60,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun selectQari(qari: Qari) {
         _selectedQari.value = qari
-    }
-
-    fun setThemeMode(mode: AppThemeMode) {
-        _themeMode.value = mode
     }
 
     fun setArabicFontSize(size: Float) {

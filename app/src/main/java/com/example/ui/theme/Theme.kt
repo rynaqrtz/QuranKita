@@ -258,12 +258,8 @@ object QuranTypoPresets {
 }
 
 // ============================================================================
-// 4. THEME MODES & COLOR SCHEMES (Strictly OLED Midnight Dark Only)
+// 4. COLOR SCHEME (Strictly OLED Midnight Dark Only)
 // ============================================================================
-
-enum class AppThemeMode {
-    DARK
-}
 
 // Minimalist, high-contrast Dark Scheme (OLED friendly)
 private val DarkColorScheme = darkColorScheme(
@@ -296,10 +292,7 @@ private val DarkColorScheme = darkColorScheme(
 // ============================================================================
 
 @Composable
-fun QuranKitaTheme(
-    themeMode: AppThemeMode = AppThemeMode.DARK,
-    content: @Composable () -> Unit
-) {
+fun QuranKitaTheme(content: @Composable () -> Unit) {
     val colorScheme = DarkColorScheme
 
     val view = LocalView.current

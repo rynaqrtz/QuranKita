@@ -50,7 +50,6 @@ import com.example.ui.settings.SettingsScreen
 import com.example.ui.settings.SettingsViewModel
 import com.example.ui.tahfidz.TahfidzScreen
 import com.example.ui.tahfidz.TahfidzViewModel
-import com.example.ui.theme.AppThemeMode
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
@@ -59,7 +58,6 @@ val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun QuranKitaApp(
-    onThemeChanged: (AppThemeMode) -> Unit,
     navController: NavHostController = rememberNavController()
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -270,10 +268,7 @@ fun QuranKitaApp(
                     composable(Screen.Settings.route) {
                         CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this) {
                             val settingsViewModel: SettingsViewModel = viewModel()
-                            SettingsScreen(
-                                viewModel = settingsViewModel,
-                                onThemeChanged = onThemeChanged
-                            )
+                            SettingsScreen(viewModel = settingsViewModel)
                         }
                     }
                 }
