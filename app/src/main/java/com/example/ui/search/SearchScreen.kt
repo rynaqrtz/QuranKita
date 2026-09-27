@@ -45,8 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.data.model.Surah
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,7 +68,7 @@ fun SearchScreen(
                         text = "Cari Ayat & Terjemahan",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -125,7 +123,7 @@ fun SearchScreen(
                 singleLine = true,
                 shape = RoundedCornerShape(16.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = EmeraldPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
                 )
             )
@@ -174,7 +172,7 @@ fun SearchScreen(
                             Text(
                                 text = "Ditemukan ${surahResults.size} surah, ${searchResults.size} ayat",
                                 style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                                color = EmeraldPrimary
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                         items(surahResults, key = { "surah-${it.number}" }) { surah ->
@@ -205,13 +203,13 @@ fun SearchScreen(
                                         text = "Surah No. ${verse.surahNumber} : Ayat ${verse.verseNumber}",
                                         style = MaterialTheme.typography.labelLarge.copy(
                                             fontWeight = FontWeight.Bold,
-                                            color = GoldAccent
+                                            color = MaterialTheme.colorScheme.secondary
                                         )
                                     )
                                     Text(
                                         text = "Buka Surah ›",
                                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                        color = EmeraldPrimary
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 }
 
@@ -263,7 +261,7 @@ private fun SurahHitCard(surah: Surah, onClick: () -> Unit) {
                 Text(
                     text = "${surah.number}. ${surah.nameLatin}",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = GoldAccent
+                    color = MaterialTheme.colorScheme.secondary
                 )
                 Text(
                     text = "${surah.meaning} · ${surah.verseCount} ayat · ${surah.revelation}",

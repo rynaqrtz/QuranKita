@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -23,7 +22,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
@@ -57,14 +55,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ui.components.SurahCard
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.DarkCardSurface
-import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldDark
-import com.example.ui.theme.EmeraldMint
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,7 +82,7 @@ fun QuranListScreen(
                         text = "Al-Qur'anul Karim",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -124,7 +116,7 @@ fun QuranListScreen(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Cari",
-                        tint = EmeraldPrimary
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 trailingIcon = {
@@ -146,7 +138,7 @@ fun QuranListScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    focusedBorderColor = EmeraldPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = Color.Transparent
                 )
             )
@@ -163,7 +155,7 @@ fun QuranListScreen(
                             onNavigateToSurah(targetSurah)
                         },
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -191,7 +183,7 @@ fun QuranListScreen(
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.MenuBook,
                                         contentDescription = null,
-                                        tint = EmeraldMint,
+                                        tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(16.dp)
                                     )
                                 }
@@ -206,7 +198,7 @@ fun QuranListScreen(
                                 text = "${(readingProgress * 100).toInt()}% Selesai",
                                 style = MaterialTheme.typography.labelMedium.copy(
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldPrimary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
                         }
@@ -218,7 +210,7 @@ fun QuranListScreen(
                                 .fillMaxWidth()
                                 .height(6.dp)
                                 .clip(RoundedCornerShape(3.dp)),
-                            color = EmeraldPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             trackColor = MaterialTheme.colorScheme.surfaceVariant
                         )
 
@@ -243,12 +235,12 @@ fun QuranListScreen(
                                 Text(
                                     text = "Lanjutkan",
                                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                    color = EmeraldMint
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                                 Icon(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                                     contentDescription = null,
-                                    tint = EmeraldMint,
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(14.dp)
                                 )
                             }
@@ -261,7 +253,7 @@ fun QuranListScreen(
             PrimaryTabRow(
                 selectedTabIndex = selectedTab.ordinal,
                 containerColor = MaterialTheme.colorScheme.background,
-                contentColor = EmeraldPrimary,
+                contentColor = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
             ) {
                 Tab(
@@ -337,7 +329,7 @@ fun QuranListScreen(
                                     .clickable { onNavigateToSurah(juz.startSurahNumber) }
                                     .testTag("juz_card_${juz.number}"),
                                 shape = RoundedCornerShape(18.dp),
-                                colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                             ) {
                                 Row(
@@ -368,7 +360,7 @@ fun QuranListScreen(
                                                 text = juz.number.toString(),
                                                 style = MaterialTheme.typography.titleMedium.copy(
                                                     fontWeight = FontWeight.Bold,
-                                                    color = EmeraldMint
+                                                    color = MaterialTheme.colorScheme.primary
                                                 )
                                             )
                                         }
@@ -394,7 +386,7 @@ fun QuranListScreen(
                                             Text(
                                                 text = "${juz.totalVerses} Ayat",
                                                 style = MaterialTheme.typography.labelSmall.copy(
-                                                    color = EmeraldMint,
+                                                    color = MaterialTheme.colorScheme.primary,
                                                     fontWeight = FontWeight.SemiBold
                                                 )
                                             )
@@ -412,7 +404,7 @@ fun QuranListScreen(
                                                 fontSize = 20.sp,
                                                 fontWeight = FontWeight.Bold
                                             ),
-                                            color = EmeraldMint
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
@@ -478,12 +470,12 @@ fun QuranListScreen(
                                     Text(
                                         text = "Ayat Tersimpan (${bookmarkedVerses.size})",
                                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                                        color = EmeraldPrimary
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                     Text(
                                         text = "Room DB",
                                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                        color = GoldAccent
+                                        color = MaterialTheme.colorScheme.secondary
                                     )
                                 }
                             }
@@ -495,7 +487,7 @@ fun QuranListScreen(
                                         .clickable { onNavigateToSurah(verse.surahNumber) }
                                         .testTag("bookmark_verse_card_${verse.id}"),
                                     shape = RoundedCornerShape(18.dp),
-                                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                                 ) {
                                     Column(
@@ -519,7 +511,7 @@ fun QuranListScreen(
                                                     text = "QS ${verse.surahNumber} : Ayat ${verse.verseNumber}",
                                                     style = MaterialTheme.typography.labelMedium.copy(
                                                         fontWeight = FontWeight.Bold,
-                                                        color = GoldAccent
+                                                        color = MaterialTheme.colorScheme.secondary
                                                     )
                                                 )
                                             }
@@ -531,7 +523,7 @@ fun QuranListScreen(
                                                 Icon(
                                                     imageVector = Icons.Default.Bookmark,
                                                     contentDescription = "Hapus Bookmark Ayat",
-                                                    tint = GoldAccent,
+                                                    tint = MaterialTheme.colorScheme.secondary,
                                                     modifier = Modifier.size(20.dp)
                                                 )
                                             }
@@ -567,7 +559,7 @@ fun QuranListScreen(
                                 Text(
                                     text = "Surah Ditandai (${bookmarkedSurahs.size})",
                                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                                    color = EmeraldPrimary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.padding(top = 12.dp)
                                 )
                             }

@@ -65,14 +65,11 @@ import com.example.ui.components.AppLaunchLoadingScreen
 import com.example.ui.components.IslamicEventsCard
 import com.example.ui.components.IslamicEventsDialog
 import com.example.ui.components.TixarBrandedHeader
-import com.example.ui.theme.DarkCardSurface
-import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -120,7 +117,7 @@ fun HomeScreen(
                             Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = "Cari Ayat",
-                                tint = EmeraldVibrant,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -150,7 +147,7 @@ fun HomeScreen(
                         Text(
                             text = "Assalamu'alaikum Warahmatullah,",
                             style = MaterialTheme.typography.bodySmall,
-                            color = EmeraldMint,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
@@ -172,7 +169,7 @@ fun HomeScreen(
                         Text(
                             text = uiState.hijriDate.ifEmpty { "1448 H" },
                             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                            color = EmeraldMint
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -200,7 +197,7 @@ fun HomeScreen(
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "Cari",
-                            tint = EmeraldPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
@@ -221,9 +218,9 @@ fun HomeScreen(
                         .clickable { onNavigateToPrayerQibla() },
                     shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = DarkCardSurface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainer
                     ),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Row(
@@ -255,7 +252,7 @@ fun HomeScreen(
                                 Icon(
                                     imageVector = Icons.Default.NotificationsActive,
                                     contentDescription = "Jadwal Sholat",
-                                    tint = EmeraldMint,
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(24.dp)
                                 )
                             }
@@ -285,14 +282,14 @@ fun HomeScreen(
                                             text = uiState.selectedCityName,
                                             fontSize = 10.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = EmeraldMint
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                     }
                                 }
                                 Text(
                                     text = "${uiState.nextPrayer?.time ?: "12:00"} WIB • ${uiState.nextPrayer?.remainingTimeText ?: ""}",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = EmeraldMint,
+                                    color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight.Medium
                                 )
                             }
@@ -402,14 +399,14 @@ fun HomeScreen(
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.MenuBook,
                                             contentDescription = null,
-                                            tint = GoldLight,
+                                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                                             modifier = Modifier.size(16.dp)
                                         )
                                     }
                                     Text(
                                         text = "Terakhir Dibaca",
                                         style = MaterialTheme.typography.labelLarge,
-                                        color = GoldLight,
+                                        color = MaterialTheme.colorScheme.onSecondaryContainer,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
@@ -465,7 +462,7 @@ fun HomeScreen(
                                 Text(
                                     text = "${(progressFraction * 100).toInt()}% (Surah $surahNo/114)",
                                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                    color = GoldLight
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                             }
                             Spacer(modifier = Modifier.height(6.dp))
@@ -475,7 +472,7 @@ fun HomeScreen(
                                     .fillMaxWidth()
                                     .height(6.dp)
                                     .clip(RoundedCornerShape(3.dp)),
-                                color = GoldAccent,
+                                color = MaterialTheme.colorScheme.secondary,
                                 trackColor = Color.White.copy(alpha = 0.2f)
                             )
 
@@ -522,7 +519,7 @@ fun HomeScreen(
                                         imageVector = Icons.Default.TrackChanges,
                                         contentDescription = null,
                                         modifier = Modifier.size(16.dp),
-                                        tint = GoldLight
+                                        tint = MaterialTheme.colorScheme.onSecondaryContainer
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
@@ -634,9 +631,9 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = DarkCardSurface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainer
                     ),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder)
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(
                         modifier = Modifier
@@ -653,7 +650,7 @@ fun HomeScreen(
                                 Icon(
                                     imageVector = Icons.Default.AutoAwesome,
                                     contentDescription = null,
-                                    tint = EmeraldMint,
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
@@ -677,7 +674,7 @@ fun HomeScreen(
                                 Text(
                                     text = "${uiState.totalKhatamCount} / 114 Surah",
                                     style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
-                                    color = EmeraldMint
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             }
                             LinearProgressIndicator(
@@ -686,7 +683,7 @@ fun HomeScreen(
                                     .fillMaxWidth()
                                     .height(8.dp)
                                     .clip(RoundedCornerShape(4.dp)),
-                                color = EmeraldVibrant,
+                                color = MaterialTheme.colorScheme.primary,
                                 trackColor = MaterialTheme.colorScheme.surfaceVariant
                             )
                         }
@@ -708,7 +705,7 @@ fun HomeScreen(
                             Text(
                                 text = "${uiState.totalMemorizedCount} Ayat",
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                                color = GoldAccent
+                                color = MaterialTheme.colorScheme.secondary
                             )
                         }
                     }
@@ -722,7 +719,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = DarkCardSurface
+                        containerColor = MaterialTheme.colorScheme.surfaceContainer
                     ),
                     border = androidx.compose.foundation.BorderStroke(1.dp, EmeraldDark.copy(alpha = 0.5f))
                 ) {
@@ -748,14 +745,14 @@ fun HomeScreen(
                                     text = "Ayat Hari Ini (Tadabbur)",
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = EmeraldMint
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 )
                             }
                             Text(
                                 text = "QS. ${votd.surahName}: ${votd.verseNumber}",
                                 style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-                                color = GoldLight
+                                color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
                         }
 
@@ -823,8 +820,8 @@ private fun QuickActionItem(
             .clip(RoundedCornerShape(20.dp))
             .clickable { onClick() },
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
-        border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
     ) {
         Column(
             modifier = Modifier
@@ -862,7 +859,7 @@ private fun QuickActionItem(
                         text = badge,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
-                        color = EmeraldMint
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }

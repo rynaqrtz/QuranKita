@@ -43,14 +43,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.data.model.AsmaulHusnaItem
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.DarkCardSurface
 import com.example.ui.theme.EmeraldDark
-import com.example.ui.theme.EmeraldMint
-import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,7 +77,7 @@ fun AsmaulHusnaScreen(
                         text = "99 Asmaul Husna",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -118,7 +113,7 @@ fun AsmaulHusnaScreen(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Cari",
-                        tint = EmeraldPrimary
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 trailingIcon = {
@@ -140,7 +135,7 @@ fun AsmaulHusnaScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    focusedBorderColor = EmeraldPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = Color.Transparent
                 )
             )
@@ -156,7 +151,7 @@ fun AsmaulHusnaScreen(
                             .fillMaxWidth()
                             .testTag("asmaul_husna_card_${item.number}"),
                         shape = RoundedCornerShape(18.dp),
-                        colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                     ) {
                         Row(
@@ -186,7 +181,7 @@ fun AsmaulHusnaScreen(
                                         text = item.number.toString(),
                                         style = MaterialTheme.typography.titleMedium.copy(
                                             fontWeight = FontWeight.Bold,
-                                            color = EmeraldMint
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                     )
                                 }
@@ -203,7 +198,7 @@ fun AsmaulHusnaScreen(
                                         text = item.translation,
                                         style = MaterialTheme.typography.bodySmall.copy(
                                             fontWeight = FontWeight.SemiBold,
-                                            color = GoldAccent
+                                            color = MaterialTheme.colorScheme.secondary
                                         )
                                     )
                                     Text(
@@ -220,7 +215,7 @@ fun AsmaulHusnaScreen(
                                 style = MaterialTheme.typography.headlineSmall.copy(
                                     fontWeight = FontWeight.Bold
                                 ),
-                                color = EmeraldMint
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }

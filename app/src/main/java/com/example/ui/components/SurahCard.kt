@@ -38,12 +38,8 @@ import com.example.data.model.Surah
 import com.example.ui.navigation.LocalNavAnimatedVisibilityScope
 import com.example.ui.navigation.LocalSharedTransitionScope
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.DarkCardSurface
-import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
-import com.example.ui.theme.EmeraldVibrant
-import com.example.ui.theme.GoldAccent
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -73,9 +69,9 @@ fun SurahCard(
             .testTag("surah_card_${surah.number}"),
         shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(
-            containerColor = DarkCardSurface
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
         ),
-        border = BorderStroke(1.dp, DarkSurfaceBorder),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Row(
@@ -103,7 +99,7 @@ fun SurahCard(
                     text = surah.number.toString(),
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = EmeraldMint
+                        color = MaterialTheme.colorScheme.primary
                     )
                 )
             }
@@ -132,7 +128,7 @@ fun SurahCard(
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
                             contentDescription = "Sudah Khatam",
-                            tint = EmeraldVibrant,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -152,7 +148,7 @@ fun SurahCard(
                             text = surah.revelation,
                             style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldMint,
+                            color = MaterialTheme.colorScheme.primary,
                             maxLines = 1
                         )
                     }
@@ -178,7 +174,7 @@ fun SurahCard(
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp
                     ),
-                    color = EmeraldMint,
+                    color = MaterialTheme.colorScheme.primary,
                     maxLines = 1
                 )
 
@@ -189,7 +185,7 @@ fun SurahCard(
                     Icon(
                         imageVector = if (surah.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                         contentDescription = "Tandai Surah",
-                        tint = if (surah.isBookmarked) GoldAccent else MaterialTheme.colorScheme.onSurfaceVariant,
+                        tint = if (surah.isBookmarked) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(22.dp)
                     )
                 }

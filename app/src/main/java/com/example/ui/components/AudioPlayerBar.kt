@@ -49,9 +49,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.DarkCardSurface
-import com.example.ui.theme.DarkSurfaceBorder
-import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.GoldAccent
 import com.example.util.AudioPlaybackState
@@ -86,8 +83,8 @@ fun AudioPlayerBar(
                 .padding(horizontal = 14.dp, vertical = 8.dp)
                 .testTag("audio_player_bar"),
             shape = RoundedCornerShape(22.dp),
-            colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
-            border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
         ) {
             Column(
@@ -117,7 +114,7 @@ fun AudioPlayerBar(
                             Icon(
                                 imageVector = Icons.Default.GraphicEq,
                                 contentDescription = null,
-                                tint = EmeraldMint,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -145,7 +142,7 @@ fun AudioPlayerBar(
                                     Text(
                                         text = " • ⏱️ ${state.sleepTimerMinutesRemaining}m",
                                         style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
-                                        color = GoldAccent
+                                        color = MaterialTheme.colorScheme.secondary
                                     )
                                 }
                             }
@@ -183,7 +180,7 @@ fun AudioPlayerBar(
                     Text(
                         text = state.downloadStatus.orEmpty(),
                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                        color = GoldAccent
+                        color = MaterialTheme.colorScheme.secondary
                     )
                 }
 
@@ -199,7 +196,7 @@ fun AudioPlayerBar(
                             .fillMaxWidth()
                             .height(4.dp)
                             .clip(RoundedCornerShape(2.dp)),
-                        color = EmeraldPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant
                     )
 
@@ -245,7 +242,7 @@ fun AudioPlayerBar(
                                 text = "${state.playbackSpeed}x",
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = EmeraldMint
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
@@ -270,7 +267,7 @@ fun AudioPlayerBar(
                                     Icon(
                                         imageVector = Icons.Default.Timer,
                                         contentDescription = "Pengatur Waktu Tidur",
-                                        tint = if (state.sleepTimerMinutesRemaining != null) GoldAccent else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        tint = if (state.sleepTimerMinutesRemaining != null) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.size(16.dp)
                                     )
                                     if (state.sleepTimerMinutesRemaining != null) {
@@ -278,7 +275,7 @@ fun AudioPlayerBar(
                                             text = "${state.sleepTimerMinutesRemaining}m",
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = GoldAccent
+                                            color = MaterialTheme.colorScheme.secondary
                                         )
                                     }
                                 }
@@ -343,7 +340,7 @@ fun AudioPlayerBar(
                                 Icon(
                                     imageVector = Icons.Default.Repeat,
                                     contentDescription = "Ulangi Hafalan",
-                                    tint = EmeraldPrimary,
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(14.dp)
                                 )
                                 Text(
@@ -351,7 +348,7 @@ fun AudioPlayerBar(
                                             if (state.targetRepeatCount > 1) " (${state.currentRepeatIteration})" else "",
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldPrimary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }

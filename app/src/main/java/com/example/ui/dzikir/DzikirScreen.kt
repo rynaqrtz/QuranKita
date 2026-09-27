@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +73,7 @@ fun DzikirScreen(
                         text = "Tasbih & Dzikir",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -115,7 +114,7 @@ fun DzikirScreen(
                         label = { Text(item.title, fontWeight = FontWeight.Bold) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = EmeraldPrimary
+                            selectedLabelColor = MaterialTheme.colorScheme.primary
                         )
                     )
                 }
@@ -143,7 +142,7 @@ fun DzikirScreen(
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         ),
-                        color = EmeraldPrimary
+                        color = MaterialTheme.colorScheme.primary
                     )
 
                     Text(
@@ -178,7 +177,7 @@ fun DzikirScreen(
                             Text(
                                 text = "${currentDzikir.currentCount} / ${currentDzikir.countTarget}",
                                 style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                color = EmeraldPrimary
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                         LinearProgressIndicator(
@@ -190,7 +189,7 @@ fun DzikirScreen(
                                 .fillMaxWidth()
                                 .height(8.dp)
                                 .clip(RoundedCornerShape(4.dp)),
-                            color = EmeraldPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             trackColor = MaterialTheme.colorScheme.surfaceVariant
                         )
                     }

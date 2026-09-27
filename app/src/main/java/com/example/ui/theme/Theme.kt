@@ -4,9 +4,11 @@ import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
@@ -210,10 +212,30 @@ object QuranTypoPresets {
 }
 
 // ============================================================================
-// 4. COLOR SCHEME (Strictly OLED Midnight Dark Only)
+// 4. COLOR SCHEMES (OLED Dark, Daylight, Sepia)
 // ============================================================================
 
-// Minimalist, high-contrast Dark Scheme (OLED friendly)
+enum class AppThemeMode { DARK, LIGHT, SEPIA }
+
+/** Held as snapshot state so switching the mode recomposes the whole tree at once. */
+val ThemeModeState = mutableStateOf(AppThemeMode.DARK)
+
+object ThemeSettings {
+    private const val FILE = "qurankita_theme"
+    private const val KEY = "theme_mode"
+
+    fun load(context: android.content.Context): AppThemeMode {
+        val raw = context.getSharedPreferences(FILE, android.content.Context.MODE_PRIVATE)
+            .getString(KEY, AppThemeMode.DARK.name) ?: AppThemeMode.DARK.name
+        return AppThemeMode.entries.firstOrNull { it.name == raw } ?: AppThemeMode.DARK
+    }
+
+    fun save(context: android.content.Context, mode: AppThemeMode) {
+        context.getSharedPreferences(FILE, android.content.Context.MODE_PRIVATE)
+            .edit().putString(KEY, mode.name).apply()
+    }
+}
+
 private val DarkColorScheme = darkColorScheme(
     primary = EmeraldGreen,
     onPrimary = Color(0xFF04201A),
@@ -236,7 +258,57 @@ private val DarkColorScheme = darkColorScheme(
     surfaceContainer = DarkCardSurface,
     surfaceContainerHigh = DarkSurfaceElevated,
     outline = DarkSurfaceBorder,
-    outlineVariant = Color(0xFF1E2D44)
+    outlineVariant = DarkSurfaceBorder
+)
+
+private val LightColorScheme = lightColorScheme(
+    primary = EmeraldGreenDark,
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = EmeraldGreenContainerLight,
+    onPrimaryContainer = EmeraldDark,
+    secondary = GoldDark,
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = GoldContainer,
+    onSecondaryContainer = GoldDark,
+    tertiary = CelestialTeal,
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFFCCFBF1),
+    onTertiaryContainer = Color(0xFF134E4A),
+    background = LightBackground,
+    onBackground = LightTextPrimary,
+    surface = LightSurface,
+    onSurface = LightTextPrimary,
+    surfaceVariant = LightSurfaceElevated,
+    onSurfaceVariant = LightTextSecondary,
+    surfaceContainer = LightSurface,
+    surfaceContainerHigh = LightSurfaceElevated,
+    outline = LightSurfaceBorder,
+    outlineVariant = LightSurfaceBorder
+)
+
+private val SepiaColorScheme = lightColorScheme(
+    primary = EmeraldGreenDark,
+    onPrimary = SepiaBackground,
+    primaryContainer = SepiaSurfaceElevated,
+    onPrimaryContainer = SepiaTextPrimary,
+    secondary = GoldDark,
+    onSecondary = SepiaBackground,
+    secondaryContainer = SepiaSurface,
+    onSecondaryContainer = SepiaTextPrimary,
+    tertiary = CelestialTeal,
+    onTertiary = SepiaBackground,
+    tertiaryContainer = SepiaSurfaceElevated,
+    onTertiaryContainer = SepiaTextPrimary,
+    background = SepiaBackground,
+    onBackground = SepiaTextPrimary,
+    surface = SepiaSurface,
+    onSurface = SepiaTextPrimary,
+    surfaceVariant = SepiaSurfaceElevated,
+    onSurfaceVariant = SepiaTextSecondary,
+    surfaceContainer = SepiaSurface,
+    surfaceContainerHigh = SepiaSurfaceElevated,
+    outline = SepiaSurfaceBorder,
+    outlineVariant = SepiaSurfaceBorder
 )
 
 // ============================================================================
@@ -245,7 +317,13 @@ private val DarkColorScheme = darkColorScheme(
 
 @Composable
 fun QuranKitaTheme(content: @Composable () -> Unit) {
-    val colorScheme = DarkColorScheme
+    val themeMode = ThemeModeState.value
+    val colorScheme = when (themeMode) {
+        AppThemeMode.DARK -> DarkColorScheme
+        AppThemeMode.LIGHT -> LightColorScheme
+        AppThemeMode.SEPIA -> SepiaColorScheme
+    }
+    val lightBars = themeMode != AppThemeMode.DARK
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -255,8 +333,8 @@ fun QuranKitaTheme(content: @Composable () -> Unit) {
             window.statusBarColor = colorScheme.background.toArgb()
             @Suppress("DEPRECATION")
             window.navigationBarColor = colorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
-            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = false
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = lightBars
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = lightBars
         }
     }
 

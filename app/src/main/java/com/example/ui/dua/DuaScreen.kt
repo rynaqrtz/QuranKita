@@ -58,11 +58,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.QuranDua
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.DarkCardSurface
-import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +94,7 @@ fun DuaScreen(
                         text = "Doa-Doa Al-Qur'an",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -134,7 +130,7 @@ fun DuaScreen(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Cari",
-                        tint = EmeraldPrimary
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 trailingIcon = {
@@ -149,7 +145,7 @@ fun DuaScreen(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    focusedBorderColor = EmeraldPrimary,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = Color.Transparent
                 )
             )
@@ -169,7 +165,7 @@ fun DuaScreen(
                         label = { Text(category, fontWeight = FontWeight.SemiBold) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = EmeraldPrimary.copy(alpha = 0.25f),
-                            selectedLabelColor = EmeraldMint
+                            selectedLabelColor = MaterialTheme.colorScheme.primary
                         )
                     )
                 }
@@ -203,7 +199,7 @@ fun DuaScreen(
                                 .fillMaxWidth()
                                 .testTag("dua_card_${dua.id}"),
                             shape = RoundedCornerShape(20.dp),
-                            colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                         ) {
                             Column(
@@ -222,13 +218,13 @@ fun DuaScreen(
                                             text = dua.title,
                                             style = MaterialTheme.typography.titleMedium.copy(
                                                 fontWeight = FontWeight.Bold,
-                                                color = EmeraldMint
+                                                color = MaterialTheme.colorScheme.primary
                                             )
                                         )
                                         Text(
                                             text = "${dua.surahReference} • Kategori: ${dua.category}",
                                             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
-                                            color = GoldLight
+                                            color = MaterialTheme.colorScheme.onSecondaryContainer
                                         )
                                     }
 
@@ -267,7 +263,7 @@ fun DuaScreen(
                                             Icon(
                                                 imageVector = Icons.Default.Share,
                                                 contentDescription = "Bagikan",
-                                                tint = GoldAccent,
+                                                tint = MaterialTheme.colorScheme.secondary,
                                                 modifier = Modifier.size(20.dp)
                                             )
                                         }
@@ -289,7 +285,7 @@ fun DuaScreen(
                                 Text(
                                     text = dua.latin,
                                     style = MaterialTheme.typography.bodySmall.copy(lineHeight = 18.sp),
-                                    color = EmeraldPrimary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
 
                                 Text(

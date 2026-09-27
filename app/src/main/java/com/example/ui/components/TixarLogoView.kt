@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.R
-import com.example.ui.theme.EmeraldGreen
-import com.example.ui.theme.GoldAccent
 
 /**
  * Modern minimalist Quran app logo icon badge with soothing emerald, celestial gold, and sky cyan.
@@ -79,12 +77,12 @@ fun TixarBrandedHeader(
                     fontWeight = FontWeight.ExtraBold,
                     letterSpacing = (-0.3).sp
                 ),
-                color = EmeraldGreen
+                color = MaterialTheme.colorScheme.primary
             )
             Text(
                 text = " ✨",
                 style = MaterialTheme.typography.labelSmall,
-                color = GoldAccent
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }

@@ -52,14 +52,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.data.model.IslamicEvent
-import com.example.ui.theme.DarkCardSurface
-import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldLight
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -78,7 +75,7 @@ fun IslamicEventsCard(
             .clip(RoundedCornerShape(26.dp))
             .clickable { onOpenAllEvents() },
         shape = RoundedCornerShape(26.dp),
-        colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Box(
@@ -195,14 +192,14 @@ fun IslamicEventsCard(
                                 Icon(
                                     imageVector = Icons.Default.NightsStay,
                                     contentDescription = null,
-                                    tint = GoldLight,
+                                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier.size(13.dp)
                                 )
                                 Text(
                                     text = primaryEvent.hijriDate,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = GoldLight,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     letterSpacing = 0.3.sp
                                 )
                             }
@@ -214,7 +211,7 @@ fun IslamicEventsCard(
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 1.sp
                             ),
-                            color = EmeraldMint
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
 
@@ -259,7 +256,7 @@ fun IslamicEventsCard(
                                         fontWeight = FontWeight.ExtraBold,
                                         letterSpacing = 0.5.sp
                                     ),
-                                    color = GoldLight
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                                 Text(
                                     text = "Menuju 1 Ramadhan",
@@ -311,7 +308,7 @@ fun IslamicEventsCard(
                     Icon(
                         imageVector = Icons.Default.AutoAwesome,
                         contentDescription = null,
-                        tint = EmeraldMint,
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(13.dp)
                     )
                     Text(
@@ -344,7 +341,7 @@ fun IslamicEventsDialog(
                 .padding(horizontal = 14.dp, vertical = 20.dp),
             shape = RoundedCornerShape(28.dp),
             color = MaterialTheme.colorScheme.background,
-            border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
+            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
             tonalElevation = 6.dp
         ) {
             Column(
@@ -377,7 +374,7 @@ fun IslamicEventsDialog(
                             Icon(
                                 imageVector = Icons.Default.Event,
                                 contentDescription = null,
-                                tint = EmeraldMint,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(22.dp)
                             )
                         }
@@ -391,7 +388,7 @@ fun IslamicEventsDialog(
                             Text(
                                 text = "Hitung mundur & amalan sunnah dianjurkan",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = EmeraldMint
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -421,10 +418,10 @@ fun IslamicEventsDialog(
                         Card(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(20.dp),
-                            colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                             border = androidx.compose.foundation.BorderStroke(
                                 1.dp,
-                                if (isHighlighted) EmeraldPrimary.copy(alpha = 0.4f) else DarkSurfaceBorder
+                                if (isHighlighted) EmeraldPrimary.copy(alpha = 0.4f) else MaterialTheme.colorScheme.outline
                             ),
                             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                         ) {
@@ -443,12 +440,12 @@ fun IslamicEventsDialog(
                                         Text(
                                             text = event.title,
                                             style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                                            color = if (isHighlighted) EmeraldMint else MaterialTheme.colorScheme.onSurface
+                                            color = if (isHighlighted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                                         )
                                         Text(
                                             text = "${event.hijriDate} • ${dateFormat.format(event.targetGregorianDate)}",
                                             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold),
-                                            color = GoldAccent
+                                            color = MaterialTheme.colorScheme.secondary
                                         )
                                     }
 
@@ -470,7 +467,7 @@ fun IslamicEventsDialog(
                                             text = if (event.daysRemaining == 0L) "Hari Ini!" else "${event.daysRemaining} Hari Lagi",
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = if (isHighlighted) EmeraldMint else MaterialTheme.colorScheme.onSurface
+                                            color = if (isHighlighted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                                         )
                                     }
                                 }
@@ -493,7 +490,7 @@ fun IslamicEventsDialog(
                                         Text(
                                             text = "Amalan yang Dianjurkan:",
                                             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                            color = GoldLight
+                                            color = MaterialTheme.colorScheme.onSecondaryContainer
                                         )
                                         event.recommendedPractices.forEach { practice ->
                                             Row(

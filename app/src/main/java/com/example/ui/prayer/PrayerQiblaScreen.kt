@@ -61,7 +61,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldLight
 import com.example.util.PrayerTimeCalculator
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -97,7 +96,7 @@ fun PrayerQiblaScreen(
                         text = "Ibadah & Waktu",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -116,7 +115,7 @@ fun PrayerQiblaScreen(
             PrimaryTabRow(
                 selectedTabIndex = selectedTab.ordinal,
                 containerColor = MaterialTheme.colorScheme.background,
-                contentColor = EmeraldPrimary,
+                contentColor = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 Tab(
@@ -219,7 +218,7 @@ fun PrayerQiblaScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(16.dp),
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isNext) EmeraldPrimary else MaterialTheme.colorScheme.surface
+                                    containerColor = if (isNext) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
                                 ),
                                 elevation = CardDefaults.cardElevation(defaultElevation = if (isNext) 4.dp else 1.dp)
                             ) {
@@ -264,7 +263,7 @@ fun PrayerQiblaScreen(
                                                 Text(
                                                     text = prayer.remainingTimeText,
                                                     style = MaterialTheme.typography.bodySmall,
-                                                    color = GoldLight,
+                                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                                                     fontWeight = FontWeight.SemiBold
                                                 )
                                             }
@@ -320,7 +319,7 @@ fun PrayerQiblaScreen(
                                         text = "${compassState.qiblaBearing.toInt()}° Barat Laut",
                                         style = MaterialTheme.typography.titleMedium.copy(
                                             fontWeight = FontWeight.Bold,
-                                            color = EmeraldPrimary
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                     )
                                 }
@@ -335,7 +334,7 @@ fun PrayerQiblaScreen(
                                         text = "± ${compassState.distanceToMakkahKm} km",
                                         style = MaterialTheme.typography.titleMedium.copy(
                                             fontWeight = FontWeight.Bold,
-                                            color = GoldAccent
+                                            color = MaterialTheme.colorScheme.secondary
                                         )
                                     )
                                 }
@@ -414,7 +413,7 @@ fun QiblaCompassGraphic(
     val dialRotation = -deviceAzimuth
     val qiblaRelative = (qiblaBearing - deviceAzimuth + 360f) % 360f
 
-    val primaryColor = if (isAligned) EmeraldPrimary else Color(0xFF334155)
+    val primaryColor = if (isAligned) MaterialTheme.colorScheme.primary else Color(0xFF334155)
     val goldColor = GoldAccent
 
     Box(
@@ -493,7 +492,7 @@ fun QiblaCompassGraphic(
             modifier = Modifier
                 .size(36.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(if (isAligned) EmeraldPrimary else Color(0xFF0F172A))
+                .background(if (isAligned) MaterialTheme.colorScheme.primary else Color(0xFF0F172A))
                 .border(2.dp, goldColor, RoundedCornerShape(8.dp)),
             contentAlignment = Alignment.Center
         ) {

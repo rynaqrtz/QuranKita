@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,7 +49,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,7 +69,7 @@ fun TahfidzScreen(
                         text = "Tahfidz Companion",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -168,14 +166,14 @@ fun TahfidzScreen(
                                 text = "Kuis Sambung Ayat",
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldPrimary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
                             if (!quizState.isQuizFinished) {
                                 Text(
                                     text = "Soal ${quizState.currentQuestionIndex + 1}/${quizState.questions.size} • Skor: ${quizState.score}",
                                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                                    color = GoldAccent
+                                    color = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -193,7 +191,7 @@ fun TahfidzScreen(
                                     text = "🎉 Alhamdulillah!",
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldPrimary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                                 Text(
                                     text = "Skor Akhir Anda: ${quizState.score} / 100",
@@ -229,7 +227,7 @@ fun TahfidzScreen(
                                         text = "QS. ${question.surahName} (Ayat ${question.verseNumber})",
                                         style = MaterialTheme.typography.labelMedium.copy(
                                             fontWeight = FontWeight.Bold,
-                                            color = EmeraldPrimary
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                     )
                                 }
@@ -406,7 +404,7 @@ fun TahfidzScreen(
                                     text = "Surah No. ${verse.surahNumber} : Ayat ${verse.verseNumber}",
                                     style = MaterialTheme.typography.labelLarge.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = EmeraldPrimary
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 )
                                 Text(
@@ -430,7 +428,7 @@ fun TahfidzScreen(
                                 Icon(
                                     imageVector = Icons.Default.CheckCircle,
                                     contentDescription = "Hapus tanda hafal",
-                                    tint = EmeraldPrimary
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }

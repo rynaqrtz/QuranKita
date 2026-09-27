@@ -58,6 +58,7 @@ val SepiaSurface = Color(0xFFFEF3C7)
 val SepiaSurfaceElevated = Color(0xFFFDE68A)
 val SepiaTextPrimary = Color(0xFF451A03)
 val SepiaTextSecondary = Color(0xFF78350F)
+val SepiaSurfaceBorder = Color(0xFFE7DCA8)
 
 // 8. HARMONIZED TAJWEED HIGHLIGHT COLORS (High-contrast, non-glare on Dark Surfaces)
 val TajwidGhunnah = Color(0xFFF472B6)               // Rose Pink: Nun & Mim Tasydid (Dengung)

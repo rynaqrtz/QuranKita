@@ -5,7 +5,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,17 +19,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.LocalFireDepartment
-import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.outlined.CheckCircleOutline
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -64,13 +59,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.JuzInfo
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.DarkCardSurface
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldLight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -127,7 +119,7 @@ fun KhatamTrackerScreen(
                         text = "Khatam Tracker",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -159,7 +151,7 @@ fun KhatamTrackerScreen(
                         .fillMaxWidth()
                         .testTag("khatam_progress_ring_card"),
                     shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -201,7 +193,7 @@ fun KhatamTrackerScreen(
                                     text = "${(animatedProgress * 100).toInt()}%",
                                     style = MaterialTheme.typography.headlineLarge.copy(
                                         fontWeight = FontWeight.ExtraBold,
-                                        color = EmeraldMint
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 )
                                 Text(
@@ -227,14 +219,14 @@ fun KhatamTrackerScreen(
                                     Icon(
                                         imageVector = Icons.Default.LocalFireDepartment,
                                         contentDescription = null,
-                                        tint = GoldAccent,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(16.dp)
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         text = "7 Hari",
                                         style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                                        color = GoldAccent
+                                        color = MaterialTheme.colorScheme.secondary
                                     )
                                 }
                                 Text(
@@ -256,7 +248,7 @@ fun KhatamTrackerScreen(
                                     text = "${30 - completedCount} Juz",
                                     style = MaterialTheme.typography.titleSmall.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = EmeraldMint
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 )
                                 Text(
@@ -278,7 +270,7 @@ fun KhatamTrackerScreen(
                                     text = "$targetDays Hari",
                                     style = MaterialTheme.typography.titleSmall.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = EmeraldPrimary
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 )
                                 Text(
@@ -297,7 +289,7 @@ fun KhatamTrackerScreen(
                 Text(
                     text = "Pilih Rencana Target Khatam",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -319,7 +311,7 @@ fun KhatamTrackerScreen(
                             },
                             colors = FilterChipDefaults.filterChipColors(
                                 selectedContainerColor = EmeraldPrimary.copy(alpha = 0.3f),
-                                selectedLabelColor = EmeraldMint
+                                selectedLabelColor = MaterialTheme.colorScheme.primary
                             ),
                             modifier = Modifier.weight(1f)
                         )
@@ -337,7 +329,7 @@ fun KhatamTrackerScreen(
                     Text(
                         text = "Daftar Centang 30 Juz",
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        color = EmeraldPrimary
+                        color = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = "Ketuk untuk menandai selesai",
@@ -356,7 +348,7 @@ fun KhatamTrackerScreen(
                         .testTag("juz_item_${juz.number}"),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = if (isCompleted) EmeraldDark.copy(alpha = 0.45f) else DarkCardSurface
+                        containerColor = if (isCompleted) EmeraldDark.copy(alpha = 0.45f) else MaterialTheme.colorScheme.surfaceContainer
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
@@ -375,7 +367,7 @@ fun KhatamTrackerScreen(
                             Icon(
                                 imageVector = if (isCompleted) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
                                 contentDescription = "Tandai Selesai",
-                                tint = if (isCompleted) EmeraldMint else MaterialTheme.colorScheme.onSurfaceVariant,
+                                tint = if (isCompleted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(26.dp)
                             )
                         }
@@ -394,13 +386,13 @@ fun KhatamTrackerScreen(
                                     text = "Juz ${juz.number}",
                                     style = MaterialTheme.typography.titleSmall.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = if (isCompleted) EmeraldMint else MaterialTheme.colorScheme.onSurface
+                                        color = if (isCompleted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                                     )
                                 )
                                 Text(
                                     text = "• ${juz.nameLatin}",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = GoldAccent
+                                    color = MaterialTheme.colorScheme.secondary
                                 )
                             }
                             Text(
@@ -418,7 +410,7 @@ fun KhatamTrackerScreen(
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.MenuBook,
                                 contentDescription = "Buka Juz",
-                                tint = EmeraldPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(22.dp)
                             )
                         }
@@ -431,7 +423,7 @@ fun KhatamTrackerScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -444,7 +436,7 @@ fun KhatamTrackerScreen(
                             text = "Doa Khatam Al-Qur'an",
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = GoldAccent
+                                color = MaterialTheme.colorScheme.secondary
                             )
                         )
                         Text(
@@ -453,7 +445,7 @@ fun KhatamTrackerScreen(
                             fontSize = 20.sp,
                             lineHeight = 36.sp,
                             textAlign = TextAlign.End,
-                            color = EmeraldMint,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(

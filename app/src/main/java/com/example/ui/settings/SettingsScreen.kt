@@ -67,11 +67,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.data.model.Qari
 import com.example.ui.components.TixarLogoBadge
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.DarkCardSurface
-import com.example.ui.theme.DarkSurfaceBorder
-import com.example.ui.theme.EmeraldMint
+import com.example.ui.theme.AppThemeMode
 import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
+import com.example.ui.theme.ThemeModeState
+import com.example.ui.theme.ThemeSettings
 import com.example.ui.theme.TajwidIqlab
 import com.example.ui.theme.TajwidGhunnah
 import com.example.ui.theme.TajwidIdgham
@@ -111,7 +110,7 @@ fun SettingsScreen(
                         text = "Pengaturan",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -133,7 +132,7 @@ fun SettingsScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Row(
@@ -153,7 +152,7 @@ fun SettingsScreen(
                             Text(
                                 text = "100% Offline-First • Bebas Iklan",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = EmeraldPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold
                             )
                             Text(
@@ -171,15 +170,15 @@ fun SettingsScreen(
                 Text(
                     text = "Hukum Tajwid & Pewarnaan Visual",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -213,7 +212,7 @@ fun SettingsScreen(
                                     Icon(
                                         imageVector = Icons.Default.AutoAwesome,
                                         contentDescription = null,
-                                        tint = if (isTajweedHighlighterEnabled) EmeraldPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        tint = if (isTajweedHighlighterEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.size(22.dp)
                                     )
                                 }
@@ -235,7 +234,7 @@ fun SettingsScreen(
                                 checked = isTajweedHighlighterEnabled,
                                 onCheckedChange = { viewModel.toggleTajweedHighlighter(it) },
                                 colors = SwitchDefaults.colors(
-                                    checkedThumbColor = EmeraldPrimary,
+                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
                                     checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
                                 ),
                                 modifier = Modifier.testTag("tajweed_highlighter_switch")
@@ -248,14 +247,14 @@ fun SettingsScreen(
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(14.dp))
                                 .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f))
-                                .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(14.dp))
+                                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(14.dp))
                                 .padding(14.dp),
                             verticalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
                             Text(
                                 text = "Panduan Warna Kaidah Tajwid:",
                                 style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                                color = GoldAccent
+                                color = MaterialTheme.colorScheme.secondary
                             )
 
                             // 2-Row Responsive Tajweed Guide Chips (Strict M3 Scale & No Clipping)
@@ -287,7 +286,7 @@ fun SettingsScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(DarkCardSurface)
+                                    .background(MaterialTheme.colorScheme.surfaceContainer)
                                     .padding(vertical = 8.dp, horizontal = 12.dp),
                                 contentAlignment = Alignment.Center
                             ) {
@@ -311,14 +310,14 @@ fun SettingsScreen(
                 Text(
                     text = "Ukuran Teks & Tipografi",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -341,7 +340,7 @@ fun SettingsScreen(
                                     Icon(
                                         imageVector = Icons.Default.FormatSize,
                                         contentDescription = null,
-                                        tint = EmeraldPrimary,
+                                        tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(18.dp)
                                     )
                                     Text(
@@ -353,7 +352,7 @@ fun SettingsScreen(
                                     text = "${arabicFontSize.toInt()} sp",
                                     style = MaterialTheme.typography.labelLarge.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = EmeraldPrimary
+                                        color = MaterialTheme.colorScheme.primary
                                     )
                                 )
                             }
@@ -364,8 +363,8 @@ fun SettingsScreen(
                                 valueRange = 20f..40f,
                                 steps = 9,
                                 colors = SliderDefaults.colors(
-                                    thumbColor = EmeraldPrimary,
-                                    activeTrackColor = EmeraldPrimary
+                                    thumbColor = MaterialTheme.colorScheme.primary,
+                                    activeTrackColor = MaterialTheme.colorScheme.primary
                                 ),
                                 modifier = Modifier.testTag("arabic_font_slider")
                             )
@@ -386,7 +385,7 @@ fun SettingsScreen(
                                     text = "${translationFontSize.toInt()} sp",
                                     style = MaterialTheme.typography.labelLarge.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = GoldAccent
+                                        color = MaterialTheme.colorScheme.secondary
                                     )
                                 )
                             }
@@ -397,8 +396,8 @@ fun SettingsScreen(
                                 valueRange = 12f..24f,
                                 steps = 5,
                                 colors = SliderDefaults.colors(
-                                    thumbColor = GoldAccent,
-                                    activeTrackColor = GoldAccent
+                                    thumbColor = MaterialTheme.colorScheme.secondary,
+                                    activeTrackColor = MaterialTheme.colorScheme.secondary
                                 ),
                                 modifier = Modifier.testTag("translation_font_slider")
                             )
@@ -430,14 +429,14 @@ fun SettingsScreen(
                 Text(
                     text = "Pengingat Tilawah Harian",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -471,7 +470,7 @@ fun SettingsScreen(
                                     Icon(
                                         imageVector = Icons.Default.NotificationsActive,
                                         contentDescription = null,
-                                        tint = if (isDailyReminderEnabled) EmeraldPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        tint = if (isDailyReminderEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.size(20.dp)
                                     )
                                 }
@@ -504,7 +503,7 @@ fun SettingsScreen(
                                     viewModel.toggleDailyReminder(isChecked)
                                 },
                                 colors = SwitchDefaults.colors(
-                                    checkedThumbColor = EmeraldPrimary,
+                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
                                     checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
                                 ),
                                 modifier = Modifier.testTag("reminder_switch")
@@ -528,7 +527,7 @@ fun SettingsScreen(
                                     Icon(
                                         imageVector = Icons.Default.AccessTime,
                                         contentDescription = null,
-                                        tint = GoldAccent,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(18.dp)
                                     )
                                     Text(
@@ -546,7 +545,7 @@ fun SettingsScreen(
                                         text = timeStr,
                                         style = MaterialTheme.typography.titleSmall.copy(
                                             fontWeight = FontWeight.Bold,
-                                            color = EmeraldMint
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                     )
 
@@ -557,7 +556,7 @@ fun SettingsScreen(
                                         label = { Text("18:30", fontSize = 11.sp) },
                                         colors = FilterChipDefaults.filterChipColors(
                                             selectedContainerColor = EmeraldPrimary.copy(alpha = 0.3f),
-                                            selectedLabelColor = EmeraldMint
+                                            selectedLabelColor = MaterialTheme.colorScheme.primary
                                         )
                                     )
                                     FilterChip(
@@ -566,7 +565,7 @@ fun SettingsScreen(
                                         label = { Text("05:00", fontSize = 11.sp) },
                                         colors = FilterChipDefaults.filterChipColors(
                                             selectedContainerColor = EmeraldPrimary.copy(alpha = 0.3f),
-                                            selectedLabelColor = EmeraldMint
+                                            selectedLabelColor = MaterialTheme.colorScheme.primary
                                         )
                                     )
                                 }
@@ -581,7 +580,7 @@ fun SettingsScreen(
                 Text(
                     text = "Pilihan Qari Murottal",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -595,7 +594,7 @@ fun SettingsScreen(
                             shape = RoundedCornerShape(14.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                                else DarkCardSurface
+                                else MaterialTheme.colorScheme.surfaceContainer
                             ),
                             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                         ) {
@@ -613,14 +612,14 @@ fun SettingsScreen(
                                     Icon(
                                         imageVector = Icons.Default.RecordVoiceOver,
                                         contentDescription = null,
-                                        tint = if (isSelected) EmeraldPrimary else MaterialTheme.colorScheme.onSurfaceVariant
+                                        tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Column {
                                         Text(
                                             text = qari.name,
                                             style = MaterialTheme.typography.bodyMedium.copy(
                                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                                color = if (isSelected) EmeraldPrimary else MaterialTheme.colorScheme.onSurface
+                                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                                             )
                                         )
                                         Text(
@@ -635,7 +634,7 @@ fun SettingsScreen(
                                     Icon(
                                         imageVector = Icons.Default.CheckCircle,
                                         contentDescription = "Dipilih",
-                                        tint = EmeraldPrimary,
+                                        tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(20.dp)
                                     )
                                 }
@@ -645,58 +644,78 @@ fun SettingsScreen(
                 }
             }
 
-            // Theme Card (Pure OLED Dark Exclusive)
+            // Theme Picker
             item {
+                val themeContext = LocalContext.current
                 Text(
                     text = "Tema Tampilan",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(14.dp)
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Palette,
                                 contentDescription = null,
-                                tint = EmeraldPrimary
+                                tint = MaterialTheme.colorScheme.primary
                             )
-                            Column {
-                                Text(
-                                    text = "Mode Gelap OLED (Pure Black)",
-                                    style = MaterialTheme.typography.bodyMedium.copy(
-                                        fontWeight = FontWeight.Bold,
-                                        color = EmeraldPrimary
-                                    )
+                            Text(
+                                text = when (ThemeModeState.value) {
+                                    AppThemeMode.DARK -> "Mode Gelap OLED (Pure Black)"
+                                    AppThemeMode.LIGHT -> "Mode Terang (Siang Hari)"
+                                    AppThemeMode.SEPIA -> "Mode Sepia (Kertas Mushaf)"
+                                },
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.primary
                                 )
-                                Text(
-                                    text = "Kontras tinggi, minim kelelahan mata, dan hemat daya layar",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            listOf(
+                                AppThemeMode.DARK to "Gelap",
+                                AppThemeMode.LIGHT to "Terang",
+                                AppThemeMode.SEPIA to "Sepia"
+                            ).forEach { (mode, label) ->
+                                FilterChip(
+                                    selected = ThemeModeState.value == mode,
+                                    onClick = {
+                                        ThemeModeState.value = mode
+                                        ThemeSettings.save(themeContext, mode)
+                                    },
+                                    label = { Text(label) },
+                                    modifier = Modifier.weight(1f)
                                 )
                             }
                         }
 
-                        Icon(
-                            imageVector = Icons.Default.CheckCircle,
-                            contentDescription = "Aktif",
-                            tint = EmeraldPrimary,
-                            modifier = Modifier.size(20.dp)
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = when (ThemeModeState.value) {
+                                AppThemeMode.DARK -> "Kontras tinggi, minim kelelahan mata, dan hemat daya layar"
+                                AppThemeMode.LIGHT -> "Nyaman dibaca di luar ruang dan di bawah cahaya terang"
+                                AppThemeMode.SEPIA -> "Latar krem hangat, tiru warna kertas mushaf cetak"
+                            },
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -707,7 +726,7 @@ fun SettingsScreen(
                 Text(
                     text = "Kelola Unduhan Audio (${downloadedAudios.size})",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -716,7 +735,7 @@ fun SettingsScreen(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(14.dp),
-                        colors = CardDefaults.cardColors(containerColor = DarkCardSurface)
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
                     ) {
                         Text(
                             text = "Belum ada audio murottal yang diunduh untuk offline.",
@@ -731,7 +750,7 @@ fun SettingsScreen(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(containerColor = DarkCardSurface)
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
                     ) {
                         Row(
                             modifier = Modifier
@@ -781,7 +800,7 @@ private fun TajweedLegendBadge(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
-            .background(DarkCardSurface)
+            .background(MaterialTheme.colorScheme.surfaceContainer)
             .border(1.dp, color.copy(alpha = 0.35f), RoundedCornerShape(10.dp))
             .padding(horizontal = 6.dp, vertical = 6.dp)
     ) {

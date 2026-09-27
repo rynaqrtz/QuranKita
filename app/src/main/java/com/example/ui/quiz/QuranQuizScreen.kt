@@ -7,12 +7,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -21,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -52,11 +49,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.QuizQuestion
 import com.example.ui.theme.AmiriFontFamily
-import com.example.ui.theme.DarkCardSurface
 import com.example.ui.theme.EmeraldDark
-import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.GoldAccent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -147,7 +141,7 @@ fun QuranQuizScreen(
                         text = "Kuis Hafalan & Tajwid",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
                 },
@@ -177,7 +171,7 @@ fun QuranQuizScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -205,14 +199,14 @@ fun QuranQuizScreen(
                         Text(
                             text = "Alhamdulillah!",
                             style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                            color = EmeraldMint
+                            color = MaterialTheme.colorScheme.primary
                         )
 
                         Text(
                             text = "Skor Anda: $score / ${quizBank.size * 100}",
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.ExtraBold,
-                                color = GoldAccent
+                                color = MaterialTheme.colorScheme.secondary
                             )
                         )
 
@@ -255,7 +249,7 @@ fun QuranQuizScreen(
                         text = "Soal ${currentIndex + 1} dari ${quizBank.size}",
                         style = MaterialTheme.typography.titleSmall.copy(
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     )
 
@@ -263,7 +257,7 @@ fun QuranQuizScreen(
                         text = "Skor: $score",
                         style = MaterialTheme.typography.labelLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = GoldAccent
+                            color = MaterialTheme.colorScheme.secondary
                         )
                     )
                 }
@@ -272,7 +266,7 @@ fun QuranQuizScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
@@ -285,7 +279,7 @@ fun QuranQuizScreen(
                             text = "QS. ${currentQuestion.surahName} [${currentQuestion.surahNumber}]",
                             style = MaterialTheme.typography.labelMedium.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = GoldAccent
+                                color = MaterialTheme.colorScheme.secondary
                             )
                         )
 
@@ -319,7 +313,7 @@ fun QuranQuizScreen(
                             !isAnswerSubmitted && isSelected -> MaterialTheme.colorScheme.primaryContainer
                             isAnswerSubmitted && isCorrect -> EmeraldDark
                             isAnswerSubmitted && isSelected && !isCorrect -> MaterialTheme.colorScheme.errorContainer
-                            else -> DarkCardSurface
+                            else -> MaterialTheme.colorScheme.surfaceContainer
                         }
 
                         Card(
@@ -353,7 +347,7 @@ fun QuranQuizScreen(
                                         Icon(
                                             imageVector = Icons.Default.CheckCircle,
                                             contentDescription = "Benar",
-                                            tint = EmeraldMint,
+                                            tint = MaterialTheme.colorScheme.primary,
                                             modifier = Modifier.size(20.dp)
                                         )
                                     } else if (isSelected) {

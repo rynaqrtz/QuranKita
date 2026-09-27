@@ -180,7 +180,7 @@ fun SurahReaderScreen(
                                 text = surahNumber.toString(),
                                 style = MaterialTheme.typography.labelMedium.copy(
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldMint
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
                         }
@@ -228,7 +228,7 @@ fun SurahReaderScreen(
                                     Icons.Default.PlayArrow
                                 },
                                 contentDescription = "Putar Murottal Surah",
-                                tint = EmeraldPrimary
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -288,7 +288,7 @@ fun SurahReaderScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(3.dp),
-                color = EmeraldPrimary,
+                color = MaterialTheme.colorScheme.primary,
                 trackColor = MaterialTheme.colorScheme.surfaceVariant
             )
 
@@ -307,7 +307,7 @@ fun SurahReaderScreen(
                         label = { Text("Per-Ayat", fontSize = 12.sp) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = EmeraldPrimary
+                            selectedLabelColor = MaterialTheme.colorScheme.primary
                         )
                     )
                     FilterChip(
@@ -316,7 +316,7 @@ fun SurahReaderScreen(
                         label = { Text("Mushaf", fontSize = 12.sp) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = EmeraldPrimary
+                            selectedLabelColor = MaterialTheme.colorScheme.primary
                         )
                     )
                 }
@@ -340,7 +340,7 @@ fun SurahReaderScreen(
                     },
                     colors = FilterChipDefaults.filterChipColors(
                         selectedContainerColor = GoldAccent.copy(alpha = 0.2f),
-                        selectedLabelColor = GoldAccent
+                        selectedLabelColor = MaterialTheme.colorScheme.secondary
                     )
                 )
             }
@@ -445,7 +445,7 @@ fun SurahReaderScreen(
                     Text(
                         text = "Pengaturan Membaca",
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                        color = EmeraldPrimary
+                        color = MaterialTheme.colorScheme.primary
                     )
 
                     // Font Size Slider
@@ -463,7 +463,7 @@ fun SurahReaderScreen(
                                 text = "${settings.arabicFontSize.toInt()} sp",
                                 style = MaterialTheme.typography.labelLarge.copy(
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldPrimary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             )
                         }
@@ -472,8 +472,8 @@ fun SurahReaderScreen(
                             onValueChange = viewModel::setArabicFontSize,
                             valueRange = 20f..38f,
                             colors = SliderDefaults.colors(
-                                thumbColor = EmeraldPrimary,
-                                activeTrackColor = EmeraldPrimary
+                                thumbColor = MaterialTheme.colorScheme.primary,
+                                activeTrackColor = MaterialTheme.colorScheme.primary
                             )
                         )
                     }
@@ -499,7 +499,7 @@ fun SurahReaderScreen(
                             checked = settings.isTajwidEnabled,
                             onCheckedChange = { viewModel.toggleTajwid() },
                             colors = SwitchDefaults.colors(
-                                checkedThumbColor = EmeraldPrimary,
+                                checkedThumbColor = MaterialTheme.colorScheme.primary,
                                 checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
                             )
                         )
@@ -525,7 +525,7 @@ fun SurahReaderScreen(
                             checked = settings.isTransliterationEnabled,
                             onCheckedChange = { viewModel.toggleTransliteration() },
                             colors = SwitchDefaults.colors(
-                                checkedThumbColor = EmeraldPrimary,
+                                checkedThumbColor = MaterialTheme.colorScheme.primary,
                                 checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
                             )
                         )
@@ -561,7 +561,7 @@ fun SurahReaderScreen(
                                             text = qari.name,
                                             style = MaterialTheme.typography.bodyMedium.copy(
                                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                                color = if (isSelected) EmeraldPrimary else MaterialTheme.colorScheme.onSurface
+                                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                                             )
                                         )
                                         Text(
@@ -574,7 +574,7 @@ fun SurahReaderScreen(
                                         Icon(
                                             imageVector = Icons.Default.CheckCircle,
                                             contentDescription = "Dipilih",
-                                            tint = EmeraldPrimary,
+                                            tint = MaterialTheme.colorScheme.primary,
                                             modifier = Modifier.size(18.dp)
                                         )
                                     }
@@ -606,7 +606,7 @@ fun BasmalahBanner() {
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            color = EmeraldMint
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -659,7 +659,7 @@ fun VerseCardItem(
                         .size(34.dp)
                         .clip(CircleShape)
                         .background(
-                            if (isPlaying) EmeraldPrimary else MaterialTheme.colorScheme.surface
+                            if (isPlaying) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
                         ),
                     contentAlignment = Alignment.Center
                 ) {
@@ -685,7 +685,7 @@ fun VerseCardItem(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.MenuBook,
                             contentDescription = "Buka Tafsir Lengkap",
-                            tint = EmeraldPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -698,7 +698,7 @@ fun VerseCardItem(
                         Icon(
                             imageVector = if (verse.isMemorized) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
                             contentDescription = "Tandai Hafalan",
-                            tint = if (verse.isMemorized) EmeraldPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            tint = if (verse.isMemorized) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -711,7 +711,7 @@ fun VerseCardItem(
                         Icon(
                             imageVector = if (verse.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                             contentDescription = "Bookmark Ayat",
-                            tint = if (verse.isBookmarked) GoldAccent else MaterialTheme.colorScheme.onSurfaceVariant,
+                            tint = if (verse.isBookmarked) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -724,7 +724,7 @@ fun VerseCardItem(
                         Icon(
                             imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                             contentDescription = "Putar Audio Ayat",
-                            tint = EmeraldPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(22.dp)
                         )
                     }
@@ -749,13 +749,13 @@ fun VerseCardItem(
                         Icon(
                             imageVector = Icons.Default.Psychology,
                             contentDescription = null,
-                            tint = GoldAccent,
+                            tint = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(24.dp)
                         )
                         Text(
                             text = "Mode Uji Hafalan Aktif",
                             style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                            color = GoldAccent
+                            color = MaterialTheme.colorScheme.secondary
                         )
                         Text(
                             text = "Ketuk di sini untuk membuka teks ayat",
@@ -816,13 +816,13 @@ fun VerseCardItem(
                             text = "Tafsir Ringkas",
                             style = MaterialTheme.typography.labelMedium.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = EmeraldPrimary
+                                color = MaterialTheme.colorScheme.primary
                             )
                         )
                         Icon(
                             imageVector = if (isTafsirExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
                             contentDescription = "Buka Tafsir",
-                            tint = EmeraldPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -876,7 +876,7 @@ fun TafsirDetailView(
                 Text(
                     text = "Tafsir Ayat",
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Text(
                     text = "QS. $surahName : Ayat ${verse.verseNumber}",
@@ -917,7 +917,7 @@ fun TafsirDetailView(
                 text = "Terjemahan (Kemenag RI):",
                 style = MaterialTheme.typography.labelMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = GoldAccent
+                    color = MaterialTheme.colorScheme.secondary
                 )
             )
             Text(
@@ -936,7 +936,7 @@ fun TafsirDetailView(
                 text = "Tafsir Ringkas & Konteks Kandungan:",
                 style = MaterialTheme.typography.titleSmall.copy(
                     fontWeight = FontWeight.Bold,
-                    color = EmeraldPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
             Text(

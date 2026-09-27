@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -33,9 +32,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.R
-import com.example.ui.theme.DarkBackground
-import com.example.ui.theme.EmeraldGreen
-import com.example.ui.theme.EmeraldMint
 
 @Composable
 fun AppLaunchLoadingView(
@@ -46,7 +42,7 @@ fun AppLaunchLoadingView(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(DarkBackground)
+            .background(MaterialTheme.colorScheme.background)
             .testTag("app_launch_loading_screen"),
         contentAlignment = Alignment.Center
     ) {
@@ -73,7 +69,7 @@ fun AppLaunchLoadingView(
                         fontWeight = FontWeight.Bold,
                         letterSpacing = (-0.5).sp
                     ),
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
                     text = "Kita",
@@ -81,7 +77,7 @@ fun AppLaunchLoadingView(
                         fontWeight = FontWeight.ExtraBold,
                         letterSpacing = (-0.5).sp
                     ),
-                    color = EmeraldGreen
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -90,8 +86,8 @@ fun AppLaunchLoadingView(
             CircularProgressIndicator(
                 modifier = Modifier.size(26.dp),
                 strokeWidth = 2.dp,
-                color = EmeraldMint,
-                trackColor = Color.White.copy(alpha = 0.12f)
+                color = MaterialTheme.colorScheme.primary,
+                trackColor = MaterialTheme.colorScheme.outline
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -102,7 +98,7 @@ fun AppLaunchLoadingView(
                     fontSize = 12.sp,
                     letterSpacing = 0.2.sp
                 ),
-                color = Color.White.copy(alpha = 0.55f)
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
