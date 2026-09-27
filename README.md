@@ -32,9 +32,10 @@ pertama dibuka. QuranKita **membundel semuanya ke dalam APK**:
 | 📚 Tafsir | Tafsir Jalalayn, Bahasa Indonesia | `id.jalalayn` |
 | 🔤 Transliterasi | Bacaan latin per ayat | `en.transliteration` |
 
-Berkas `app/src/main/assets/initial_verses.json` (6,3 MB) ditulis ulang langsung dari
-keempat edisi di atas, dengan jumlah ayat tiap surah diverifikasi terhadap
-`surahs.json`. **Hasilnya: membaca, mencari, menyalin tafsir, dan melihat jadwal
+Berkas `app/src/main/assets/verses.txt` (5,9 MB) ditulis ulang langsung dari keempat
+edisi di atas, lalu dirapikan menjadi satu ayat per baris (dipisah tab) supaya bisa
+dibaca *streaming* — tanpa memuat seluruh 6 MB data sebagai pohon JSON di memori.
+Jumlah ayat tiap surah diverifikasi terhadap `surahs.json`. **Hasilnya: membaca, mencari, menyalin tafsir, dan melihat jadwal
 sholat semuanya jalan tanpa satu paket data pun yang diunduh.**
 
 > Pengecualian jujur: **murottal audio** tetap di-*stream* dari CDN EveryAyah, dan bisa
@@ -203,7 +204,7 @@ app/src/main/java/com/example/
 
 app/src/main/assets/
 ├── surahs.json           # metadata 114 surah
-└── initial_verses.json   # 6.236 ayat lengkap (teks+terjemah+tafsir+latin)
+└── verses.txt            # 6.236 ayat lengkap (teks+terjemah+tafsir+latin)
 ```
 
 ---

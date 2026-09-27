@@ -18,99 +18,103 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
-import org.json.JSONObject
 import java.io.File
 
 class QuranRepository(private val quranDao: QuranDao) {
 
     suspend fun initializeDatabase(context: Context) = withContext(Dispatchers.IO) {
-        val count = quranDao.getSurahsCount()
-        if (count == 0) {
-            // Load surahs.json
-            try {
-                val jsonString = context.assets.open("surahs.json").bufferedReader().use { it.readText() }
-                val jsonArray = JSONArray(jsonString)
-                val surahs = mutableListOf<SurahEntity>()
-                val surahsFts = mutableListOf<SurahFtsEntity>()
-                for (i in 0 until jsonArray.length()) {
-                    val obj = jsonArray.getJSONObject(i)
-                    val sNo = obj.getInt("number")
-                    val sLatin = obj.getString("nameLatin")
-                    val sArabic = obj.getString("nameArabic")
-                    val sMeaning = obj.getString("meaning")
-                    surahs.add(
-                        SurahEntity(
-                            number = sNo,
-                            nameLatin = sLatin,
-                            nameArabic = sArabic,
-                            meaning = sMeaning,
-                            verseCount = obj.getInt("verseCount"),
-                            revelation = obj.getString("revelation")
-                        )
-                    )
-                    surahsFts.add(
-                        SurahFtsEntity(
-                            rowid = sNo,
-                            number = sNo,
-                            nameLatin = sLatin,
-                            nameArabic = sArabic,
-                            meaning = sMeaning
-                        )
-                    )
-                }
-                quranDao.insertSurahs(surahs)
-                quranDao.insertSurahsFts(surahsFts)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        if (quranDao.getSurahsCount() != 0) return@withContext
 
-            // Load initial_verses.json
-            try {
-                val versesJson = context.assets.open("initial_verses.json").bufferedReader().use { it.readText() }
-                val jsonObj = JSONObject(versesJson)
-                val versesList = mutableListOf<VerseEntity>()
-                val versesFtsList = mutableListOf<VerseFtsEntity>()
-                val keys = jsonObj.keys()
-                while (keys.hasNext()) {
-                    val surahNoStr = keys.next()
-                    val surahNo = surahNoStr.toInt()
-                    val arr = jsonObj.getJSONArray(surahNoStr)
-                    for (j in 0 until arr.length()) {
-                        val vObj = arr.getJSONObject(j)
-                        val vNum = vObj.getInt("verseNumber")
-                        val vArabic = vObj.getString("arabic")
-                        val vTrans = vObj.getString("transliteration")
-                        val vTranslation = vObj.getString("translation")
-                        val vTafsir = vObj.optString("tafsir", "")
-                        versesList.add(
-                            VerseEntity(
-                                id = "${surahNo}_$vNum",
-                                surahNumber = surahNo,
-                                verseNumber = vNum,
-                                arabic = vArabic,
-                                transliteration = vTrans,
-                                translation = vTranslation,
-                                tafsir = vTafsir
-                            )
+        // Load surahs.json
+        try {
+            val jsonString = context.assets.open("surahs.json").bufferedReader().use { it.readText() }
+            val jsonArray = JSONArray(jsonString)
+            val surahs = mutableListOf<SurahEntity>()
+            val surahsFts = mutableListOf<SurahFtsEntity>()
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                val sNo = obj.getInt("number")
+                val sLatin = obj.getString("nameLatin")
+                val sArabic = obj.getString("nameArabic")
+                val sMeaning = obj.getString("meaning")
+                surahs.add(
+                    SurahEntity(
+                        number = sNo,
+                        nameLatin = sLatin,
+                        nameArabic = sArabic,
+                        meaning = sMeaning,
+                        verseCount = obj.getInt("verseCount"),
+                        revelation = obj.getString("revelation")
+                    )
+                )
+                surahsFts.add(
+                    SurahFtsEntity(
+                        rowid = sNo,
+                        number = sNo,
+                        nameLatin = sLatin,
+                        nameArabic = sArabic,
+                        meaning = sMeaning
+                    )
+                )
+            }
+            quranDao.insertSurahs(surahs)
+            quranDao.insertSurahsFts(surahsFts)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Stream verses: one verse per line, tab separated. Avoids holding the whole
+        // payload as a parsed JSON tree, which used to spike tens of MB of heap.
+        try {
+            var verses = mutableListOf<VerseEntity>()
+            var versesFts = mutableListOf<VerseFtsEntity>()
+            context.assets.open("verses.txt").bufferedReader().use { reader ->
+                reader.forEachLine { line ->
+                    if (line.isEmpty()) return@forEachLine
+                    val parts = line.split('\t')
+                    if (parts.size < 6) return@forEachLine
+                    val surahNo = parts[0].toInt()
+                    val vNum = parts[1].toInt()
+                    val arabic = parts[2]
+                    val translit = parts[3]
+                    val translation = parts[4]
+                    val tafsir = parts[5]
+                    verses.add(
+                        VerseEntity(
+                            id = "${surahNo}_$vNum",
+                            surahNumber = surahNo,
+                            verseNumber = vNum,
+                            arabic = arabic,
+                            transliteration = translit,
+                            translation = translation,
+                            tafsir = tafsir
                         )
-                        versesFtsList.add(
-                            VerseFtsEntity(
-                                rowid = surahNo * 1000 + vNum,
-                                surahNumber = surahNo,
-                                verseNumber = vNum,
-                                arabic = vArabic,
-                                transliteration = vTrans,
-                                translation = vTranslation,
-                                tafsir = vTafsir
-                            )
+                    )
+                    versesFts.add(
+                        VerseFtsEntity(
+                            rowid = surahNo * 1000 + vNum,
+                            surahNumber = surahNo,
+                            verseNumber = vNum,
+                            arabic = arabic,
+                            transliteration = translit,
+                            translation = translation,
+                            tafsir = tafsir
                         )
+                    )
+                    if (verses.size >= 300) {
+                        quranDao.insertVerses(verses)
+                        quranDao.insertVersesFts(versesFts)
+                        verses = mutableListOf()
+                        versesFts = mutableListOf()
                     }
                 }
-                quranDao.insertVerses(versesList)
-                quranDao.insertVersesFts(versesFtsList)
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
+            if (verses.isNotEmpty()) {
+                quranDao.insertVerses(verses)
+                quranDao.insertVersesFts(versesFts)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
