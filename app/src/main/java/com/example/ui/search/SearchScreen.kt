@@ -176,13 +176,18 @@ fun SearchScreen(
                             )
                         }
                         items(surahResults, key = { "surah-${it.number}" }) { surah ->
-                            SurahHitCard(surah = surah, onClick = { onNavigateToSurah(surah.number) })
+                            SurahHitCard(
+                                surah = surah,
+                                onClick = { onNavigateToSurah(surah.number) },
+                                modifier = Modifier.animateItem()
+                            )
                         }
                     }
 
                     items(searchResults, key = { it.id }) { verse ->
                         Card(
                             modifier = Modifier
+                                .animateItem()
                                 .fillMaxWidth()
                                 .clickable { onNavigateToSurah(verse.surahNumber) },
                             shape = RoundedCornerShape(16.dp),
@@ -238,9 +243,9 @@ fun SearchScreen(
 }
 
 @Composable
-private fun SurahHitCard(surah: Surah, onClick: () -> Unit) {
+private fun SurahHitCard(surah: Surah, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),

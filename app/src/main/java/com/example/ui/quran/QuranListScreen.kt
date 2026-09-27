@@ -308,7 +308,8 @@ fun QuranListScreen(
                                     onClick = { onNavigateToSurah(surah.number) },
                                     onToggleBookmark = {
                                         viewModel.toggleSurahBookmark(surah.number, surah.isBookmarked)
-                                    }
+                                    },
+                                    modifier = Modifier.animateItem()
                                 )
                             }
                         }
@@ -569,7 +570,8 @@ fun QuranListScreen(
                                     onClick = { onNavigateToSurah(surah.number) },
                                     onToggleBookmark = {
                                         viewModel.toggleSurahBookmark(surah.number, true)
-                                    }
+                                    },
+                                    modifier = Modifier.animateItem()
                                 )
                             }
                         }

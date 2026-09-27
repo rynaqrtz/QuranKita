@@ -389,7 +389,8 @@ fun SurahReaderScreen(
                             onToggleMemorized = { viewModel.toggleVerseMemorized(verse) },
                             onToggleTafsir = { viewModel.toggleExpandTafsir(verse.id) },
                             onOpenFullTafsir = { selectedTafsirVerse = verse },
-                            onRevealVerse = { viewModel.toggleRevealVerse(verse.id) }
+                            onRevealVerse = { viewModel.toggleRevealVerse(verse.id) },
+                            modifier = Modifier.animateItem()
                         )
                     }
                 }
