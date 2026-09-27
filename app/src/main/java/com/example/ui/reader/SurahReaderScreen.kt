@@ -273,7 +273,8 @@ fun SurahReaderScreen(
                 onSetSleepTimer = { minutes ->
                     viewModel.audioPlayer.setSleepTimer(minutes)
                 },
-                onDownload = { viewModel.downloadCurrentSurahAudio() }
+                onDownload = { viewModel.downloadCurrentSurahAudio() },
+                onCancelDownload = { viewModel.cancelSurahAudioDownload() }
             )
         }
     ) { innerPadding ->

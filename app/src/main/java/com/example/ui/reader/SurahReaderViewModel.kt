@@ -80,6 +80,10 @@ class SurahReaderViewModel(application: Application) : AndroidViewModel(applicat
         audioPlayer.downloadCurrentSurah(playbackState.value.totalVersesInSurah)
     }
 
+    fun cancelSurahAudioDownload() {
+        audioPlayer.cancelDownload()
+    }
+
     fun loadSurah(surahNumber: Int) {
         _currentSurahNumber.value = surahNumber
     }

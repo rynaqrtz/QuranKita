@@ -8,6 +8,8 @@ import com.example.data.model.Qari
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +21,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 import java.util.Locale
+
+private const val PARALLEL_DOWNLOADS = 4
 
 data class AudioPlaybackState(
     val isPlaying: Boolean = false,
@@ -36,7 +40,9 @@ data class AudioPlaybackState(
     val durationMs: Int = 0,
     val errorMessage: String? = null,
     val isDownloading: Boolean = false,
-    val downloadStatus: String? = null
+    val downloadStatus: String? = null,
+    val downloadedCount: Int = 0,
+    val downloadTotal: Int = 0
 )
 
 class AudioPlayerManager(private val context: Context) {
@@ -45,6 +51,7 @@ class AudioPlayerManager(private val context: Context) {
     private val scope = CoroutineScope(Dispatchers.Main + Job())
     private var progressJob: Job? = null
     private var sleepTimerJob: Job? = null
+    private var downloadJob: Job? = null
 
     private val _playbackState = MutableStateFlow(AudioPlaybackState())
     val playbackState: StateFlow<AudioPlaybackState> = _playbackState.asStateFlow()
@@ -295,40 +302,77 @@ class AudioPlayerManager(private val context: Context) {
         val surahNumber = state.currentSurahNumber
         val sStr = String.format(Locale.US, "%03d", surahNumber)
         val dir = File(File(context.filesDir, "audio"), qari.id)
-        _playbackState.value = state.copy(isDownloading = true, downloadStatus = "Mengunduh surah…")
+        _playbackState.value = state.copy(
+            isDownloading = true,
+            downloadedCount = 0,
+            downloadTotal = verseCount,
+            downloadStatus = "Menyiapkan unduhan…"
+        )
 
-        scope.launch {
+        downloadJob = scope.launch {
             val message = try {
                 dir.mkdirs()
                 var totalBytes = 0L
-                for (verse in 1..verseCount) {
-                    val target = verseFile(context.filesDir, qari.id, surahNumber, verse)
-                    if (!target.exists()) {
-                        withContext(Dispatchers.IO) {
-                            val vStr = String.format(Locale.US, "%03d", verse)
-                            val url = "https://everyayah.com/data/${qari.subfolder}/$sStr$vStr.mp3"
-                            URL(url).openStream().use { input ->
-                                FileOutputStream(target).use { output -> input.copyTo(output) }
+                var done = 0
+                val failed = mutableListOf<Int>()
+
+                // Four at a time: enough to hide latency without hammering the CDN.
+                val pending = (1..verseCount).toList().chunked(PARALLEL_DOWNLOADS)
+                for (batch in pending) {
+                    batch.map { verse ->
+                        async(Dispatchers.IO) {
+                            val target = verseFile(context.filesDir, qari.id, surahNumber, verse)
+                            if (target.exists()) {
+                                target.length()
+                            } else {
+                                try {
+                                    val vStr = String.format(Locale.US, "%03d", verse)
+                                    val url = "https://everyayah.com/data/${qari.subfolder}/$sStr$vStr.mp3"
+                                    URL(url).openStream().use { input ->
+                                        FileOutputStream(target).use { output -> input.copyTo(output) }
+                                    }
+                                    target.length()
+                                } catch (e: Exception) {
+                                    target.delete()
+                                    failed += verse
+                                    0L
+                                }
                             }
                         }
+                    }.awaitAll().forEach { size ->
+                        totalBytes += size
+                        done++
+                        _playbackState.value = _playbackState.value.copy(
+                            downloadedCount = done,
+                            downloadStatus = "Mengunduh $done/$verseCount (${done * 100 / verseCount}%)"
+                        )
                     }
-                    totalBytes += target.length()
-                    _playbackState.value = _playbackState.value.copy(
-                        downloadStatus = "Mengunduh $verse/$verseCount"
-                    )
                 }
-                onAudioDownloaded?.invoke(qari.id, surahNumber, dir.absolutePath, formatSize(totalBytes))
-                "Surah tersimpan untuk dibaca offline"
+
+                if (failed.isEmpty()) {
+                    onAudioDownloaded?.invoke(qari.id, surahNumber, dir.absolutePath, formatSize(totalBytes))
+                    "Surah tersimpan untuk didengarkan luring"
+                } else {
+                    "Selesai ${done - failed.size}/$verseCount ayat — ${failed.size} gagal, coba lagi nanti"
+                }
             } catch (e: Exception) {
-                dir.deleteRecursively()
                 "Gagal mengunduh: " + (e.localizedMessage ?: "jaringan bermasalah")
             }
             _playbackState.value = _playbackState.value.copy(isDownloading = false, downloadStatus = message)
-            delay(4000)
+            delay(5000)
             if (_playbackState.value.downloadStatus == message) {
                 _playbackState.value = _playbackState.value.copy(downloadStatus = null)
             }
         }
+    }
+
+    fun cancelDownload() {
+        downloadJob?.cancel()
+        downloadJob = null
+        _playbackState.value = _playbackState.value.copy(
+            isDownloading = false,
+            downloadStatus = "Unduhan dibatalkan"
+        )
     }
 
     private fun formatSize(bytes: Long): String = when {

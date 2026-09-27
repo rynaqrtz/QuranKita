@@ -65,6 +65,7 @@ fun AudioPlayerBar(
     onCycleSpeed: () -> Unit = {},
     onSetSleepTimer: (Int?) -> Unit = {},
     onDownload: () -> Unit = {},
+    onCancelDownload: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val isVisible = state.isPlaying || state.isLoading || state.isDownloading || state.currentPositionMs > 0
@@ -150,14 +151,18 @@ fun AudioPlayerBar(
                     }
 
                     IconButton(
-                        onClick = onDownload,
-                        enabled = !state.isDownloading,
+                        onClick = { if (state.isDownloading) onCancelDownload() else onDownload() },
                         modifier = Modifier.size(40.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Download,
-                            contentDescription = "Unduh surah ini untuk dibaca offline",
-                            tint = if (state.downloadStatus != null) GoldAccent
+                            imageVector = if (state.isDownloading) Icons.Default.Close else Icons.Default.Download,
+                            contentDescription = if (state.isDownloading) {
+                                "Batalkan unduhan surah"
+                            } else {
+                                "Unduh surah ini untuk didengarkan luring"
+                            },
+                            tint = if (state.isDownloading) MaterialTheme.colorScheme.error
+                                   else if (state.downloadStatus != null) GoldAccent
                                    else MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(20.dp)
                         )
@@ -180,7 +185,21 @@ fun AudioPlayerBar(
                     Text(
                         text = state.downloadStatus.orEmpty(),
                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.secondary
+                        color = if (state.isDownloading) MaterialTheme.colorScheme.primary
+                               else MaterialTheme.colorScheme.secondary
+                    )
+                }
+
+                if (state.isDownloading && state.downloadTotal > 0) {
+                    val fraction = (state.downloadedCount.toFloat() / state.downloadTotal).coerceIn(0f, 1f)
+                    LinearProgressIndicator(
+                        progress = { fraction },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(4.dp)
+                            .clip(RoundedCornerShape(2.dp)),
+                        color = MaterialTheme.colorScheme.primary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant
                     )
                 }
 
