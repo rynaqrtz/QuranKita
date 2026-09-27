@@ -47,7 +47,7 @@ sholat semuanya jalan tanpa satu paket data pun yang diunduh.**
 * **Versi** — `1.0` (`versionCode 1`)
 * **Android** — 7.0 Nougat (API 24) s/d target API 36
 * **Basis data** — Room 2.7 + indeks **FTS4** untuk pencarian ayat *dan* surah
-* **UI** — Jetpack Compose Material 3, tema OLED gelap tunggal
+* **UI** — Jetpack Compose Material 3, tiga tema (OLED gelap, terang, sepia)
 * **Iklan / tracking / akun** — tidak ada
 
 ---
@@ -196,7 +196,7 @@ app/src/main/java/com/example/
 │   ├── dzikir/ dua/ asmaulhusna/ quiz/
 │   ├── search/  settings/
 │   ├── navigation/       # NavGraph + rute
-│   └── theme/            # Palet OLED, tipografi Amiri & Inter
+│   └── theme/            # Palet 3 tema, tipografi Amiri & Inter
 ├── util/                 # AudioPlayerManager, HijriCalendar,
 │                         # PrayerTimeCalculator, TajwidFormatter, …
 └── MainActivity.kt
@@ -216,7 +216,7 @@ app/src/main/assets/
 - ✅ Unduh surah untuk dibaca luring
 - ✅ Pembersihan dependensi & aset tak terpakai
 - ✅ Animasi transisi antar layar (shared element surah → pembaca, spring slide/fade)
-- ⬜ Mode terang dan sepia
+- ✅ Mode Gelap OLED, Terang, dan Sepia (ganti di Pengaturan)
 - ⬜ Baseline profile untuk mempercepat startup
 
 ---
