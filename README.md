@@ -215,7 +215,7 @@ app/src/main/assets/
 - ✅ Kalender hijriah, kota sholat bersama, pencarian FTS untuk ayat & surah
 - ✅ Unduh surah untuk dibaca luring
 - ✅ Pembersihan dependensi & aset tak terpakai
-- 🚧 Animasi transisi antar layar
+- ✅ Animasi transisi antar layar (shared element surah → pembaca, spring slide/fade)
 - ⬜ Mode terang dan sepia
 - ⬜ Baseline profile untuk mempercepat startup
 
