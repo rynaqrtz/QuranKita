@@ -1,12 +1,6 @@
 package com.example.ui.components
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -42,7 +36,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,27 +72,6 @@ fun IslamicEventsCard(
     val primaryEvent = events.firstOrNull { it.id == "ramadan_1448" } ?: events.first()
     val gregorianFormat = remember { SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag("id-ID")) }
 
-    // Smooth subtle ambient pulsing effect for luxury 3D depth
-    val infiniteTransition = rememberInfiniteTransition(label = "islamic_card_ambient")
-    val pulseGlow by infiniteTransition.animateFloat(
-        initialValue = 0.5f,
-        targetValue = 0.95f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(2400, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "pulse_glow"
-    )
-    val starRotation by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(45000, easing = androidx.compose.animation.core.LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "star_rotation"
-    )
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -127,7 +99,7 @@ fun IslamicEventsCard(
                     width = 1.2.dp,
                     brush = Brush.linearGradient(
                         colors = listOf(
-                            GoldAccent.copy(alpha = 0.45f * pulseGlow),
+                            GoldAccent.copy(alpha = 0.32f),
                             EmeraldMint.copy(alpha = 0.35f),
                             Color.Transparent
                         )
@@ -149,8 +121,8 @@ fun IslamicEventsCard(
                 drawCircle(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            EmeraldVibrant.copy(alpha = 0.12f * pulseGlow),
-                            GoldAccent.copy(alpha = 0.05f * pulseGlow),
+                            EmeraldVibrant.copy(alpha = 0.10f),
+                            GoldAccent.copy(alpha = 0.04f),
                             Color.Transparent
                         ),
                         center = Offset(cx, cy),
@@ -161,7 +133,7 @@ fun IslamicEventsCard(
                 )
 
                 // Rotating 8-Pointed Star (Rub el Hizb)
-                rotate(starRotation, pivot = Offset(cx, cy)) {
+                rotate(22f, pivot = Offset(cx, cy)) {
                     val s = radius * 0.65f
                     // Square 1
                     drawRect(

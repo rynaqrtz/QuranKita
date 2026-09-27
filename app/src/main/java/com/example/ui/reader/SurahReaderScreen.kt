@@ -980,6 +980,8 @@ fun MushafContinuousView(
     surahNumber: Int,
     modifier: Modifier = Modifier
 ) {
+    val pages = remember(verses) { verses.chunked(25) }
+
     LazyColumn(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -990,7 +992,7 @@ fun MushafContinuousView(
             }
         }
 
-        item {
+        items(pages, key = { page -> page.first().id }) { page ->
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
@@ -1001,7 +1003,7 @@ fun MushafContinuousView(
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    verses.forEach { verse ->
+                    page.forEach { verse ->
                         val formatted = remember(verse.arabic, isTajwidEnabled) {
                             TajwidFormatter.formatWithTajwid(verse.arabic, isTajwidEnabled)
                         }
