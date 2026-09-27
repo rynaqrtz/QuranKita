@@ -1,0 +1,71 @@
+name: Build and Release Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Package APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant Execute Permission to Gradle
+        run: chmod +x gradlew || true
+
+      - name: Run Unit Tests
+        run: gradle testDebugUnitTest --no-daemon
+
+      - name: Build Debug APK
+        run: gradle assembleDebug --no-daemon
+
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuranKita-Debug-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "QuranKita v1.2.0 - Official Release"
+          body: |
+            ## 📖 QuranKita v1.2.0 - Official Build
+            
+            Aplikasi Al-Qur'anul Karim & Pendamping Ibadah Harian Modern, Bersih, 100% Bebas Iklan, dan Offline-First.
+            
+            ### ✨ Fitur Terbaru:
+            - **Hitung Mundur Ramadhan & Hari Besar Islam:** Kalender Hijriah dan countdown otomatis ke bulan suci Ramadhan, Idul Fitri, Idul Adha, dan hari-hari besar Islam.
+            - **Visual Tajweed Highlighter:** Pewarnaan hukum tajwid dinamis dengan panduan warna (*Ghunnah, Ikhfa, Idgham, Qalqalah, Mad*).
+            - **Khatam Tracker Dashboard:** Visualisasi cincin progres khatam 30 Juz dan checklist tilawah.
+            - **Kumpulan Doa Quran Terkategori:** Doa *Rabbana*, *Para Nabi*, *Perlindungan*, *Rezeki*, dan *Taubat*.
+            - **Audio Murottal + Sleep Timer:** 4 Qari dunia, repeat loop tahfidz, pengatur kecepatan (*0.75x - 1.5x*), dan sleep timer.
+            - **100% Offline-First:** Basis data Room FTS4 terindeks tanpa koneksi internet.
+            
+            ### 📥 Download Langsung:
+            Unduh berkas `app-debug.apk` di bawah dan pasang langsung pada smartphone Android Anda.
+          files: |
+            app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

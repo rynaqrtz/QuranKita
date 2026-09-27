@@ -1,0 +1,914 @@
+[
+  {
+    "number": 1,
+    "nameLatin": "Al-Fatihah",
+    "nameArabic": "الفاتحة",
+    "meaning": "Pembukaan",
+    "verseCount": 7,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 2,
+    "nameLatin": "Al-Baqarah",
+    "nameArabic": "البقرة",
+    "meaning": "Sapi Betina",
+    "verseCount": 286,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 3,
+    "nameLatin": "Ali 'Imran",
+    "nameArabic": "آل عمران",
+    "meaning": "Keluarga Imran",
+    "verseCount": 200,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 4,
+    "nameLatin": "An-Nisa'",
+    "nameArabic": "النساء",
+    "meaning": "Wanita",
+    "verseCount": 176,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 5,
+    "nameLatin": "Al-Ma'idah",
+    "nameArabic": "المائدة",
+    "meaning": "Hidangan",
+    "verseCount": 120,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 6,
+    "nameLatin": "Al-An'am",
+    "nameArabic": "الأنعام",
+    "meaning": "Binatang Ternak",
+    "verseCount": 165,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 7,
+    "nameLatin": "Al-A'raf",
+    "nameArabic": "الأعراف",
+    "meaning": "Tempat Tertinggi",
+    "verseCount": 206,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 8,
+    "nameLatin": "Al-Anfal",
+    "nameArabic": "الأنفال",
+    "meaning": "Rampasan Perang",
+    "verseCount": 75,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 9,
+    "nameLatin": "At-Taubah",
+    "nameArabic": "التوبة",
+    "meaning": "Pengampunan",
+    "verseCount": 129,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 10,
+    "nameLatin": "Yunus",
+    "nameArabic": "يونس",
+    "meaning": "Yunus",
+    "verseCount": 109,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 11,
+    "nameLatin": "Hud",
+    "nameArabic": "هود",
+    "meaning": "Hud",
+    "verseCount": 123,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 12,
+    "nameLatin": "Yusuf",
+    "nameArabic": "يوسف",
+    "meaning": "Yusuf",
+    "verseCount": 111,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 13,
+    "nameLatin": "Ar-Ra'd",
+    "nameArabic": "الرعد",
+    "meaning": "Guruh",
+    "verseCount": 43,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 14,
+    "nameLatin": "Ibrahim",
+    "nameArabic": "إبراهيم",
+    "meaning": "Ibrahim",
+    "verseCount": 52,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 15,
+    "nameLatin": "Al-Hijr",
+    "nameArabic": "الحجر",
+    "meaning": "Daerah Pegunungan",
+    "verseCount": 99,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 16,
+    "nameLatin": "An-Nahl",
+    "nameArabic": "النحل",
+    "meaning": "Lebah",
+    "verseCount": 128,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 17,
+    "nameLatin": "Al-Isra'",
+    "nameArabic": "الإسراء",
+    "meaning": "Memperjalankan Malam",
+    "verseCount": 111,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 18,
+    "nameLatin": "Al-Kahf",
+    "nameArabic": "الكهف",
+    "meaning": "Gua",
+    "verseCount": 110,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 19,
+    "nameLatin": "Maryam",
+    "nameArabic": "مريم",
+    "meaning": "Maryam",
+    "verseCount": 98,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 20,
+    "nameLatin": "Taha",
+    "nameArabic": "طه",
+    "meaning": "Taha",
+    "verseCount": 135,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 21,
+    "nameLatin": "Al-Anbiya'",
+    "nameArabic": "الأنبياء",
+    "meaning": "Para Nabi",
+    "verseCount": 112,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 22,
+    "nameLatin": "Al-Hajj",
+    "nameArabic": "الحج",
+    "meaning": "Haji",
+    "verseCount": 78,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 23,
+    "nameLatin": "Al-Mu'minun",
+    "nameArabic": "المؤمنون",
+    "meaning": "Orang-orang Mukmin",
+    "verseCount": 118,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 24,
+    "nameLatin": "An-Nur",
+    "nameArabic": "النور",
+    "meaning": "Cahaya",
+    "verseCount": 64,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 25,
+    "nameLatin": "Al-Furqan",
+    "nameArabic": "الفرقان",
+    "meaning": "Pembeda",
+    "verseCount": 77,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 26,
+    "nameLatin": "Asy-Syu'ara'",
+    "nameArabic": "الشعراء",
+    "meaning": "Para Penyair",
+    "verseCount": 227,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 27,
+    "nameLatin": "An-Naml",
+    "nameArabic": "النمل",
+    "meaning": "Semut",
+    "verseCount": 93,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 28,
+    "nameLatin": "Al-Qasas",
+    "nameArabic": "القصص",
+    "meaning": "Kisah-kisah",
+    "verseCount": 88,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 29,
+    "nameLatin": "Al-'Ankabut",
+    "nameArabic": "العنكبوت",
+    "meaning": "Laba-laba",
+    "verseCount": 69,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 30,
+    "nameLatin": "Ar-Rum",
+    "nameArabic": "الروم",
+    "meaning": "Bangsa Romawi",
+    "verseCount": 60,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 31,
+    "nameLatin": "Luqman",
+    "nameArabic": "لقمان",
+    "meaning": "Luqman",
+    "verseCount": 34,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 32,
+    "nameLatin": "As-Sajdah",
+    "nameArabic": "السجدة",
+    "meaning": "Sujud",
+    "verseCount": 30,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 33,
+    "nameLatin": "Al-Ahzab",
+    "nameArabic": "الأحزاب",
+    "meaning": "Golongan Bersekutu",
+    "verseCount": 73,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 34,
+    "nameLatin": "Saba'",
+    "nameArabic": "سبإ",
+    "meaning": "Kaum Saba'",
+    "verseCount": 54,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 35,
+    "nameLatin": "Fatir",
+    "nameArabic": "فاطر",
+    "meaning": "Pencipta",
+    "verseCount": 45,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 36,
+    "nameLatin": "Yasin",
+    "nameArabic": "يس",
+    "meaning": "Yasin",
+    "verseCount": 83,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 37,
+    "nameLatin": "As-Saffat",
+    "nameArabic": "الصافات",
+    "meaning": "Barisan-barisan",
+    "verseCount": 182,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 38,
+    "nameLatin": "Sad",
+    "nameArabic": "ص",
+    "meaning": "Sad",
+    "verseCount": 88,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 39,
+    "nameLatin": "Az-Zumar",
+    "nameArabic": "الزمر",
+    "meaning": "Rombongan-rombongan",
+    "verseCount": 75,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 40,
+    "nameLatin": "Ghafir",
+    "nameArabic": "غافر",
+    "meaning": "Yang Mengampuni",
+    "verseCount": 85,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 41,
+    "nameLatin": "Fussilat",
+    "nameArabic": "فصلت",
+    "meaning": "Dijelaskan",
+    "verseCount": 54,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 42,
+    "nameLatin": "Asy-Syura",
+    "nameArabic": "الشورى",
+    "meaning": "Musyawarah",
+    "verseCount": 53,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 43,
+    "nameLatin": "Az-Zukhruf",
+    "nameArabic": "الزخرف",
+    "meaning": "Perhiasan",
+    "verseCount": 89,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 44,
+    "nameLatin": "Ad-Dukhan",
+    "nameArabic": "الدخان",
+    "meaning": "Kabut",
+    "verseCount": 59,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 45,
+    "nameLatin": "Al-Jasiyah",
+    "nameArabic": "الجاثية",
+    "meaning": "Yang Berlutut",
+    "verseCount": 37,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 46,
+    "nameLatin": "Al-Ahqaf",
+    "nameArabic": "الأحقاف",
+    "meaning": "Bukit-bukit Pasir",
+    "verseCount": 35,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 47,
+    "nameLatin": "Muhammad",
+    "nameArabic": "محمد",
+    "meaning": "Muhammad",
+    "verseCount": 38,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 48,
+    "nameLatin": "Al-Fath",
+    "nameArabic": "الفتح",
+    "meaning": "Kemenangan",
+    "verseCount": 29,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 49,
+    "nameLatin": "Al-Hujurat",
+    "nameArabic": "الحجرات",
+    "meaning": "Kamar-kamar",
+    "verseCount": 18,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 50,
+    "nameLatin": "Qaf",
+    "nameArabic": "ق",
+    "meaning": "Qaf",
+    "verseCount": 45,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 51,
+    "nameLatin": "Az-Zariyat",
+    "nameArabic": "الذاريات",
+    "meaning": "Angin Menerbangkan",
+    "verseCount": 60,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 52,
+    "nameLatin": "At-Tur",
+    "nameArabic": "الطور",
+    "meaning": "Bukit Tursina",
+    "verseCount": 49,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 53,
+    "nameLatin": "An-Najm",
+    "nameArabic": "النجم",
+    "meaning": "Bintang",
+    "verseCount": 62,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 54,
+    "nameLatin": "Al-Qamar",
+    "nameArabic": "القمر",
+    "meaning": "Bulan",
+    "verseCount": 55,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 55,
+    "nameLatin": "Ar-Rahman",
+    "nameArabic": "الرحمن",
+    "meaning": "Maha Pengasih",
+    "verseCount": 78,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 56,
+    "nameLatin": "Al-Waqi'ah",
+    "nameArabic": "الواقعة",
+    "meaning": "Hari Kiamat",
+    "verseCount": 96,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 57,
+    "nameLatin": "Al-Hadid",
+    "nameArabic": "الحديد",
+    "meaning": "Besi",
+    "verseCount": 29,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 58,
+    "nameLatin": "Al-Mujadilah",
+    "nameArabic": "المجادلة",
+    "meaning": "Gugatan",
+    "verseCount": 22,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 59,
+    "nameLatin": "Al-Hasyr",
+    "nameArabic": "الحشر",
+    "meaning": "Pengusiran",
+    "verseCount": 24,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 60,
+    "nameLatin": "Al-Mumtahanah",
+    "nameArabic": "الممتحنة",
+    "meaning": "Wanita Diuji",
+    "verseCount": 13,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 61,
+    "nameLatin": "As-Saff",
+    "nameArabic": "الصف",
+    "meaning": "Barisan",
+    "verseCount": 14,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 62,
+    "nameLatin": "Al-Jumu'ah",
+    "nameArabic": "الجمعة",
+    "meaning": "Hari Jumat",
+    "verseCount": 11,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 63,
+    "nameLatin": "Al-Munafiqun",
+    "nameArabic": "المنافقون",
+    "meaning": "Orang-orang Munafik",
+    "verseCount": 11,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 64,
+    "nameLatin": "At-Taghabun",
+    "nameArabic": "التغابن",
+    "meaning": "Hari Dinampakkan Kesalahan",
+    "verseCount": 18,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 65,
+    "nameLatin": "At-Talaq",
+    "nameArabic": "الطلاق",
+    "meaning": "Perceraian",
+    "verseCount": 12,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 66,
+    "nameLatin": "At-Tahrim",
+    "nameArabic": "التحريم",
+    "meaning": "Mengharamkan",
+    "verseCount": 12,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 67,
+    "nameLatin": "Al-Mulk",
+    "nameArabic": "الملك",
+    "meaning": "Kerajaan",
+    "verseCount": 30,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 68,
+    "nameLatin": "Al-Qalam",
+    "nameArabic": "القلم",
+    "meaning": "Pena",
+    "verseCount": 52,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 69,
+    "nameLatin": "Al-Haqqah",
+    "nameArabic": "الحاقة",
+    "meaning": "Hari Kiamat Pasti",
+    "verseCount": 52,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 70,
+    "nameLatin": "Al-Ma'arij",
+    "nameArabic": "المعارج",
+    "meaning": "Tempat Naik",
+    "verseCount": 44,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 71,
+    "nameLatin": "Nuh",
+    "nameArabic": "نوح",
+    "meaning": "Nuh",
+    "verseCount": 28,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 72,
+    "nameLatin": "Al-Jinn",
+    "nameArabic": "الجن",
+    "meaning": "Jin",
+    "verseCount": 28,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 73,
+    "nameLatin": "Al-Muzzammil",
+    "nameArabic": "المزمل",
+    "meaning": "Orang Berselimut",
+    "verseCount": 20,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 74,
+    "nameLatin": "Al-Muddassir",
+    "nameArabic": "المدثر",
+    "meaning": "Orang Berkemul",
+    "verseCount": 56,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 75,
+    "nameLatin": "Al-Qiyamah",
+    "nameArabic": "القيامة",
+    "meaning": "Hari Berbangkit",
+    "verseCount": 40,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 76,
+    "nameLatin": "Al-Insan",
+    "nameArabic": "الإنسان",
+    "meaning": "Manusia",
+    "verseCount": 31,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 77,
+    "nameLatin": "Al-Mursalat",
+    "nameArabic": "المرسلات",
+    "meaning": "Malaikat Dikirim",
+    "verseCount": 50,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 78,
+    "nameLatin": "An-Naba'",
+    "nameArabic": "النبإ",
+    "meaning": "Berita Besar",
+    "verseCount": 40,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 79,
+    "nameLatin": "An-Nazi'at",
+    "nameArabic": "النازعات",
+    "meaning": "Malaikat Mencabut",
+    "verseCount": 46,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 80,
+    "nameLatin": "'Abasa",
+    "nameArabic": "عبس",
+    "meaning": "Bermuka Masam",
+    "verseCount": 42,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 81,
+    "nameLatin": "At-Takwir",
+    "nameArabic": "التكوير",
+    "meaning": "Menggulung",
+    "verseCount": 29,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 82,
+    "nameLatin": "Al-Infitar",
+    "nameArabic": "الانفطار",
+    "meaning": "Terbelah",
+    "verseCount": 19,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 83,
+    "nameLatin": "Al-Mutaffifin",
+    "nameArabic": "المطففين",
+    "meaning": "Orang Curang",
+    "verseCount": 36,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 84,
+    "nameLatin": "Al-Insyiqaq",
+    "nameArabic": "الانشقاق",
+    "meaning": "Terbelah",
+    "verseCount": 25,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 85,
+    "nameLatin": "Al-Buruj",
+    "nameArabic": "البروج",
+    "meaning": "Gugusan Bintang",
+    "verseCount": 22,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 86,
+    "nameLatin": "At-Tariq",
+    "nameArabic": "الطارق",
+    "meaning": "Yang Datang di Malam Hari",
+    "verseCount": 17,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 87,
+    "nameLatin": "Al-A'la",
+    "nameArabic": "الأعلى",
+    "meaning": "Yang Paling Tinggi",
+    "verseCount": 19,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 88,
+    "nameLatin": "Al-Ghasyiyah",
+    "nameArabic": "الغاشية",
+    "meaning": "Hari Pembalasan",
+    "verseCount": 26,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 89,
+    "nameLatin": "Al-Fajr",
+    "nameArabic": "الفجر",
+    "meaning": "Fajar",
+    "verseCount": 30,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 90,
+    "nameLatin": "Al-Balad",
+    "nameArabic": "البلد",
+    "meaning": "Negeri",
+    "verseCount": 20,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 91,
+    "nameLatin": "Asy-Syams",
+    "nameArabic": "الشمس",
+    "meaning": "Matahari",
+    "verseCount": 15,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 92,
+    "nameLatin": "Al-Lail",
+    "nameArabic": "الليل",
+    "meaning": "Malam",
+    "verseCount": 21,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 93,
+    "nameLatin": "Ad-Duha",
+    "nameArabic": "الضحى",
+    "meaning": "Waktu Dhuha",
+    "verseCount": 11,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 94,
+    "nameLatin": "Asy-Syarh",
+    "nameArabic": "الشرح",
+    "meaning": "Melapangkan",
+    "verseCount": 8,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 95,
+    "nameLatin": "At-Tin",
+    "nameArabic": "التين",
+    "meaning": "Buah Tin",
+    "verseCount": 8,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 96,
+    "nameLatin": "Al-'Alaq",
+    "nameArabic": "العلق",
+    "meaning": "Segumpal Darah",
+    "verseCount": 19,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 97,
+    "nameLatin": "Al-Qadr",
+    "nameArabic": "القدر",
+    "meaning": "Kemuliaan",
+    "verseCount": 5,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 98,
+    "nameLatin": "Al-Bayyinah",
+    "nameArabic": "البينة",
+    "meaning": "Bukti Nyata",
+    "verseCount": 8,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 99,
+    "nameLatin": "Az-Zalzalah",
+    "nameArabic": "الزلزلة",
+    "meaning": "Keguncangan",
+    "verseCount": 8,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 100,
+    "nameLatin": "Al-'Adiyat",
+    "nameArabic": "العاديات",
+    "meaning": "Kuda Perang",
+    "verseCount": 11,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 101,
+    "nameLatin": "Al-Qari'ah",
+    "nameArabic": "القارعة",
+    "meaning": "Hari Kiamat",
+    "verseCount": 11,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 102,
+    "nameLatin": "At-Takasur",
+    "nameArabic": "التكاثر",
+    "meaning": "Bermegah-megahan",
+    "verseCount": 8,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 103,
+    "nameLatin": "Al-'Asr",
+    "nameArabic": "العصر",
+    "meaning": "Masa / Waktu",
+    "verseCount": 3,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 104,
+    "nameLatin": "Al-Humazah",
+    "nameArabic": "الهمزة",
+    "meaning": "Pengumpat",
+    "verseCount": 9,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 105,
+    "nameLatin": "Al-Fil",
+    "nameArabic": "الفيل",
+    "meaning": "Gajah",
+    "verseCount": 5,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 106,
+    "nameLatin": "Quraisy",
+    "nameArabic": "قريش",
+    "meaning": "Suku Quraisy",
+    "verseCount": 4,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 107,
+    "nameLatin": "Al-Ma'un",
+    "nameArabic": "الماعون",
+    "meaning": "Barang Berguna",
+    "verseCount": 7,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 108,
+    "nameLatin": "Al-Kausar",
+    "nameArabic": "الكوثر",
+    "meaning": "Nikmat Berlimpah",
+    "verseCount": 3,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 109,
+    "nameLatin": "Al-Kafirun",
+    "nameArabic": "الكافرون",
+    "meaning": "Orang-orang Kafir",
+    "verseCount": 6,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 110,
+    "nameLatin": "An-Nasr",
+    "nameArabic": "النصر",
+    "meaning": "Pertolongan",
+    "verseCount": 3,
+    "revelation": "Madinah"
+  },
+  {
+    "number": 111,
+    "nameLatin": "Al-Lahab",
+    "nameArabic": "اللهب",
+    "meaning": "Gejolak Api",
+    "verseCount": 5,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 112,
+    "nameLatin": "Al-Ikhlas",
+    "nameArabic": "الإخلاص",
+    "meaning": "Memurnikan Keesaan Allah",
+    "verseCount": 4,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 113,
+    "nameLatin": "Al-Falaq",
+    "nameArabic": "الفلق",
+    "meaning": "Waktu Subuh",
+    "verseCount": 5,
+    "revelation": "Mekah"
+  },
+  {
+    "number": 114,
+    "nameLatin": "An-Nas",
+    "nameArabic": "الناس",
+    "meaning": "Manusia",
+    "verseCount": 6,
+    "revelation": "Mekah"
+  }
+]

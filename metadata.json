@@ -1,0 +1,6 @@
+{
+  "name": "QuranKita",
+  "description": "Aplikasi Al-Qur'an modern dan elegan untuk membaca, menghafal (tahfidz), dan memahami makna ayat suci Al-Qur'an.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
