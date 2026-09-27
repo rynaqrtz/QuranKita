@@ -42,7 +42,6 @@ import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Psychology
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.CheckCircleOutline
@@ -59,7 +58,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -98,9 +96,7 @@ import com.example.ui.theme.AmiriFontFamily
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
-import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
-import com.example.ui.theme.GoldLight
 import com.example.ui.theme.QuranTypoPresets
 import com.example.util.TajwidFormatter
 

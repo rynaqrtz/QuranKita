@@ -1,13 +1,11 @@
 package com.example.util
 
 import com.example.data.model.PrayerTimeInfo
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.acos
-import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.floor

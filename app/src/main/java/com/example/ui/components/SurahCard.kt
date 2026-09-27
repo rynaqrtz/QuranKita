@@ -42,7 +42,6 @@ import com.example.ui.theme.DarkCardSurface
 import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
-import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
 
