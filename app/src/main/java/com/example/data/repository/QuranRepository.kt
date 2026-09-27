@@ -69,10 +69,11 @@ class QuranRepository(private val quranDao: QuranDao) {
             var verses = mutableListOf<VerseEntity>()
             var versesFts = mutableListOf<VerseFtsEntity>()
             context.assets.open("verses.txt").bufferedReader().use { reader ->
-                reader.forEachLine { line ->
-                    if (line.isEmpty()) return@forEachLine
+                while (true) {
+                    val line = reader.readLine() ?: break
+                    if (line.isEmpty()) continue
                     val parts = line.split('\t')
-                    if (parts.size < 6) return@forEachLine
+                    if (parts.size < 6) continue
                     val surahNo = parts[0].toInt()
                     val vNum = parts[1].toInt()
                     val arabic = parts[2]
