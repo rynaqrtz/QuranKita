@@ -123,7 +123,7 @@ fun QuranListScreen(
                     if (searchQuery.isNotEmpty()) {
                         IconButton(
                             onClick = { viewModel.onSearchQueryChanged("") },
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
@@ -519,7 +519,7 @@ fun QuranListScreen(
 
                                             IconButton(
                                                 onClick = { viewModel.toggleVerseBookmark(verse.id, true) },
-                                                modifier = Modifier.size(32.dp)
+                                                modifier = Modifier.size(48.dp)
                                             ) {
                                                 Icon(
                                                     imageVector = Icons.Default.Bookmark,

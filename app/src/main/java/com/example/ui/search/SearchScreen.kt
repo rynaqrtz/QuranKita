@@ -110,7 +110,7 @@ fun SearchScreen(
                     if (query.isNotEmpty()) {
                         IconButton(
                             onClick = { viewModel.onQueryChanged("") },
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Close,

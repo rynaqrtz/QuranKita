@@ -362,7 +362,7 @@ fun KhatamTrackerScreen(
                         // Checkbox Toggle (Accessible Min 44dp Touch Area)
                         IconButton(
                             onClick = { toggleJuzCompletion(juz.number) },
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
                                 imageVector = if (isCompleted) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
@@ -405,7 +405,7 @@ fun KhatamTrackerScreen(
                         // Action: Read this Juz (Accessible Min 44dp Touch Area)
                         IconButton(
                             onClick = { onNavigateToSurah(juz.startSurahNumber) },
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.MenuBook,

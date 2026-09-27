@@ -380,7 +380,7 @@ fun AudioPlayerBar(
                     ) {
                         IconButton(
                             onClick = onPrev,
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(40.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.SkipPrevious,
@@ -417,7 +417,7 @@ fun AudioPlayerBar(
 
                         IconButton(
                             onClick = onNext,
-                            modifier = Modifier.size(44.dp)
+                            modifier = Modifier.size(40.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.SkipNext,

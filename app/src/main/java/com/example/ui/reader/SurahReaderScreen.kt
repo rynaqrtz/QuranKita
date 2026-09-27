@@ -682,7 +682,7 @@ fun VerseCardItem(
                     // Full Tafsir Modal Button
                     IconButton(
                         onClick = onOpenFullTafsir,
-                        modifier = Modifier.size(42.dp)
+                        modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.MenuBook,
@@ -695,7 +695,7 @@ fun VerseCardItem(
                     // Mark as Memorized (Tahfidz)
                     IconButton(
                         onClick = onToggleMemorized,
-                        modifier = Modifier.size(42.dp)
+                        modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = if (verse.isMemorized) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
@@ -708,7 +708,7 @@ fun VerseCardItem(
                     // Bookmark
                     IconButton(
                         onClick = onToggleBookmark,
-                        modifier = Modifier.size(42.dp)
+                        modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = if (verse.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
@@ -721,7 +721,7 @@ fun VerseCardItem(
                     // Play Audio
                     IconButton(
                         onClick = onPlay,
-                        modifier = Modifier.size(42.dp)
+                        modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,

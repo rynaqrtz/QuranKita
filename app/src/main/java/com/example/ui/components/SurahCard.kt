@@ -180,7 +180,7 @@ fun SurahCard(
 
                 IconButton(
                     onClick = onToggleBookmark,
-                    modifier = Modifier.size(44.dp)
+                    modifier = Modifier.size(48.dp)
                 ) {
                     Icon(
                         imageVector = if (surah.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
