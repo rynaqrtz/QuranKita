@@ -109,7 +109,7 @@ class AudioPlayerManager(private val context: Context) {
             return
         }
 
-        stop()
+        releasePlayer()
 
         _playbackState.value = state.copy(
             isLoading = true,
@@ -198,7 +198,7 @@ class AudioPlayerManager(private val context: Context) {
                     totalVerses = state.totalVersesInSurah
                 )
             } else {
-                stop()
+                releasePlayer()
             }
         }
     }
@@ -240,8 +240,13 @@ class AudioPlayerManager(private val context: Context) {
     }
 
     fun stop() {
-        progressJob?.cancel()
         sleepTimerJob?.cancel()
+        _playbackState.value = _playbackState.value.copy(sleepTimerMinutesRemaining = null)
+        releasePlayer()
+    }
+
+    private fun releasePlayer() {
+        progressJob?.cancel()
         try {
             mediaPlayer?.stop()
             mediaPlayer?.release()
@@ -252,8 +257,7 @@ class AudioPlayerManager(private val context: Context) {
         _playbackState.value = _playbackState.value.copy(
             isPlaying = false,
             isLoading = false,
-            currentPositionMs = 0,
-            sleepTimerMinutesRemaining = null
+            currentPositionMs = 0
         )
     }
 

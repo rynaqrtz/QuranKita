@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.data.model.PrayerTimeInfo
 import com.example.util.CityLocation
 import com.example.util.CompassState
+import com.example.util.PrayerSettings
 import com.example.util.PrayerTimeCalculator
 import com.example.util.QiblaCompassHelper
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,7 @@ class PrayerQiblaViewModel(application: Application) : AndroidViewModel(applicat
     private val _selectedTab = MutableStateFlow(PrayerQiblaTab.SHOLAT)
     val selectedTab: StateFlow<PrayerQiblaTab> = _selectedTab.asStateFlow()
 
-    private val _selectedCity = MutableStateFlow(PrayerTimeCalculator.DEFAULT_CITIES.first())
+    private val _selectedCity = MutableStateFlow(PrayerSettings.loadCity(application))
     val selectedCity: StateFlow<CityLocation> = _selectedCity.asStateFlow()
 
     private val _prayerTimes = MutableStateFlow<List<PrayerTimeInfo>>(emptyList())
@@ -60,6 +61,7 @@ class PrayerQiblaViewModel(application: Application) : AndroidViewModel(applicat
 
     fun selectCity(city: CityLocation) {
         _selectedCity.value = city
+        PrayerSettings.saveCity(getApplication(), city)
         compassHelper.setLocation(city.latitude, city.longitude)
         updatePrayerTimes()
     }

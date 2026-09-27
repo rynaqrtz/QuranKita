@@ -157,22 +157,13 @@ object PrayerTimeCalculator {
     }
 
     fun getTodayHijriDate(): String {
-        // Approximate Hijri conversion for calendar display
         val cal = Calendar.getInstance()
-        val year = cal.get(Calendar.YEAR)
-        val month = cal.get(Calendar.MONTH)
-        val day = cal.get(Calendar.DAY_OF_MONTH)
-
-        // Approximation for standard display
-        val hijriMonths = listOf(
-            "Muharram", "Safar", "Rabi'ul Awwal", "Rabi'uts Tsani",
-            "Jumadil Ula", "Jumadil Akhir", "Rajab", "Sya'ban",
-            "Ramadhan", "Syawwal", "Dzulqa'dah", "Dzulhijjah"
+        return HijriCalendar.format(
+            HijriCalendar.fromGregorian(
+                year = cal.get(Calendar.YEAR),
+                month = cal.get(Calendar.MONTH) + 1,
+                day = cal.get(Calendar.DAY_OF_MONTH)
+            )
         )
-        val hijriYear = 1448 // Adjusted for current era
-        val hijriDay = ((day + 12) % 29) + 1
-        val hijriMonth = hijriMonths[(month + 2) % 12]
-
-        return "$hijriDay $hijriMonth $hijriYear H"
     }
 }

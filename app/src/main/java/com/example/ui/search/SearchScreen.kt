@@ -135,7 +135,7 @@ fun SearchScreen(
                     .padding(horizontal = 16.dp, vertical = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(viewModel.popularKeywords) { keyword ->
+                items(viewModel.popularKeywords, key = { it }) { keyword ->
                     FilterChip(
                         selected = query.equals(keyword, ignoreCase = true),
                         onClick = { viewModel.onQueryChanged(keyword) },

@@ -11,10 +11,12 @@ import com.example.data.repository.QuranRepository
 import com.example.ui.theme.AppThemeMode
 import com.example.util.AudioPlaybackState
 import com.example.util.AudioPlayerManager
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -33,6 +35,7 @@ data class ReaderSettings(
     val readerTheme: AppThemeMode = AppThemeMode.DARK
 )
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SurahReaderViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: QuranRepository
@@ -58,13 +61,13 @@ class SurahReaderViewModel(application: Application) : AndroidViewModel(applicat
         val db = AppDatabase.getInstance(application)
         repository = QuranRepository(db.quranDao())
 
-        currentSurah = repository.getSurah(_currentSurahNumber.value).stateIn(
+        currentSurah = _currentSurahNumber.flatMapLatest { repository.getSurah(it) }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = null
         )
 
-        verses = repository.getVersesForSurah(_currentSurahNumber.value).stateIn(
+        verses = _currentSurahNumber.flatMapLatest { repository.getVersesForSurah(it) }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
@@ -73,16 +76,6 @@ class SurahReaderViewModel(application: Application) : AndroidViewModel(applicat
 
     fun loadSurah(surahNumber: Int) {
         _currentSurahNumber.value = surahNumber
-        viewModelScope.launch {
-            val surah = repository.getSurah(surahNumber)
-            repository.ensureVersesLoaded(
-                surahNumber = surahNumber,
-                surahName = "Surah $surahNumber",
-                verseCount = 7
-            )
-            // Save last read
-            repository.setLastRead(surahNumber, "Surah $surahNumber", 1)
-        }
     }
 
     fun setViewMode(mode: ReadingViewMode) {

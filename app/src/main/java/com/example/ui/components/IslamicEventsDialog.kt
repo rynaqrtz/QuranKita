@@ -78,6 +78,7 @@ fun IslamicEventsCard(
 ) {
     val events = remember { IslamicEvent.getUpcomingEvents() }
     val primaryEvent = events.firstOrNull { it.id == "ramadan_1448" } ?: events.first()
+    val gregorianFormat = remember { SimpleDateFormat("dd MMM yyyy", Locale("id", "ID")) }
 
     // Smooth subtle ambient pulsing effect for luxury 3D depth
     val infiniteTransition = rememberInfiniteTransition(label = "islamic_card_ambient")
@@ -253,7 +254,7 @@ fun IslamicEventsCard(
                             .padding(horizontal = 7.dp, vertical = 2.dp)
                     ) {
                         Text(
-                            text = "18 Feb 2027",
+                            text = gregorianFormat.format(primaryEvent.targetGregorianDate),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant

@@ -220,7 +220,7 @@ fun PrayerQiblaScreen(
                         }
 
                         // Prayer Times Cards
-                        items(prayerTimes) { prayer ->
+                        items(prayerTimes, key = { it.name }) { prayer ->
                             val isNext = prayer.isNext
                             Card(
                                 modifier = Modifier.fillMaxWidth(),

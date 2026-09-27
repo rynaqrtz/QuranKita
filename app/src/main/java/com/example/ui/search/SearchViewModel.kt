@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
@@ -35,7 +36,11 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             if (q.isBlank() || q.length < 2) {
                 flowOf(emptyList())
             } else {
-                repository.searchVerses(q)
+                repository.searchVersesFts(q)
+                    .catch { emit(emptyList()) }
+                    .flatMapLatest { fts ->
+                        if (fts.isNotEmpty()) flowOf(fts) else repository.searchVerses(q)
+                    }
             }
         }.stateIn(
             scope = viewModelScope,

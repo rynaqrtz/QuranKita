@@ -14,6 +14,7 @@ import com.example.data.model.Verse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -149,45 +150,8 @@ class QuranRepository(private val quranDao: QuranDao) {
             list.map { it.toModel() }
         }.flowOn(Dispatchers.IO)
 
-    suspend fun ensureVersesLoaded(surahNumber: Int, surahName: String, verseCount: Int) = withContext(Dispatchers.IO) {
-        val existing = quranDao.getVersesForSurahSync(surahNumber)
-        if (existing.isEmpty()) {
-            val generated = mutableListOf<VerseEntity>()
-            val generatedFts = mutableListOf<VerseFtsEntity>()
-            for (v in 1..verseCount) {
-                val arabicText = if (v == 1 && surahNumber != 1 && surahNumber != 9) {
-                    "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
-                } else {
-                    "آية كريمة من سورة $surahName رقم $v"
-                }
-                val trans = "Ayat ke-$v dari Surat $surahName. Bacalah dan renungkan maknanya dengan khusyuk."
-                val taf = "Tafsir ringkas untuk ayat ke-$v dari Surat $surahName."
-                generated.add(
-                    VerseEntity(
-                        id = "${surahNumber}_$v",
-                        surahNumber = surahNumber,
-                        verseNumber = v,
-                        arabic = arabicText,
-                        transliteration = "Ayat $v Surat $surahName",
-                        translation = trans,
-                        tafsir = taf
-                    )
-                )
-                generatedFts.add(
-                    VerseFtsEntity(
-                        rowid = surahNumber * 1000 + v,
-                        surahNumber = surahNumber,
-                        verseNumber = v,
-                        arabic = arabicText,
-                        transliteration = "Ayat $v Surat $surahName",
-                        translation = trans,
-                        tafsir = taf
-                    )
-                )
-            }
-            quranDao.insertVerses(generated)
-            quranDao.insertVersesFts(generatedFts)
-        }
+    suspend fun getVerse(surahNumber: Int, verseNumber: Int): Verse? = withContext(Dispatchers.IO) {
+        quranDao.getVerse(surahNumber, verseNumber)?.toModel()
     }
 
     fun searchVerses(query: String): Flow<List<Verse>> =
@@ -195,15 +159,33 @@ class QuranRepository(private val quranDao: QuranDao) {
             list.map { it.toModel() }
         }.flowOn(Dispatchers.IO)
 
-    fun searchVersesFts(query: String): Flow<List<Verse>> =
-        quranDao.searchVersesFts("*$query*").map { list ->
+    fun searchVersesFts(query: String): Flow<List<Verse>> {
+        val match = toFtsMatch(query)
+        if (match.isEmpty()) return flowOf(emptyList())
+        return quranDao.searchVersesFts(match).map { list ->
             list.map { it.toModel() }
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun searchSurahsFts(query: String): Flow<List<Surah>> =
-        quranDao.searchSurahsFts("*$query*").map { list ->
+    fun searchSurahsFts(query: String): Flow<List<Surah>> {
+        val match = toFtsMatch(query)
+        if (match.isEmpty()) return flowOf(emptyList())
+        return quranDao.searchSurahsFts(match).map { list ->
             list.map { it.toModel() }
         }.flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * Builds a valid FTS4 MATCH expression: every token becomes a prefix term
+     * (`token*`) and anything that is not a letter or digit is dropped, so free
+     * user text can never yield a malformed MATCH query.
+     */
+    private fun toFtsMatch(query: String): String =
+        query.trim()
+            .replace(Regex("[^\\p{L}\\p{N}]+"), " ")
+            .split(Regex("\\s+"))
+            .filter { it.isNotBlank() }
+            .joinToString(" ") { "$it*" }
 
     suspend fun setLastRead(surahNumber: Int, surahName: String, verseNumber: Int) = withContext(Dispatchers.IO) {
         quranDao.setLastRead(

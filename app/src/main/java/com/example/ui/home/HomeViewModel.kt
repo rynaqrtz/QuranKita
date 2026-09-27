@@ -8,13 +8,18 @@ import com.example.data.model.LastRead
 import com.example.data.model.PrayerTimeInfo
 import com.example.data.model.Surah
 import com.example.data.repository.QuranRepository
+import com.example.util.PrayerSettings
 import com.example.util.PrayerTimeCalculator
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import java.util.Date
 
 data class HomeUiState(
@@ -47,6 +52,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val lastRead: StateFlow<LastRead?>
     val allSurahs: StateFlow<List<Surah>>
 
+    /** Curated ayat rotated by day, read from the bundled Quran data. */
+    private val verseOfDayReferences = listOf(
+        2 to 286, 13 to 28, 61 to 4, 3 to 139, 29 to 69, 65 to 3,
+        2 to 152, 67 to 2, 10 to 57, 48 to 29, 55 to 13, 94 to 5
+    )
+
     init {
         val db = AppDatabase.getInstance(application)
         repository = QuranRepository(db.quranDao())
@@ -64,43 +75,67 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         )
 
         viewModelScope.launch {
-            val startTime = System.currentTimeMillis()
             repository.initializeDatabase(application)
             refreshPrayerTimes()
+            refreshVerseOfTheDay()
             observeProgress()
-            val elapsed = System.currentTimeMillis() - startTime
-            val remaining = 900L - elapsed
-            if (remaining > 0) {
-                kotlinx.coroutines.delay(remaining)
-            }
             _uiState.value = _uiState.value.copy(isAppLoading = false)
+
+            // Recompute once a minute so "sholat berikutnya" and the hijri date
+            // never go stale. StateFlow drops equal values, so this stays quiet
+            // until something actually changes.
+            while (isActive) {
+                delay(60_000)
+                refreshPrayerTimes()
+                refreshVerseOfTheDay()
+            }
         }
     }
 
     private fun refreshPrayerTimes() {
-        val city = PrayerTimeCalculator.DEFAULT_CITIES.first()
+        val city = PrayerSettings.loadCity(getApplication<Application>())
         val times = PrayerTimeCalculator.calculatePrayerTimes(
             latitude = city.latitude,
             longitude = city.longitude,
             timeZoneOffset = city.timeZoneOffset,
             date = Date()
         )
-        val next = times.firstOrNull { it.isNext }
 
         _uiState.value = _uiState.value.copy(
             selectedCityName = city.name,
             hijriDate = PrayerTimeCalculator.getTodayHijriDate(),
             prayerTimes = times,
-            nextPrayer = next
+            nextPrayer = times.firstOrNull { it.isNext }
+        )
+    }
+
+    private suspend fun refreshVerseOfTheDay() {
+        val today = Calendar.getInstance()
+        val index = (
+            today.get(Calendar.DAY_OF_YEAR) + today.get(Calendar.YEAR)
+            ) % verseOfDayReferences.size
+        val (surahNumber, verseNumber) = verseOfDayReferences[index]
+
+        val verse = repository.getVerse(surahNumber, verseNumber) ?: return
+        val surah = repository.getSurah(surahNumber).first()
+
+        _uiState.value = _uiState.value.copy(
+            verseOfTheDay = VerseOfTheDay(
+                surahName = surah?.nameLatin ?: "Surah $surahNumber",
+                surahNumber = surahNumber,
+                verseNumber = verseNumber,
+                arabic = verse.arabic,
+                translation = verse.translation,
+                tadabbur = verse.tafsir
+            )
         )
     }
 
     private fun observeProgress() {
         viewModelScope.launch {
             allSurahs.collect { surahs ->
-                val khatam = surahs.count { it.isKhatam }
                 _uiState.value = _uiState.value.copy(
-                    totalKhatamCount = khatam
+                    totalKhatamCount = surahs.count { it.isKhatam }
                 )
             }
         }

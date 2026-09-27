@@ -56,8 +56,8 @@ interface QuranDao {
     @Query("SELECT * FROM verses WHERE surahNumber = :surahNumber ORDER BY verseNumber ASC")
     fun getVersesForSurah(surahNumber: Int): Flow<List<VerseEntity>>
 
-    @Query("SELECT * FROM verses WHERE surahNumber = :surahNumber ORDER BY verseNumber ASC")
-    suspend fun getVersesForSurahSync(surahNumber: Int): List<VerseEntity>
+    @Query("SELECT * FROM verses WHERE surahNumber = :surahNumber AND verseNumber = :verseNumber LIMIT 1")
+    suspend fun getVerse(surahNumber: Int, verseNumber: Int): VerseEntity?
 
     @Query("SELECT * FROM verses WHERE isBookmarked = 1 ORDER BY surahNumber ASC, verseNumber ASC")
     fun getBookmarkedVerses(): Flow<List<VerseEntity>>
