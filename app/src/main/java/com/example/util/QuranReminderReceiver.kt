@@ -42,7 +42,7 @@ class QuranReminderReceiver : BroadcastReceiver() {
         )
 
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("Waktunya Tilawah Al-Qur'an ✨")
             .setContentText("Mari luangkan waktu sejenak bertadabbur dengan Kalamullah hari ini.")
             .setStyle(

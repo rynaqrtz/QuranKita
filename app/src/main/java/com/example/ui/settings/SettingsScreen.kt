@@ -95,7 +95,6 @@ fun SettingsScreen(
     val isDailyReminderEnabled by viewModel.isDailyReminderEnabled.collectAsStateWithLifecycle()
     val reminderHour by viewModel.reminderHour.collectAsStateWithLifecycle()
     val reminderMinute by viewModel.reminderMinute.collectAsStateWithLifecycle()
-    val khatamTargetDays by viewModel.khatamTargetDays.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val permissionLauncher = rememberLauncherForActivityResult(

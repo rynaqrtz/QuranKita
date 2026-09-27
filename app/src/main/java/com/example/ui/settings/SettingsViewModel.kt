@@ -42,9 +42,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val _reminderMinute = MutableStateFlow(QuranReminderManager.getReminderMinute(application))
     val reminderMinute: StateFlow<Int> = _reminderMinute.asStateFlow()
 
-    private val _khatamTargetDays = MutableStateFlow(prefs.getInt("khatam_target_days", 30))
-    val khatamTargetDays: StateFlow<Int> = _khatamTargetDays.asStateFlow()
-
     val downloadedAudios: StateFlow<List<DownloadedAudioEntity>>
 
     init {
@@ -98,11 +95,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 minute
             )
         }
-    }
-
-    fun setKhatamTargetDays(days: Int) {
-        _khatamTargetDays.value = days
-        prefs.edit().putInt("khatam_target_days", days).apply()
     }
 
     fun deleteDownloadedAudio(audio: DownloadedAudioEntity) {

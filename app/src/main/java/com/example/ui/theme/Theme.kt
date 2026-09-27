@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import com.example.R
@@ -199,30 +198,6 @@ val Typography = QuranKitaTypography
 object QuranTypoPresets {
 
     /**
-     * Arabic verse text using authentic Amiri Naskh calligraphy.
-     * Line-height dynamically scales with font size (1.85x) to prevent mark clipping.
-     */
-    fun arabicVerse(fontSize: Float = 26f): TextStyle = TextStyle(
-        fontFamily = AmiriFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = fontSize.sp,
-        lineHeight = (fontSize * 1.85f).sp,
-        textAlign = TextAlign.End,
-        letterSpacing = 0.sp
-    )
-
-    /**
-     * Arabic Surah title badge (e.g. الفاتحة).
-     */
-    val arabicSurahTitle: TextStyle = TextStyle(
-        fontFamily = AmiriFontFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 22.sp,
-        lineHeight = 30.sp,
-        textAlign = TextAlign.End
-    )
-
-    /**
      * Latin transliteration for learning recitation and tajwid phonetics.
      */
     val transliteration: TextStyle = TextStyle(
@@ -234,27 +209,6 @@ object QuranTypoPresets {
         letterSpacing = 0.2.sp
     )
 
-    /**
-     * Indonesian Ministry of Religious Affairs (Kemenag) verse translation.
-     */
-    val translation: TextStyle = TextStyle(
-        fontFamily = InterFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.5.sp,
-        lineHeight = 23.sp,
-        letterSpacing = 0.15.sp
-    )
-
-    /**
-     * Concise Indonesian Tafsir paragraph.
-     */
-    val tafsir: TextStyle = TextStyle(
-        fontFamily = InterFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 13.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.2.sp
-    )
 }
 
 // ============================================================================
