@@ -40,7 +40,11 @@ jobs:
         run: ./gradlew assembleCiRelease --stacktrace
 
       - name: Rename APK
-        run: mv app/build/outputs/apk/ciRelease/app-ci-release.apk QuranKita.apk
+        run: |
+          set -e
+          apk=$(find app/build/outputs/apk -name '*.apk' -type f | head -n 1)
+          echo "found: $apk"
+          mv "$apk" QuranKita.apk
 
       - name: Upload Test Report
         if: always()
