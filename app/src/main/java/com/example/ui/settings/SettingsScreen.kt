@@ -60,6 +60,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -73,6 +74,7 @@ import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.GoldAccent
+import com.example.ui.theme.TajwidIqlab
 import com.example.ui.theme.TajwidGhunnah
 import com.example.ui.theme.TajwidIdgham
 import com.example.ui.theme.TajwidIkhfa
@@ -260,7 +262,7 @@ fun SettingsScreen(
                                 color = GoldAccent
                             )
 
-                            // 2-Row Responsive Tajweed Guide Chips (No Clipping)
+                            // 2-Row Responsive Tajweed Guide Chips (Strict M3 Scale & No Clipping)
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -276,6 +278,7 @@ fun SettingsScreen(
                                 ) {
                                     TajweedLegendBadge(color = TajwidQalqalah, label = "Qalqalah", sub = "Memantul", modifier = Modifier.weight(1f))
                                     TajweedLegendBadge(color = TajwidMad, label = "Mad", sub = "Panjang", modifier = Modifier.weight(1f))
+                                    TajweedLegendBadge(color = TajwidIqlab, label = "Iqlab", sub = "Membalik", modifier = Modifier.weight(1f))
                                 }
                             }
 
@@ -784,31 +787,32 @@ private fun TajweedLegendBadge(
             .clip(RoundedCornerShape(10.dp))
             .background(DarkCardSurface)
             .border(1.dp, color.copy(alpha = 0.35f), RoundedCornerShape(10.dp))
-            .padding(horizontal = 8.dp, vertical = 6.dp)
+            .padding(horizontal = 6.dp, vertical = 6.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .size(10.dp)
+                    .size(9.dp)
                     .clip(CircleShape)
                     .background(color)
             )
-            Column {
+            Column(modifier = Modifier.weight(1f, fill = false)) {
                 Text(
                     text = label,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = sub,
-                    fontSize = 9.sp,
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp, lineHeight = 11.sp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

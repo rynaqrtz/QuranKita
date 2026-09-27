@@ -1,5 +1,7 @@
 package com.example.ui.components
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,9 +31,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.Surah
+import com.example.ui.navigation.LocalNavAnimatedVisibilityScope
+import com.example.ui.navigation.LocalSharedTransitionScope
 import com.example.ui.theme.AmiriFontFamily
 import com.example.ui.theme.DarkCardSurface
 import com.example.ui.theme.DarkSurfaceBorder
@@ -41,6 +46,7 @@ import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SurahCard(
     surah: Surah,
@@ -48,6 +54,18 @@ fun SurahCard(
     onToggleBookmark: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+
+    val badgeModifier = if (sharedTransitionScope != null && animatedVisibilityScope != null) {
+        with(sharedTransitionScope) {
+            Modifier.sharedElement(
+                rememberSharedContentState(key = "surah_badge_${surah.number}"),
+                animatedVisibilityScope = animatedVisibilityScope
+            )
+        }
+    } else Modifier
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -58,6 +76,7 @@ fun SurahCard(
         colors = CardDefaults.cardColors(
             containerColor = DarkCardSurface
         ),
+        border = BorderStroke(1.dp, DarkSurfaceBorder),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -67,16 +86,18 @@ fun SurahCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Number in Octagonal/Circular frame with Emerald Gradient
+            // Number in Octagonal/Circular frame with Emerald Gradient & Shared Element Transition
             Box(
                 modifier = Modifier
+                    .then(badgeModifier)
                     .size(46.dp)
                     .clip(RoundedCornerShape(14.dp))
                     .background(
                         Brush.linearGradient(
                             listOf(EmeraldDark, Color(0xFF0F766E))
                         )
-                    ),
+                    )
+                    .border(1.dp, EmeraldMint.copy(alpha = 0.35f), RoundedCornerShape(14.dp)),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -88,7 +109,7 @@ fun SurahCard(
                 )
             }
 
-            // Info (Latin name, meaning, verse count)
+            // Info (Latin name, meaning, verse count) with Strict Typography Adherence
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -104,6 +125,8 @@ fun SurahCard(
                             fontWeight = FontWeight.Bold,
                             letterSpacing = (-0.2).sp
                         ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     if (surah.isKhatam) {
@@ -128,15 +151,18 @@ fun SurahCard(
                     ) {
                         Text(
                             text = surah.revelation,
-                            fontSize = 10.sp,
+                            style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
                             fontWeight = FontWeight.Bold,
-                            color = EmeraldMint
+                            color = EmeraldMint,
+                            maxLines = 1
                         )
                     }
                     Text(
                         text = "• ${surah.verseCount} Ayat • ${surah.meaning}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
@@ -153,7 +179,8 @@ fun SurahCard(
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp
                     ),
-                    color = EmeraldMint
+                    color = EmeraldMint,
+                    maxLines = 1
                 )
 
                 IconButton(

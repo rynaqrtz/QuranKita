@@ -6,7 +6,9 @@ import android.content.Context
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -82,6 +84,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -89,6 +92,8 @@ import com.example.data.model.Qari
 import com.example.data.model.Surah
 import com.example.data.model.Verse
 import com.example.ui.components.AudioPlayerBar
+import com.example.ui.navigation.LocalNavAnimatedVisibilityScope
+import com.example.ui.navigation.LocalSharedTransitionScope
 import com.example.ui.theme.AmiriFontFamily
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
@@ -99,7 +104,7 @@ import com.example.ui.theme.GoldLight
 import com.example.ui.theme.QuranTypoPresets
 import com.example.util.TajwidFormatter
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SurahReaderScreen(
     surahNumber: Int,
@@ -107,6 +112,18 @@ fun SurahReaderScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+
+    val badgeModifier = if (sharedTransitionScope != null && animatedVisibilityScope != null) {
+        with(sharedTransitionScope) {
+            Modifier.sharedElement(
+                rememberSharedContentState(key = "surah_badge_$surahNumber"),
+                animatedVisibilityScope = animatedVisibilityScope
+            )
+        }
+    } else Modifier
+
     BackHandler(onBack = onNavigateBack)
 
     LaunchedEffect(surahNumber) {
@@ -146,17 +163,48 @@ fun SurahReaderScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = currentSurah?.nameLatin ?: "Surah $surahNumber",
-                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                        Text(
-                            text = "${currentSurah?.meaning ?: ""} • ${currentSurah?.verseCount ?: 0} Ayat",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .then(badgeModifier)
+                                .size(34.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(
+                                    androidx.compose.ui.graphics.Brush.linearGradient(
+                                        listOf(EmeraldDark, Color(0xFF0F766E))
+                                    )
+                                )
+                                .border(1.dp, EmeraldMint.copy(alpha = 0.4f), RoundedCornerShape(10.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = surahNumber.toString(),
+                                style = MaterialTheme.typography.labelMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = EmeraldMint
+                                )
+                            )
+                        }
+
+                        Column(horizontalAlignment = Alignment.Start) {
+                            Text(
+                                text = currentSurah?.nameLatin ?: "Surah $surahNumber",
+                                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                color = MaterialTheme.colorScheme.onSurface,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = "${currentSurah?.meaning ?: ""} • ${currentSurah?.verseCount ?: 0} Ayat",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                     }
                 },
                 navigationIcon = {

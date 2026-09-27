@@ -268,20 +268,27 @@ enum class AppThemeMode {
 // Minimalist, high-contrast Dark Scheme (OLED friendly)
 private val DarkColorScheme = darkColorScheme(
     primary = EmeraldGreen,
-    onPrimary = Color(0xFF080D16),
+    onPrimary = Color(0xFF04201A),
     primaryContainer = EmeraldGreenContainerDark,
-    onPrimaryContainer = EmeraldGreenLight,
+    onPrimaryContainer = EmeraldLight,
     secondary = GoldAccent,
-    onSecondary = Color(0xFF080D16),
+    onSecondary = Color(0xFF451A03),
     secondaryContainer = GoldContainerDark,
     onSecondaryContainer = GoldLight,
+    tertiary = CelestialCyan,
+    onTertiary = Color(0xFF042F2C),
+    tertiaryContainer = CelestialContainerDark,
+    onTertiaryContainer = Color(0xFFA5F3FC),
     background = DarkBackground,
     onBackground = DarkTextPrimary,
     surface = DarkSurface,
     onSurface = DarkTextPrimary,
     surfaceVariant = DarkSurfaceElevated,
     onSurfaceVariant = DarkTextSecondary,
-    outline = DarkSurfaceBorder
+    surfaceContainer = DarkCardSurface,
+    surfaceContainerHigh = DarkSurfaceElevated,
+    outline = DarkSurfaceBorder,
+    outlineVariant = Color(0xFF1E2D44)
 )
 
 // ============================================================================
