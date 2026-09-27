@@ -2,12 +2,14 @@
 
 <div align="center">
 
+<img src="https://cdn.aceimg.com/9ZQ31x8nD.png" alt="QuranKita" width="100%">
+
 ![Version](https://img.shields.io/badge/version-1.0-10B981?style=for-the-badge&logo=android&logoColor=white)
 ![CI](https://img.shields.io/github/actions/workflow/status/rynaqrtz/QuranKita/android-build.yml?branch=main&label=build&style=for-the-badge&logo=githubactions&logoColor=white)
 ![Min SDK](https://img.shields.io/badge/Android-7.0%20%2B%20(API%2024)-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-18%20passed-22C55E?style=for-the-badge&logo=junit5&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-18%20passed-22C55E?style=for-the-badge&logoColor=white)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue?style=for-the-badge)
 
 **Aplikasi Al-Qur'an & pendamping ibadah harian — seluruh 6.236 ayat terpasang di dalam APK, tanpa iklan, tanpa akun, tanpa telemetri.**
@@ -108,9 +110,9 @@ Ambil APK dari **[GitHub Releases](../../releases)**.
 Tiap *push* ke `main` dan tiap tag `v*` memicu GitHub Actions yang:
 
 1. menjalankan seluruh **18 unit test** (JVM + Robolectric) di lingkungan headless,
-2. membangun `app-debug.apk`,
+2. membangun `app-debug.apk` dan menamainya ulang menjadi `QuranKita.apk`,
 3. mengunggahnya sebagai artefak build (30 hari), dan
-4. — **hanya untuk tag `v*`** — menerbitkan **GitHub Release** berisi APK itu.
+4. — **hanya untuk tag `v*`** — menerbitkan **GitHub Release** berisi `QuranKita.apk`.
 
 ```bash
 # menerbitkan rilis
@@ -166,7 +168,10 @@ cd QuranKita
 ./gradlew assembleDebug         # bangun APK
 ```
 
-APK: `app/build/outputs/apk/debug/app-debug.apk`
+APK (lokal): `app/build/outputs/apk/debug/app-debug.apk`
+
+> GitHub Actions me-*rename* berkas itu menjadi **`QuranKita.apk`** sebelum
+> diunggah dan dirilis.
 
 > Repo ini sudah menyertakan **Gradle wrapper** dan **`debug.keystore`**, sehingga
 > build berjalan di mesin mana pun tanpa konfigurasi tambahan.
