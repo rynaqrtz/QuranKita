@@ -23,7 +23,13 @@ enum class PrayerQiblaTab {
 class PrayerQiblaViewModel(application: Application) : AndroidViewModel(application) {
 
     private val compassHelper = QiblaCompassHelper(application)
-    private val vibrator = application.getSystemService(android.content.Context.VIBRATOR_SERVICE) as? Vibrator
+    private val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager = application.getSystemService(android.content.Context.VIBRATOR_MANAGER_SERVICE) as? android.os.VibratorManager
+        vibratorManager?.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        application.getSystemService(android.content.Context.VIBRATOR_SERVICE) as? Vibrator
+    }
 
     private val _selectedTab = MutableStateFlow(PrayerQiblaTab.SHOLAT)
     val selectedTab: StateFlow<PrayerQiblaTab> = _selectedTab.asStateFlow()
@@ -87,9 +93,10 @@ class PrayerQiblaViewModel(application: Application) : AndroidViewModel(applicat
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator?.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
                 } else {
-                    vibrator?.vibrate(50)
+                    @Suppress("DEPRECATION")
+                    vibrator?.vibrate(50L)
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 // Ignore vibration failure
             }
         } else if (!isAligned) {

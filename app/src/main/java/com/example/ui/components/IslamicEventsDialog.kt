@@ -1,6 +1,15 @@
 package com.example.ui.components
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,10 +28,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Event
-import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.NightsStay
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,12 +42,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,9 +61,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.data.model.IslamicEvent
 import com.example.ui.theme.DarkCardSurface
+import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldDark
 import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
+import com.example.ui.theme.EmeraldVibrant
 import com.example.ui.theme.GoldAccent
 import com.example.ui.theme.GoldLight
 import java.text.SimpleDateFormat
@@ -61,104 +79,273 @@ fun IslamicEventsCard(
     val events = remember { IslamicEvent.getUpcomingEvents() }
     val primaryEvent = events.firstOrNull { it.id == "ramadan_1448" } ?: events.first()
 
+    // Smooth subtle ambient pulsing effect for luxury 3D depth
+    val infiniteTransition = rememberInfiniteTransition(label = "islamic_card_ambient")
+    val pulseGlow by infiniteTransition.animateFloat(
+        initialValue = 0.5f,
+        targetValue = 0.95f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2400, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "pulse_glow"
+    )
+    val starRotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(45000, easing = androidx.compose.animation.core.LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "star_rotation"
+    )
+
     Card(
         modifier = modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(26.dp))
             .clickable { onOpenAllEvents() },
-        shape = RoundedCornerShape(22.dp),
+        shape = RoundedCornerShape(26.dp),
         colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    Brush.horizontalGradient(
-                        listOf(
-                            Color(0xFF0F172A),
-                            Color(0xFF064E3B).copy(alpha = 0.8f)
-                        )
+                    Brush.linearGradient(
+                        colors = listOf(
+                            Color(0xFF06141D), // Midnight Abyss
+                            Color(0xFF042B23), // Deep Islamic Emerald
+                            Color(0xFF081C17)  // Obsidian Forest
+                        ),
+                        start = Offset(0f, 0f),
+                        end = Offset(1000f, 800f)
                     )
                 )
-                .padding(18.dp)
+                .border(
+                    width = 1.2.dp,
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            GoldAccent.copy(alpha = 0.45f * pulseGlow),
+                            EmeraldMint.copy(alpha = 0.35f),
+                            Color.Transparent
+                        )
+                    ),
+                    shape = RoundedCornerShape(26.dp)
+                )
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+            // High-Performance Animated Islamic Canvas Geometric Watermark (Zero Image Overhead)
+            Canvas(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clip(RoundedCornerShape(26.dp))
             ) {
-                Row(
-                    modifier = Modifier.weight(1f),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(14.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(46.dp)
-                            .clip(CircleShape)
-                            .background(GoldAccent.copy(alpha = 0.2f)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.CalendarMonth,
-                            contentDescription = null,
-                            tint = GoldLight,
-                            modifier = Modifier.size(24.dp)
+                val cx = size.width * 0.88f
+                val cy = size.height * 0.5f
+                val radius = size.height * 0.75f
+
+                // Ambient Radial Glow
+                drawCircle(
+                    brush = Brush.radialGradient(
+                        colors = listOf(
+                            EmeraldVibrant.copy(alpha = 0.12f * pulseGlow),
+                            GoldAccent.copy(alpha = 0.05f * pulseGlow),
+                            Color.Transparent
+                        ),
+                        center = Offset(cx, cy),
+                        radius = radius * 1.4f
+                    ),
+                    center = Offset(cx, cy),
+                    radius = radius * 1.4f
+                )
+
+                // Rotating 8-Pointed Star (Rub el Hizb)
+                rotate(starRotation, pivot = Offset(cx, cy)) {
+                    val s = radius * 0.65f
+                    // Square 1
+                    drawRect(
+                        color = GoldAccent.copy(alpha = 0.07f),
+                        topLeft = Offset(cx - s / 2, cy - s / 2),
+                        size = Size(s, s),
+                        style = Stroke(width = 1.5.dp.toPx())
+                    )
+                    // Square 2 (Rotated 45 degrees)
+                    rotate(45f, pivot = Offset(cx, cy)) {
+                        drawRect(
+                            color = EmeraldMint.copy(alpha = 0.07f),
+                            topLeft = Offset(cx - s / 2, cy - s / 2),
+                            size = Size(s, s),
+                            style = Stroke(width = 1.5.dp.toPx())
                         )
                     }
+                    // Concentric Halo Rings
+                    drawCircle(
+                        color = GoldAccent.copy(alpha = 0.05f),
+                        center = Offset(cx, cy),
+                        radius = s * 0.85f,
+                        style = Stroke(width = 1.dp.toPx())
+                    )
+                }
+            }
 
-                    Column {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "Hitung Mundur Ramadhan",
-                                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                color = GoldLight
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .background(EmeraldPrimary.copy(alpha = 0.25f))
-                                    .padding(horizontal = 5.dp, vertical = 1.dp)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
+                // Top Meta Row: Badge & Estimated Gregorian Date
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(
+                                    Brush.horizontalGradient(
+                                        listOf(GoldAccent.copy(alpha = 0.25f), GoldAccent.copy(alpha = 0.12f))
+                                    )
+                                )
+                                .border(0.8.dp, GoldAccent.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
+                                .padding(horizontal = 8.dp, vertical = 3.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
+                                Icon(
+                                    imageVector = Icons.Default.NightsStay,
+                                    contentDescription = null,
+                                    tint = GoldLight,
+                                    modifier = Modifier.size(13.dp)
+                                )
                                 Text(
                                     text = primaryEvent.hijriDate,
-                                    fontSize = 10.sp,
+                                    fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = EmeraldMint
+                                    color = GoldLight,
+                                    letterSpacing = 0.3.sp
                                 )
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(2.dp))
-
                         Text(
-                            text = "${primaryEvent.daysRemaining} Hari Lagi",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.ExtraBold,
-                                color = Color.White
-                            )
+                            text = "HITUNG MUNDUR",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 1.sp
+                            ),
+                            color = EmeraldMint
                         )
+                    }
 
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(Color.White.copy(alpha = 0.06f))
+                            .padding(horizontal = 7.dp, vertical = 2.dp)
+                    ) {
                         Text(
-                            text = "Ketuk untuk melihat kalender hari besar Islam",
-                            style = MaterialTheme.typography.labelSmall,
+                            text = "18 Feb 2027",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
 
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(EmeraldPrimary)
-                        .padding(horizontal = 10.dp, vertical = 6.dp)
+                // Centerpiece: Dynamic Large Counter & Status
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Row(
+                            verticalAlignment = Alignment.Bottom,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = "${primaryEvent.daysRemaining}",
+                                style = MaterialTheme.typography.displaySmall.copy(
+                                    fontWeight = FontWeight.Black,
+                                    letterSpacing = (-1.5).sp
+                                ),
+                                color = Color.White
+                            )
+                            Column(modifier = Modifier.padding(bottom = 6.dp)) {
+                                Text(
+                                    text = "HARI LAGI",
+                                    style = MaterialTheme.typography.titleSmall.copy(
+                                        fontWeight = FontWeight.ExtraBold,
+                                        letterSpacing = 0.5.sp
+                                    ),
+                                    color = GoldLight
+                                )
+                                Text(
+                                    text = "Menuju 1 Ramadhan",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    }
+
+                    // Luxury 3D Action Pill
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(16.dp))
+                            .background(
+                                Brush.horizontalGradient(
+                                    listOf(EmeraldPrimary, EmeraldDark)
+                                )
+                            )
+                            .border(1.dp, EmeraldMint.copy(alpha = 0.5f), RoundedCornerShape(16.dp))
+                            .padding(horizontal = 14.dp, vertical = 10.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Text(
+                                text = "Semua Hari Besar",
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                contentDescription = "Buka Kalender",
+                                tint = Color.White,
+                                modifier = Modifier.size(14.dp)
+                            )
+                        }
+                    }
+                }
+
+                // Bottom Subtitle info
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AutoAwesome,
+                        contentDescription = null,
+                        tint = EmeraldMint,
+                        modifier = Modifier.size(13.dp)
+                    )
                     Text(
-                        text = "Kalender",
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        text = "Persiapkan ibadah tilawah, tadabbur, dan target khatam sedini mungkin.",
+                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.5.sp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -171,18 +358,21 @@ fun IslamicEventsDialog(
     onDismiss: () -> Unit
 ) {
     val events = remember { IslamicEvent.getUpcomingEvents() }
-    val dateFormat = remember { SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")) }
+    val dateFormat = remember { SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID")) }
 
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
+        BackHandler(onBack = onDismiss)
+
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 12.dp, vertical = 24.dp),
+                .padding(horizontal = 14.dp, vertical = 20.dp),
             shape = RoundedCornerShape(28.dp),
             color = MaterialTheme.colorScheme.background,
+            border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
             tonalElevation = 6.dp
         ) {
             Column(
@@ -197,14 +387,19 @@ fun IslamicEventsDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
+                        modifier = Modifier.weight(1f),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(38.dp)
-                                .clip(CircleShape)
-                                .background(EmeraldPrimary.copy(alpha = 0.2f)),
+                                .size(42.dp)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(
+                                    Brush.linearGradient(
+                                        listOf(EmeraldPrimary, EmeraldDark)
+                                    )
+                                ),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -224,39 +419,48 @@ fun IslamicEventsDialog(
                             Text(
                                 text = "Hitung mundur & amalan sunnah dianjurkan",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = EmeraldPrimary
+                                color = EmeraldMint
                             )
                         }
                     }
 
-                    IconButton(onClick = onDismiss) {
+                    IconButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.size(44.dp)
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Tutup",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(22.dp)
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(14.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                     contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
                     items(events, key = { it.id }) { event ->
+                        val isHighlighted = event.daysRemaining in 1..60
                         Card(
                             modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(18.dp),
+                            shape = RoundedCornerShape(20.dp),
                             colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                            border = androidx.compose.foundation.BorderStroke(
+                                1.dp,
+                                if (isHighlighted) EmeraldPrimary.copy(alpha = 0.4f) else DarkSurfaceBorder
+                            ),
                             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                         ) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                                    .padding(18.dp),
+                                verticalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -267,7 +471,7 @@ fun IslamicEventsDialog(
                                         Text(
                                             text = event.title,
                                             style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                                            color = EmeraldMint
+                                            color = if (isHighlighted) EmeraldMint else MaterialTheme.colorScheme.onSurface
                                         )
                                         Text(
                                             text = "${event.hijriDate} • ${dateFormat.format(event.targetGregorianDate)}",
@@ -278,18 +482,23 @@ fun IslamicEventsDialog(
 
                                     Box(
                                         modifier = Modifier
-                                            .clip(RoundedCornerShape(8.dp))
+                                            .clip(RoundedCornerShape(10.dp))
                                             .background(
-                                                if (event.daysRemaining in 1..60) EmeraldPrimary.copy(alpha = 0.25f)
+                                                if (isHighlighted) EmeraldPrimary.copy(alpha = 0.25f)
                                                 else MaterialTheme.colorScheme.surfaceVariant
                                             )
-                                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                                            .border(
+                                                0.8.dp,
+                                                if (isHighlighted) EmeraldMint.copy(alpha = 0.5f) else Color.Transparent,
+                                                RoundedCornerShape(10.dp)
+                                            )
+                                            .padding(horizontal = 10.dp, vertical = 5.dp)
                                     ) {
                                         Text(
                                             text = if (event.daysRemaining == 0L) "Hari Ini!" else "${event.daysRemaining} Hari Lagi",
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
-                                            color = if (event.daysRemaining in 1..60) EmeraldMint else MaterialTheme.colorScheme.onSurface
+                                            color = if (isHighlighted) EmeraldMint else MaterialTheme.colorScheme.onSurface
                                         )
                                     }
                                 }
@@ -304,10 +513,10 @@ fun IslamicEventsDialog(
                                     Column(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .clip(RoundedCornerShape(10.dp))
-                                            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
-                                            .padding(10.dp),
-                                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                                            .clip(RoundedCornerShape(12.dp))
+                                            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
+                                            .padding(12.dp),
+                                        verticalArrangement = Arrangement.spacedBy(5.dp)
                                     ) {
                                         Text(
                                             text = "Amalan yang Dianjurkan:",
@@ -315,11 +524,15 @@ fun IslamicEventsDialog(
                                             color = GoldLight
                                         )
                                         event.recommendedPractices.forEach { practice ->
-                                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                                Text(
-                                                    text = "• ",
-                                                    color = EmeraldPrimary,
-                                                    fontWeight = FontWeight.Bold
+                                            Row(
+                                                verticalAlignment = Alignment.CenterVertically,
+                                                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                            ) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .size(5.dp)
+                                                        .clip(CircleShape)
+                                                        .background(EmeraldPrimary)
                                                 )
                                                 Text(
                                                     text = practice,
@@ -338,3 +551,4 @@ fun IslamicEventsDialog(
         }
     }
 }
+

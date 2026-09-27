@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -70,6 +71,7 @@ fun DuaScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    BackHandler(onBack = onNavigateBack)
     var selectedCategory by remember { mutableStateOf("Semua") }
     var searchQuery by remember { mutableStateOf("") }
 
@@ -238,13 +240,13 @@ fun DuaScreen(
                                                 clipboard.setPrimaryClip(ClipData.newPlainText("Doa Quran", text))
                                                 Toast.makeText(context, "Doa berhasil disalin!", Toast.LENGTH_SHORT).show()
                                             },
-                                            modifier = Modifier.size(32.dp)
+                                            modifier = Modifier.size(42.dp)
                                         ) {
                                             Icon(
                                                 imageVector = Icons.Default.ContentCopy,
                                                 contentDescription = "Salin",
                                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                                modifier = Modifier.size(18.dp)
+                                                modifier = Modifier.size(20.dp)
                                             )
                                         }
 
@@ -260,13 +262,13 @@ fun DuaScreen(
                                                 }
                                                 context.startActivity(Intent.createChooser(shareIntent, "Bagikan Doa"))
                                             },
-                                            modifier = Modifier.size(32.dp)
+                                            modifier = Modifier.size(42.dp)
                                         ) {
                                             Icon(
                                                 imageVector = Icons.Default.Share,
                                                 contentDescription = "Bagikan",
                                                 tint = GoldAccent,
-                                                modifier = Modifier.size(18.dp)
+                                                modifier = Modifier.size(20.dp)
                                             )
                                         }
                                     }

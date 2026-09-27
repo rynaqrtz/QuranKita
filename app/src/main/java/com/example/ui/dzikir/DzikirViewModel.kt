@@ -12,7 +12,13 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class DzikirViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val vibrator = application.getSystemService(android.content.Context.VIBRATOR_SERVICE) as? Vibrator
+    private val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager = application.getSystemService(android.content.Context.VIBRATOR_MANAGER_SERVICE) as? android.os.VibratorManager
+        vibratorManager?.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        application.getSystemService(android.content.Context.VIBRATOR_SERVICE) as? Vibrator
+    }
 
     private val _dzikirList = MutableStateFlow(
         listOf(
@@ -103,20 +109,17 @@ class DzikirViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun triggerHaptic(isCompleted: Boolean) {
         try {
-            if (isCompleted) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (isCompleted) {
                     vibrator?.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 100, 50, 100), -1))
                 } else {
-                    vibrator?.vibrate(200)
+                    vibrator?.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE))
                 }
             } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator?.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else {
-                    vibrator?.vibrate(30)
-                }
+                @Suppress("DEPRECATION")
+                vibrator?.vibrate(if (isCompleted) 200L else 30L)
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Ignore
         }
     }

@@ -47,7 +47,7 @@ val NAV_ITEMS = listOf(
         route = Screen.QuranList.route,
         title = "Al-Qur'an",
         selectedIcon = Icons.AutoMirrored.Filled.MenuBook,
-        unselectedIcon = Icons.Outlined.MenuBook
+        unselectedIcon = Icons.AutoMirrored.Filled.MenuBook
     ),
     NavItem(
         route = Screen.Tahfidz.route,

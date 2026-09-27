@@ -129,7 +129,10 @@ fun QuranListScreen(
                 },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { viewModel.onSearchQueryChanged("") }) {
+                        IconButton(
+                            onClick = { viewModel.onSearchQueryChanged("") },
+                            modifier = Modifier.size(44.dp)
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Hapus Pencarian",

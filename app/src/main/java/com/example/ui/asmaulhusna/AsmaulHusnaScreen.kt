@@ -1,5 +1,6 @@
 package com.example.ui.asmaulhusna
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,6 +58,7 @@ fun AsmaulHusnaScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BackHandler(onBack = onNavigateBack)
     var searchQuery by remember { mutableStateOf("") }
 
     val filteredNames = remember(searchQuery) {
@@ -117,6 +120,20 @@ fun AsmaulHusnaScreen(
                         contentDescription = "Cari",
                         tint = EmeraldPrimary
                     )
+                },
+                trailingIcon = {
+                    if (searchQuery.isNotEmpty()) {
+                        IconButton(
+                            onClick = { searchQuery = "" },
+                            modifier = Modifier.size(44.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Hapus Pencarian",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 },
                 singleLine = true,
                 shape = RoundedCornerShape(16.dp),

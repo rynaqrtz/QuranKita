@@ -1,5 +1,6 @@
 package com.example.ui.quiz
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -63,6 +64,7 @@ fun QuranQuizScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BackHandler(onBack = onNavigateBack)
     val quizBank = remember {
         listOf(
             QuizQuestion(

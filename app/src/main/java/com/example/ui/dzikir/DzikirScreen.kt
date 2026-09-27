@@ -1,5 +1,6 @@
 package com.example.ui.dzikir
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -59,6 +60,7 @@ fun DzikirScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BackHandler(onBack = onNavigateBack)
     val dzikirList by viewModel.dzikirList.collectAsStateWithLifecycle()
     val selectedIndex by viewModel.selectedDzikirIndex.collectAsStateWithLifecycle()
     val currentDzikir = dzikirList.getOrElse(selectedIndex) { dzikirList.first() }

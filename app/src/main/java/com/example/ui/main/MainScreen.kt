@@ -167,10 +167,10 @@ fun ModernBottomNavigationBar(
                     colors = NavigationBarItemDefaults.colors(
                         // Active indicator uses Emerald Green (#10B981)
                         indicatorColor = EmeraldGreen,
-                        selectedIconColor = Color(0xFF080D16), // High-contrast dark icon inside glowing emerald pill
+                        selectedIconColor = Color(0xFF080D16),
                         selectedTextColor = EmeraldGreen,
-                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.65f),
-                        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.65f)
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
                     ),
                     modifier = Modifier.testTag(item.testTag)
                 )

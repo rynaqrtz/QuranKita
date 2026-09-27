@@ -1,5 +1,6 @@
 package com.example.ui.search
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -54,6 +55,7 @@ fun SearchScreen(
     onNavigateToSurah: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BackHandler(onBack = onNavigateBack)
     val query by viewModel.query.collectAsStateWithLifecycle()
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
 
@@ -106,10 +108,14 @@ fun SearchScreen(
                 },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
-                        IconButton(onClick = { viewModel.onQueryChanged("") }) {
+                        IconButton(
+                            onClick = { viewModel.onQueryChanged("") },
+                            modifier = Modifier.size(44.dp)
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
-                                contentDescription = "Hapus"
+                                contentDescription = "Hapus",
+                                modifier = Modifier.size(20.dp)
                             )
                         }
                     }

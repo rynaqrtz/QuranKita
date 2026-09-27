@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
@@ -105,6 +107,8 @@ fun SurahReaderScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BackHandler(onBack = onNavigateBack)
+
     LaunchedEffect(surahNumber) {
         viewModel.loadSurah(surahNumber)
     }
@@ -623,60 +627,60 @@ fun VerseCardItem(
                     )
                 }
 
-                // Action Buttons Row
+                // Action Buttons Row (Accessible Min 42dp Touch Target)
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(2.dp)
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     // Full Tafsir Modal Button
                     IconButton(
                         onClick = onOpenFullTafsir,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(42.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.MenuBook,
+                            imageVector = Icons.AutoMirrored.Filled.MenuBook,
                             contentDescription = "Buka Tafsir Lengkap",
                             tint = EmeraldPrimary,
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                     }
 
                     // Mark as Memorized (Tahfidz)
                     IconButton(
                         onClick = onToggleMemorized,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(42.dp)
                     ) {
                         Icon(
                             imageVector = if (verse.isMemorized) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
                             contentDescription = "Tandai Hafalan",
-                            tint = if (verse.isMemorized) EmeraldPrimary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                            modifier = Modifier.size(18.dp)
+                            tint = if (verse.isMemorized) EmeraldPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(20.dp)
                         )
                     }
 
                     // Bookmark
                     IconButton(
                         onClick = onToggleBookmark,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(42.dp)
                     ) {
                         Icon(
                             imageVector = if (verse.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                             contentDescription = "Bookmark Ayat",
-                            tint = if (verse.isBookmarked) GoldAccent else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                            modifier = Modifier.size(18.dp)
+                            tint = if (verse.isBookmarked) GoldAccent else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(20.dp)
                         )
                     }
 
                     // Play Audio
                     IconButton(
                         onClick = onPlay,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(42.dp)
                     ) {
                         Icon(
                             imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                             contentDescription = "Putar Audio Ayat",
                             tint = EmeraldPrimary,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(22.dp)
                         )
                     }
                 }

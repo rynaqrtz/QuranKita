@@ -1,6 +1,7 @@
 package com.example.ui.khatam
 
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -23,9 +24,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.LocalFireDepartment
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.outlined.CheckCircleOutline
 import androidx.compose.material3.Button
@@ -79,6 +80,7 @@ fun KhatamTrackerScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    BackHandler(onBack = onNavigateBack)
     val prefs = remember { context.getSharedPreferences("khatam_tracker_prefs", Context.MODE_PRIVATE) }
 
     // Load completed juz list from SharedPreferences
@@ -365,16 +367,16 @@ fun KhatamTrackerScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        // Checkbox Toggle
+                        // Checkbox Toggle (Accessible Min 44dp Touch Area)
                         IconButton(
                             onClick = { toggleJuzCompletion(juz.number) },
-                            modifier = Modifier.size(36.dp)
+                            modifier = Modifier.size(44.dp)
                         ) {
                             Icon(
                                 imageVector = if (isCompleted) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
                                 contentDescription = "Tandai Selesai",
                                 tint = if (isCompleted) EmeraldMint else MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(26.dp)
                             )
                         }
 
@@ -408,16 +410,16 @@ fun KhatamTrackerScreen(
                             )
                         }
 
-                        // Action: Read this Juz
+                        // Action: Read this Juz (Accessible Min 44dp Touch Area)
                         IconButton(
                             onClick = { onNavigateToSurah(juz.startSurahNumber) },
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(44.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.MenuBook,
+                                imageVector = Icons.AutoMirrored.Filled.MenuBook,
                                 contentDescription = "Buka Juz",
                                 tint = EmeraldPrimary,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(22.dp)
                             )
                         }
                     }

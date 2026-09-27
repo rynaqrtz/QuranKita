@@ -1,5 +1,6 @@
 package com.example.ui.home
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,6 +19,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.MenuBook
@@ -220,7 +223,8 @@ fun HomeScreen(
                     colors = CardDefaults.cardColors(
                         containerColor = DarkCardSurface
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
                 ) {
                     Row(
                         modifier = Modifier
@@ -230,32 +234,45 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Row(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(44.dp)
+                                    .size(46.dp)
                                     .clip(RoundedCornerShape(14.dp))
                                     .background(
                                         Brush.linearGradient(
                                             listOf(EmeraldPrimary, EmeraldDark)
                                         )
-                                    ),
+                                    )
+                                    .border(1.dp, EmeraldMint.copy(alpha = 0.4f), RoundedCornerShape(14.dp)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.NotificationsActive,
                                     contentDescription = "Jadwal Sholat",
                                     tint = EmeraldMint,
-                                    modifier = Modifier.size(22.dp)
+                                    modifier = Modifier.size(24.dp)
                                 )
                             }
 
                             Column {
-                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(7.dp)
+                                            .clip(CircleShape)
+                                            .background(EmeraldMint)
+                                    )
                                     Text(
-                                        text = "Sholat Berikutnya: ${uiState.nextPrayer?.name ?: "Dzuhur"}",
+                                        text = "Sholat: ${uiState.nextPrayer?.name ?: "Dzuhur"}",
                                         style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
                                     )
                                     Box(
@@ -298,15 +315,21 @@ fun HomeScreen(
                 )
             }
 
-            // Hero Card: Terakhir Dibaca (Last Read) with Rich Reading Progress
+            // Hero Card: Terakhir Dibaca (Last Read) with Rich Reading Progress & Illuminated Canvas
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(24.dp),
+                    shape = RoundedCornerShape(26.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = EmeraldDark
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                    border = androidx.compose.foundation.BorderStroke(
+                        1.2.dp,
+                        Brush.linearGradient(
+                            listOf(GoldAccent.copy(alpha = 0.6f), EmeraldMint.copy(alpha = 0.3f), Color.Transparent)
+                        )
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
                     Box(
                         modifier = Modifier
@@ -314,15 +337,52 @@ fun HomeScreen(
                             .background(
                                 Brush.linearGradient(
                                     listOf(
-                                        Color(0xFF064E3B), // Deep Forest Green
-                                        Color(0xFF047857), // Emerald Green
-                                        Color(0xFF065F46)  // Jade
+                                        Color(0xFF042F24), // Ultra Deep Islamic Green
+                                        Color(0xFF064E3B), // Royal Forest Emerald
+                                        Color(0xFF04201A)  // Night Obsidian
                                     )
                                 )
                             )
-                            .padding(22.dp)
                     ) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
+                        // High-Performance Animated Islamic Canvas Geometric Watermark
+                        Canvas(
+                            modifier = Modifier
+                                .matchParentSize()
+                                .clip(RoundedCornerShape(26.dp))
+                        ) {
+                            val cx = size.width * 0.92f
+                            val cy = size.height * 0.45f
+                            val radius = size.height * 0.8f
+
+                            // Radial Golden Amber Ambience
+                            drawCircle(
+                                brush = Brush.radialGradient(
+                                    colors = listOf(
+                                        GoldAccent.copy(alpha = 0.12f),
+                                        Color.Transparent
+                                    ),
+                                    center = Offset(cx, cy),
+                                    radius = radius
+                                ),
+                                center = Offset(cx, cy),
+                                radius = radius
+                            )
+
+                            // Islamic 8-pointed star geometry
+                            val s = radius * 0.7f
+                            drawRect(
+                                color = GoldAccent.copy(alpha = 0.08f),
+                                topLeft = Offset(cx - s / 2, cy - s / 2),
+                                size = androidx.compose.ui.geometry.Size(s, s),
+                                style = Stroke(width = 1.2.dp.toPx())
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(22.dp)
+                        ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,

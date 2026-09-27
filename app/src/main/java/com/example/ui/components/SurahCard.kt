@@ -158,13 +158,13 @@ fun SurahCard(
 
                 IconButton(
                     onClick = onToggleBookmark,
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.size(44.dp)
                 ) {
                     Icon(
                         imageVector = if (surah.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                         contentDescription = "Tandai Surah",
-                        tint = if (surah.isBookmarked) GoldAccent else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                        modifier = Modifier.size(18.dp)
+                        tint = if (surah.isBookmarked) GoldAccent else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(22.dp)
                     )
                 }
             }

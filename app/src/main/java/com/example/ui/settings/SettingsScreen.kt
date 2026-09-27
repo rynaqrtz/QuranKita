@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -68,6 +69,7 @@ import com.example.ui.components.TixarLogoBadge
 import com.example.ui.theme.AmiriFontFamily
 import com.example.ui.theme.AppThemeMode
 import com.example.ui.theme.DarkCardSurface
+import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.EmeraldMint
 import com.example.ui.theme.EmeraldPrimary
 import com.example.ui.theme.GoldAccent
@@ -147,11 +149,11 @@ fun SettingsScreen(
 
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "QuranKita v1.0",
+                                text = "QuranKita v1.2.0",
                                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                             )
                             Text(
-                                text = "Powered by Tixar • 100% Offline-First",
+                                text = "100% Offline-First • Bebas Iklan",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = EmeraldPrimary,
                                 fontWeight = FontWeight.SemiBold
@@ -166,7 +168,7 @@ fun SettingsScreen(
                 }
             }
 
-            // Visual Tajweed Highlighter Toggle & Legend
+            // Visual Tajweed Highlighter Switch & Legend
             item {
                 Text(
                     text = "Hukum Tajwid & Pewarnaan Visual",
@@ -179,6 +181,7 @@ fun SettingsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
                     colors = CardDefaults.cardColors(containerColor = DarkCardSurface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder),
                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                 ) {
                     Column(
@@ -193,13 +196,16 @@ fun SettingsScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 12.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
                                 Box(
                                     modifier = Modifier
-                                        .size(38.dp)
-                                        .clip(CircleShape)
+                                        .size(42.dp)
+                                        .clip(RoundedCornerShape(14.dp))
                                         .background(
                                             if (isTajweedHighlighterEnabled) EmeraldPrimary.copy(alpha = 0.2f)
                                             else MaterialTheme.colorScheme.surfaceVariant
@@ -210,7 +216,7 @@ fun SettingsScreen(
                                         imageVector = Icons.Default.AutoAwesome,
                                         contentDescription = null,
                                         tint = if (isTajweedHighlighterEnabled) EmeraldPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.size(20.dp)
+                                        modifier = Modifier.size(22.dp)
                                     )
                                 }
                                 Column {
@@ -219,9 +225,10 @@ fun SettingsScreen(
                                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
                                     )
                                     Text(
-                                        text = "Tandai warna hukum bacaan tajwid pada teks Arab",
+                                        text = "Tandai warna hukum bacaan tajwid pada teks ayat",
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        lineHeight = 16.sp
                                     )
                                 }
                             }
@@ -241,8 +248,9 @@ fun SettingsScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f))
+                                .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(14.dp))
                                 .padding(14.dp),
                             verticalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
@@ -252,29 +260,22 @@ fun SettingsScreen(
                                 color = GoldAccent
                             )
 
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(TajwidGhunnah))
-                                    Text(text = " Ghunnah", style = MaterialTheme.typography.labelSmall)
+                            // 2-Row Responsive Tajweed Guide Chips (No Clipping)
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    TajweedLegendBadge(color = TajwidGhunnah, label = "Ghunnah", sub = "Dengung", modifier = Modifier.weight(1f))
+                                    TajweedLegendBadge(color = TajwidIkhfa, label = "Ikhfa", sub = "Samar", modifier = Modifier.weight(1f))
+                                    TajweedLegendBadge(color = TajwidIdgham, label = "Idgham", sub = "Melebur", modifier = Modifier.weight(1f))
                                 }
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(TajwidIkhfa))
-                                    Text(text = " Ikhfa", style = MaterialTheme.typography.labelSmall)
-                                }
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(TajwidIdgham))
-                                    Text(text = " Idgham", style = MaterialTheme.typography.labelSmall)
-                                }
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(TajwidQalqalah))
-                                    Text(text = " Qalqalah", style = MaterialTheme.typography.labelSmall)
-                                }
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(TajwidMad))
-                                    Text(text = " Mad", style = MaterialTheme.typography.labelSmall)
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    TajweedLegendBadge(color = TajwidQalqalah, label = "Qalqalah", sub = "Memantul", modifier = Modifier.weight(1f))
+                                    TajweedLegendBadge(color = TajwidMad, label = "Mad", sub = "Panjang", modifier = Modifier.weight(1f))
                                 }
                             }
 
@@ -283,17 +284,24 @@ fun SettingsScreen(
                                 TajwidFormatter.formatWithTajwid(sampleText, isTajweedHighlighterEnabled)
                             }
 
-                            Text(
-                                text = formattedSample,
-                                fontFamily = AmiriFontFamily,
-                                fontSize = arabicFontSize.sp,
-                                lineHeight = (arabicFontSize * 1.8f).sp,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.onSurface,
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 6.dp)
-                            )
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(DarkCardSurface)
+                                    .padding(vertical = 8.dp, horizontal = 12.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = formattedSample,
+                                    fontFamily = AmiriFontFamily,
+                                    fontSize = arabicFontSize.sp,
+                                    lineHeight = (arabicFontSize * 1.8f).sp,
+                                    textAlign = TextAlign.Center,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
                     }
                 }
@@ -445,6 +453,9 @@ fun SettingsScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 12.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
@@ -756,6 +767,49 @@ fun SettingsScreen(
 
             item {
                 Spacer(modifier = Modifier.height(24.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun TajweedLegendBadge(
+    color: Color,
+    label: String,
+    sub: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(10.dp))
+            .background(DarkCardSurface)
+            .border(1.dp, color.copy(alpha = 0.35f), RoundedCornerShape(10.dp))
+            .padding(horizontal = 8.dp, vertical = 6.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .clip(CircleShape)
+                    .background(color)
+            )
+            Column {
+                Text(
+                    text = label,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
+                Text(
+                    text = sub,
+                    fontSize = 9.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1
+                )
             }
         }
     }
