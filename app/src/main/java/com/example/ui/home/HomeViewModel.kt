@@ -52,7 +52,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val lastRead: StateFlow<LastRead?>
     val allSurahs: StateFlow<List<Surah>>
 
-    /** Curated ayat rotated by day, read from the bundled Quran data. */
     private val verseOfDayReferences = listOf(
         2 to 286, 13 to 28, 61 to 4, 3 to 139, 29 to 69, 65 to 3,
         2 to 152, 67 to 2, 10 to 57, 48 to 29, 55 to 13, 94 to 5
@@ -81,9 +80,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             observeProgress()
             _uiState.value = _uiState.value.copy(isAppLoading = false)
 
-            // Recompute once a minute so "sholat berikutnya" and the hijri date
-            // never go stale. StateFlow drops equal values, so this stays quiet
-            // until something actually changes.
             while (isActive) {
                 delay(60_000)
                 refreshPrayerTimes()

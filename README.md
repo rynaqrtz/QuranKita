@@ -8,7 +8,7 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-18%20passed-22C55E?style=for-the-badge&logo=junit5&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-yellow?style=for-the-badge)
+![License](https://img.shields.io/badge/license-AGPL--3.0-blue?style=for-the-badge)
 
 **Aplikasi Al-Qur'an & pendamping ibadah harian — seluruh 6.236 ayat terpasang di dalam APK, tanpa iklan, tanpa akun, tanpa telemetri.**
 
@@ -203,21 +203,19 @@ app/src/main/assets/
 
 ---
 
-## 🗺️ Status & rencana
+## 🗺️ Roadmap
 
-Audit menyeluruh beserta daftar tiket dikerjakan ada di [`PRD.md`](PRD.md).
-
-| Fase | Status |
-| :--- | :--- |
-| 0 — CI/CD, wrapper, keystore | ✅ selesai, build hijau |
-| 1 — Perbaikan pembaca, audio, state | ✅ selesai |
-| 2 — Kalender hijriah, kota sholat, pencarian | ✅ selesai |
-| 3 — Lapisan visual (animasi 3D, transisi berbagi elemen) | 🚧 berjalan |
-| 4 — Pembersihan jejak build & dependensi mati | ✅ selesai |
-| 5 — Pembersihan kode mati | ✅ selesai |
+- ✅ Al-Qur'an lengkap (6.236 ayat) terpasang di dalam APK
+- ✅ CI/CD: test → build → artefak → rilis otomatis
+- ✅ Kalender hijriah, kota sholat bersama, pencarian FTS untuk ayat & surah
+- ✅ Unduh surah untuk dibaca luring
+- ✅ Pembersihan dependensi & aset tak terpakai
+- 🚧 Animasi transisi antar layar
+- ⬜ Mode terang dan sepia
+- ⬜ Baseline profile untuk mempercepat startup
 
 ---
 
 ## 📄 Lisensi
 
-MIT — lihat [`LICENSE`](LICENSE).
+**GNU AGPL v3.0** — lihat [`LICENSE`](LICENSE) di repositori ini.

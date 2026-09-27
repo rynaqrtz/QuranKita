@@ -180,11 +180,6 @@ class QuranRepository(private val quranDao: QuranDao) {
             list.map { it.toModel() }
         }.flowOn(Dispatchers.IO)
 
-    /**
-     * Builds a valid FTS4 MATCH expression: every token becomes a prefix term
-     * (`token*`) and anything that is not a letter or digit is dropped, so free
-     * user text can never yield a malformed MATCH query.
-     */
     private fun toFtsMatch(query: String): String =
         query.trim()
             .replace(Regex("[^\\p{L}\\p{N}]+"), " ")
@@ -239,7 +234,6 @@ class QuranRepository(private val quranDao: QuranDao) {
     suspend fun deleteDownloadedAudio(key: String, filePath: String) = withContext(Dispatchers.IO) {
         quranDao.deleteDownloadedAudio(key)
         try {
-            // localFilePath is the per-qari audio directory, not a single file
             File(filePath).deleteRecursively()
         } catch (e: Exception) {
             e.printStackTrace()

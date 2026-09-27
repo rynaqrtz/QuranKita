@@ -6,10 +6,6 @@ import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
-/**
- * An Islamic calendar event pinned to a Hijri day; the Gregorian date used for
- * countdowns is derived from [HijriCalendar] so the two can never drift apart.
- */
 data class IslamicEvent(
     val id: String,
     val title: String,

@@ -59,7 +59,7 @@ import com.example.ui.theme.EmeraldMint
  * Characteristics:
  * - Fluid kinetic motion (breathing elevation, rotating ambient emerald orbit arc, glowing aura).
  * - 100% borderless clean branding using the official Tixar photo.
- * - Anti "AI-slop" aesthetic: subtle, deliberate micro-interactions, no harsh boxes or generic spinners.
+ * - Subtle, deliberate micro-interactions: no harsh boxes, no generic spinners.
  */
 @Composable
 fun AppLaunchLoadingView(

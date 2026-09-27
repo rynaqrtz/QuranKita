@@ -12,20 +12,8 @@ data class GregorianDate(
     val day: Int
 )
 
-/**
- * Tabular (arithmetic) Islamic calendar.
- *
- * Calibrated against Indonesian sidang-isbat announcements for 1446-1448 H —
- * 4 of 5 known anchors land exactly, the fifth is one day off, and Gregorian
- * round-trips are lossless.
- *
- * ponytail: arithmetic conversion instead of shipping an Umm al-Qura day table.
- * Ceiling: +-1 day vs the official moon sighting. Swap `fromGregorian` for a
- * precomputed table if that ever matters.
- */
 object HijriCalendar {
 
-    /** Julian day number of 1 Muharram 1 AH. */
     private const val EPOCH = 1948439
 
     val MONTH_NAMES = listOf(
@@ -71,7 +59,6 @@ object HijriCalendar {
         )
     }
 
-    /** Gregorian (proleptic) calendar day -> Islamic calendar. */
     fun fromGregorian(year: Int, month: Int, day: Int): HijriDate {
         val jdn = toJulianDay(year, month, day)
         var hy = (jdn - EPOCH) / 354 + 1
@@ -89,7 +76,6 @@ object HijriCalendar {
         return HijriDate(hy, hm, remaining + 1)
     }
 
-    /** Islamic calendar -> Gregorian (proleptic) calendar. */
     fun toGregorian(date: HijriDate): GregorianDate {
         var jdn = EPOCH + daysBeforeYear(date.year)
         for (m in 1 until date.month) jdn += monthLength(date.year, m)

@@ -2,12 +2,6 @@ package com.example.util
 
 import android.content.Context
 
-/**
- * Prayer location shared by Home and the Kiblat screen so both always agree.
- *
- * ponytail: SharedPreferences over DataStore/Room — one string key, native,
- * zero extra dependency.
- */
 object PrayerSettings {
 
     private const val PREFS = "prayer_settings"

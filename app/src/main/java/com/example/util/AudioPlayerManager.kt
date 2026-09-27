@@ -49,7 +49,6 @@ class AudioPlayerManager(private val context: Context) {
     private val _playbackState = MutableStateFlow(AudioPlaybackState())
     val playbackState: StateFlow<AudioPlaybackState> = _playbackState.asStateFlow()
 
-    /** Wired by the ViewModel so a finished download is recorded for the Settings list. */
     var onAudioDownloaded: (suspend (qariId: String, surahNumber: Int, filePath: String, sizeStr: String) -> Unit)? = null
 
     fun setQari(qari: Qari) {
@@ -288,11 +287,6 @@ class AudioPlayerManager(private val context: Context) {
         }
     }
 
-    /**
-     * Downloads every verse of the current surah so it plays with no network.
-     * ponytail: java.net.URL + copyTo, whole-surah only, no byte-level progress.
-     * Add per-verse resume if users start hitting timeouts on long surahs.
-     */
     fun downloadCurrentSurah(verseCount: Int) {
         if (_playbackState.value.isDownloading) return
 
@@ -344,7 +338,6 @@ class AudioPlayerManager(private val context: Context) {
     }
 
     companion object {
-        /** Single source of truth for the offline layout: audio/<qari>/<surah>_<verse>.mp3 */
         fun verseFile(root: File, qariId: String, surahNumber: Int, verseNumber: Int): File = File(
             File(File(root, "audio"), qariId),
             String.format(Locale.US, "%03d_%03d.mp3", surahNumber, verseNumber)

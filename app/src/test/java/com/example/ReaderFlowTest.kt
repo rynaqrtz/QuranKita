@@ -104,7 +104,6 @@ class ReaderFlowTest {
                 vm.loadSurah(5)
                 assertEquals(5, awaitState(vm.currentSurah) { it?.number == 5 }?.number)
 
-                // allow the loadSurah coroutine to finish its seeding path
                 Thread.sleep(1_500)
 
                 val lastRead = repository.lastRead.first()
